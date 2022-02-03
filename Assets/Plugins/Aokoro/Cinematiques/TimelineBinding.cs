@@ -28,7 +28,7 @@ namespace Aokoro.Tools.Cinematiques
             if (MainBrain == null)
             {
                 var cam = Camera.main;
-                if (cam.TryGetComponent(out CinemachineBrain brain))
+                if (cam != null && cam.TryGetComponent(out CinemachineBrain brain))
                     MainBrain = brain;
             }
 
