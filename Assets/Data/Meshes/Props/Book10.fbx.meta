@@ -1,58 +1,157 @@
 fileFormatVersion: 2
 guid: d4c7e034d1c8f0d45b57129f707cc276
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Object150
-    100004: Object271
-    100006: Object273
-    100008: Object274
-    100010: Object275
-    100012: Object276
-    100014: Object277
-    100016: Object285
-    100018: Object286
-    400000: //RootNode
-    400002: Object150
-    400004: Object271
-    400006: Object273
-    400008: Object274
-    400010: Object275
-    400012: Object276
-    400014: Object277
-    400016: Object285
-    400018: Object286
-    2300000: Object150
-    2300002: Object271
-    2300004: Object273
-    2300006: Object274
-    2300008: Object275
-    2300010: Object276
-    2300012: Object277
-    2300014: Object285
-    2300016: Object286
-    3300000: Object150
-    3300002: Object271
-    3300004: Object273
-    3300006: Object274
-    3300008: Object275
-    3300010: Object276
-    3300012: Object277
-    3300014: Object285
-    3300016: Object286
-    4300000: Object150
-    4300002: Object271
-    4300004: Object273
-    4300006: Object274
-    4300008: Object275
-    4300010: Object276
-    4300012: Object277
-    4300014: Object285
-    4300016: Object286
-  externalObjects: {}
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Object150
+  - first:
+      1: 100004
+    second: Object271
+  - first:
+      1: 100006
+    second: Object273
+  - first:
+      1: 100008
+    second: Object274
+  - first:
+      1: 100010
+    second: Object275
+  - first:
+      1: 100012
+    second: Object276
+  - first:
+      1: 100014
+    second: Object277
+  - first:
+      1: 100016
+    second: Object285
+  - first:
+      1: 100018
+    second: Object286
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Object150
+  - first:
+      4: 400004
+    second: Object271
+  - first:
+      4: 400006
+    second: Object273
+  - first:
+      4: 400008
+    second: Object274
+  - first:
+      4: 400010
+    second: Object275
+  - first:
+      4: 400012
+    second: Object276
+  - first:
+      4: 400014
+    second: Object277
+  - first:
+      4: 400016
+    second: Object285
+  - first:
+      4: 400018
+    second: Object286
+  - first:
+      23: 2300000
+    second: Object150
+  - first:
+      23: 2300002
+    second: Object271
+  - first:
+      23: 2300004
+    second: Object273
+  - first:
+      23: 2300006
+    second: Object274
+  - first:
+      23: 2300008
+    second: Object275
+  - first:
+      23: 2300010
+    second: Object276
+  - first:
+      23: 2300012
+    second: Object277
+  - first:
+      23: 2300014
+    second: Object285
+  - first:
+      23: 2300016
+    second: Object286
+  - first:
+      33: 3300000
+    second: Object150
+  - first:
+      33: 3300002
+    second: Object271
+  - first:
+      33: 3300004
+    second: Object273
+  - first:
+      33: 3300006
+    second: Object274
+  - first:
+      33: 3300008
+    second: Object275
+  - first:
+      33: 3300010
+    second: Object276
+  - first:
+      33: 3300012
+    second: Object277
+  - first:
+      33: 3300014
+    second: Object285
+  - first:
+      33: 3300016
+    second: Object286
+  - first:
+      43: 4300000
+    second: Object150
+  - first:
+      43: 4300002
+    second: Object271
+  - first:
+      43: 4300004
+    second: Object273
+  - first:
+      43: 4300006
+    second: Object274
+  - first:
+      43: 4300008
+    second: Object275
+  - first:
+      43: 4300010
+    second: Object276
+  - first:
+      43: 4300012
+    second: Object277
+  - first:
+      43: 4300014
+    second: Object285
+  - first:
+      43: 4300016
+    second: Object286
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Aircondition
+    second: {fileID: 2100000, guid: ec88d7b454c124247afb2687a658fa4d, type: 2}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -61,6 +160,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -78,44 +178,53 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 3
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
-    importBlendShapes: 1
+    importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
-    weldVertices: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -125,13 +234,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 0
   humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
