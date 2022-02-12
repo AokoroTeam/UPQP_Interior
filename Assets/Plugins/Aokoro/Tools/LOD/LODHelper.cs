@@ -14,6 +14,13 @@ namespace Aokoro.Tools.LODs
     {
         public string exportPath;
 
+
+        private void OnValidate()
+        {
+            if (exportPath != null && exportPath.StartsWith("Assets/"))
+                exportPath = exportPath.Remove(0, 7);
+        }
+
         [Button("Export", EButtonEnableMode.Editor)]
         public void ExportGameObjects()
         {
@@ -40,24 +47,27 @@ namespace Aokoro.Tools.LODs
                     renderers.Add(renderer);
                     objectsToExport.Add(renderer.gameObject);
                     string newName = $"{gameObject.name}_{j}_LOD_{i}";
-                    /*
+
                     string lodGroupName = $"LOD_{i}";
-                    if (renderer.transform.parent.name != lodGroupName)
+                    if (parent == null)
                     {
-                        if (parent == null)
-                        {
+                        if (renderer.transform.parent.name != lodGroupName)
                             parent = new GameObject(lodGroupName).transform;
-                            parent.SetParent(transform);
-                            parent.localPosition = Vector3.zero;
-                        }
+                        else
+                            parent = renderer.transform.parent;
+
+                        parent.SetParent(transform);
+                        parent.localPosition = Vector3.zero;
                     }
+
                     renderer.transform.SetParent(parent);
                     renderer.transform.SetAsLastSibling();
-*/
+
                     renderer.gameObject.name = newName;
                 }
             }
-            string filePath = Path.Combine(Application.dataPath, $"{gameObject.name}.fbx");
+
+            string filePath = Path.Combine(Application.dataPath, exportPath, $"{gameObject.name}.fbx");
             string exportedPath = ModelExporter.ExportObjects(filePath, objectsToExport.ToArray());
 
             //If export is successful
@@ -75,7 +85,6 @@ namespace Aokoro.Tools.LODs
                 {
                     if (meshes[i] is Mesh mesh)
                     {
-
                         int index = renderers.FindIndex(ctx => ctx.gameObject.name == mesh.name);
                         if (index != -1)
                         {

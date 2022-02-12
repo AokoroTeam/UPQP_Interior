@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3825166833949537330}
   - component: {fileID: 3825166833949537331}
+  - component: {fileID: 4989276944004015706}
   m_Layer: 0
   m_Name: Book01
   m_TagString: Untagged
@@ -136,12 +137,25 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3825166833947768528}
     - renderer: {fileID: 3825166833947768530}
-  - screenRelativeHeight: 0.022610946
+  - screenRelativeHeight: 0.01
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3825166835278714880}
     - renderer: {fileID: 3825166834957847889}
   m_Enabled: 1
+--- !u!114 &4989276944004015706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825166833949698066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bafdcce6ec82a3449e35f603d8128a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 0ebc06fca854ff54ab84a9b61fb6f979, type: 2}
 --- !u!1 &3825166833949698070
 GameObject:
   m_ObjectHideFlags: 0
