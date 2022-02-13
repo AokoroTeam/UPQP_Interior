@@ -2,43 +2,7 @@ fileFormatVersion: 2
 guid: 304404d9d72748d4cb7573c3dff1ddd2
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: polySurface29
-  - first:
-      1: 100004
-    second: polySurface31
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: polySurface29
-  - first:
-      4: 400004
-    second: polySurface31
-  - first:
-      23: 2300000
-    second: polySurface29
-  - first:
-      23: 2300002
-    second: polySurface31
-  - first:
-      33: 3300000
-    second: polySurface29
-  - first:
-      33: 3300002
-    second: polySurface31
-  - first:
-      43: 4300000
-    second: polySurface31
-  - first:
-      43: 4300002
-    second: polySurface29
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -86,7 +50,7 @@ ModelImporter:
     importCameras: 0
     importLights: 0
     nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
