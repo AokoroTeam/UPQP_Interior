@@ -10,6 +10,7 @@ namespace UPQP.Environnement.Props
     [RequireComponent(typeof(LODGroup))]
     public class MaterialRandomizer : MonoBehaviour
     {
+        [Expandable]
         public MaterialRandomizerList data;
 
         [Button]

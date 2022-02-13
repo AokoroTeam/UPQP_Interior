@@ -2,43 +2,7 @@ fileFormatVersion: 2
 guid: 11df94adc59c7e646994ecb8c88fcca1
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: Item03:Item03:Mesh1
-  - first:
-      1: 100004
-    second: Item03:Mesh3
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: Item03:Item03:Mesh1
-  - first:
-      4: 400004
-    second: Item03:Mesh3
-  - first:
-      23: 2300000
-    second: Item03:Item03:Mesh1
-  - first:
-      23: 2300002
-    second: Item03:Mesh3
-  - first:
-      33: 3300000
-    second: Item03:Item03:Mesh1
-  - first:
-      33: 3300002
-    second: Item03:Mesh3
-  - first:
-      43: 4300000
-    second: Item03:Mesh3
-  - first:
-      43: 4300002
-    second: Item03:Item03:Mesh1
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -86,7 +50,7 @@ ModelImporter:
     importCameras: 0
     importLights: 0
     nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
@@ -110,7 +74,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0

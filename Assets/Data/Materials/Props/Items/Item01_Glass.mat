@@ -9,10 +9,10 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Item01_Glass
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _OCCLUSIONMAP _SPECULAR_SETUP _SURFACE_TYPE_TRANSPARENT
+  m_ShaderKeywords: _OCCLUSIONMAP _SPECULAR_SETUP _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
@@ -101,12 +101,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Blend: 1
+    - _Blend: 0
     - _BumpScale: 1
     - _ChromaticAberration: 0.1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -120,26 +120,26 @@ Material:
     - _Metallic: 0
     - _Mode: 3
     - _NormalScale: 1
-    - _OcclusionStrength: 0.5
+    - _OcclusionStrength: 1
     - _Occlusion_Power: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.92
+    - _Smoothness: 0.7
     - _SmoothnessTextureChannel: 0
     - _SmothnessIntensity: 1
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _Surface: 1
     - _UVSec: 0
     - _WorkflowMode: 0
     - _ZWrite: 0
     - __dirty: 1
     m_Colors:
-    - _BaseColor: {r: 0.12813786, g: 0.15799984, b: 0.15448666, a: 0.4}
-    - _Color: {r: 0.12813783, g: 0.15799981, b: 0.15448663, a: 0.4}
+    - _BaseColor: {r: 0.12813777, g: 0.15799975, b: 0.15448657, a: 0.7254902}
+    - _Color: {r: 0.12813774, g: 0.15799972, b: 0.15448654, a: 0.7254902}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.175, g: 0.175, b: 0.175, a: 1}
+    - _SpecColor: {r: 0.5324493, g: 0.5566038, b: 0.55153024, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8279109121742476553
 MonoBehaviour:

@@ -2,58 +2,7 @@ fileFormatVersion: 2
 guid: 844d5473e2080ba428783374fa454b17
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: Mac
-  - first:
-      1: 100004
-    second: Mac001
-  - first:
-      1: 100006
-    second: Mac002
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: Mac
-  - first:
-      4: 400004
-    second: Mac001
-  - first:
-      4: 400006
-    second: Mac002
-  - first:
-      23: 2300000
-    second: Mac
-  - first:
-      23: 2300002
-    second: Mac001
-  - first:
-      23: 2300004
-    second: Mac002
-  - first:
-      33: 3300000
-    second: Mac
-  - first:
-      33: 3300002
-    second: Mac001
-  - first:
-      33: 3300004
-    second: Mac002
-  - first:
-      43: 4300000
-    second: Mac
-  - first:
-      43: 4300002
-    second: Mac001
-  - first:
-      43: 4300004
-    second: Mac002
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -101,7 +50,7 @@ ModelImporter:
     importCameras: 0
     importLights: 0
     nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
