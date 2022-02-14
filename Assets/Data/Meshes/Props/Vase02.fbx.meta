@@ -2,58 +2,7 @@ fileFormatVersion: 2
 guid: fe51e87dd0f33ae4abd746fc202d0817
 ModelImporter:
   serializedVersion: 21202
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: //RootNode
-  - first:
-      1: 100002
-    second: Vase02:Mesh1
-  - first:
-      1: 100004
-    second: Vase02:Mesh2
-  - first:
-      1: 100006
-    second: Vase02:Mesh3
-  - first:
-      4: 400000
-    second: //RootNode
-  - first:
-      4: 400002
-    second: Vase02:Mesh1
-  - first:
-      4: 400004
-    second: Vase02:Mesh2
-  - first:
-      4: 400006
-    second: Vase02:Mesh3
-  - first:
-      23: 2300000
-    second: Vase02:Mesh1
-  - first:
-      23: 2300002
-    second: Vase02:Mesh2
-  - first:
-      23: 2300004
-    second: Vase02:Mesh3
-  - first:
-      33: 3300000
-    second: Vase02:Mesh1
-  - first:
-      33: 3300002
-    second: Vase02:Mesh2
-  - first:
-      33: 3300004
-    second: Vase02:Mesh3
-  - first:
-      43: 4300000
-    second: Vase02:Mesh1
-  - first:
-      43: 4300002
-    second: Vase02:Mesh2
-  - first:
-      43: 4300004
-    second: Vase02:Mesh3
+  internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -101,7 +50,7 @@ ModelImporter:
     importCameras: 0
     importLights: 0
     nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 1
     useFileUnits: 1
