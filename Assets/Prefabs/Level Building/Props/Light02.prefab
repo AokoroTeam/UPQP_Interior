@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 6089028748879205105}
   m_Layer: 0
   m_Name: Light02_0_LOD_0
-  m_TagString: Untagged
+  m_TagString: Transparent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
