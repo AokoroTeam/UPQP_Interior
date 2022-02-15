@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 968872082081538229}
   - component: {fileID: 5642903222612978495}
   - component: {fileID: 8732063588003222729}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_Midldle_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9041318181943940692}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 5014215594573993576}
   - component: {fileID: 1277015703968046136}
   - component: {fileID: 4209569866454129038}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_Midldle_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 154886711278881922}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 5037079204833760945}
   - component: {fileID: 4991091845282719987}
   - component: {fileID: 8453348619178218456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_Midldle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1786046683425474240}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 2130482847816616616}
   - component: {fileID: 8463805445400303006}
   - component: {fileID: 533253240238595569}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_Midldle_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

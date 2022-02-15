@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8709436419105606373}
   - component: {fileID: 2551149824428171324}
   - component: {fileID: 85709616047801688}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2804520782195196510}
   - component: {fileID: 688241318856529243}
   - component: {fileID: 7869780854038047974}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_1_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 2076106309078621657}
   - component: {fileID: 6318632151739702334}
   - component: {fileID: 5787027433835111390}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2807675438954388141}
   - component: {fileID: 4803534534824538980}
   - component: {fileID: 5391307029808921785}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_1_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1692444644954308695}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 7963344107620798225}
   - component: {fileID: 3026600416725178863}
   - component: {fileID: 6020228638523757461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_1_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969688158383069978}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1012998368363527655}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 8050507265781391472}
   - component: {fileID: 4478864577435974660}
   - component: {fileID: 1568794201657258682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4920803540278242884}
   - component: {fileID: 5228218407392158726}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BookShelf04
   m_TagString: Untagged
   m_Icon: {fileID: 0}

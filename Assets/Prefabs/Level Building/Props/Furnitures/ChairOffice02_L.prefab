@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7941510250626485264}
   - component: {fileID: 5842341295140554707}
   - component: {fileID: 7211373980285604283}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChairOffice02_L_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4838348890520881650}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 5643756579413807207}
   - component: {fileID: 1689615555193439185}
   - component: {fileID: 470482446992452758}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChairOffice02_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5643756579413838919}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.3128972, y: 0.059999973, z: -1.4798031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 1736519254782412347}
   - component: {fileID: 5047501715988060554}
   - component: {fileID: 2803819850741779004}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChairOffice02_L_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 2389429665553373333}
   - component: {fileID: 9068968820912544612}
   - component: {fileID: 3146077923721154155}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChairOffice02_L_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7197649942176197186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2637267887754016968}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3331826295412424787}
   - component: {fileID: 5398121758357282360}
   - component: {fileID: 2789622963430084610}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 828413973209042858}
   - component: {fileID: 3027508306583156222}
   - component: {fileID: 4630213681511700253}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 4405725253210127801}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.3819675, y: 2.84, z: 0.6769881}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.4331, y: 1.4331, z: 1.4331}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7190810103373195276}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 7445037824305230244}
   - component: {fileID: 7620816973710448294}
   - component: {fileID: 6089028748879205105}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light02_0_LOD_0
   m_TagString: Transparent
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7190810103373195276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4252561205844447191}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 3110143719777558632}
   - component: {fileID: 8048303894175575403}
   - component: {fileID: 406540823747004820}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light02_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

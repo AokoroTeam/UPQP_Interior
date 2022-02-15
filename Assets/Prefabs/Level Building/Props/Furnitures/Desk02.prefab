@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1075921716739160351}
   - component: {fileID: 928250420186816079}
   - component: {fileID: 8112362601780843354}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desk02_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1088685092208296298}
   - component: {fileID: 348443705904530820}
   - component: {fileID: 959327405064406709}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desk02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,8 +127,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4125456181835608953}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1.978006
+  m_LocalReferencePoint: {x: -0.00041772425, y: -0.00035354495, z: 0}
+  m_Size: 1.9741511
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -168,7 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7352078588546684358}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7857697052400161206}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 4506637778239012144}
   - component: {fileID: 5257422790227408343}
   - component: {fileID: 2121166185401796368}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desk02_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,13 +291,13 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 0.6087488
+  m_ScaleInLightmap: 1.0839388
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 2618387486071742050}
   - component: {fileID: 6195538235114209311}
   - component: {fileID: 5170307454604617520}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Desk02_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8494139732958085394}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

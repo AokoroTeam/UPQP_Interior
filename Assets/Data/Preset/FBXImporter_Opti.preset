@@ -242,7 +242,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: secondaryUVAreaDistortion
-    value: 15.000001
+    value: 15
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: secondaryUVHardAngle
@@ -262,7 +262,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: secondaryUVPackMargin
-    value: 4
+    value: 40
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_UseFileScale
@@ -274,7 +274,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: normalImportMode
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: tangentImportMode

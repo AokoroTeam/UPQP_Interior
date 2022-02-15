@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1093342247}
   - component: {fileID: 1093342249}
   - component: {fileID: 1093342248}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2900606777166685704}
   - component: {fileID: 5537265968088011126}
   - component: {fileID: 5537265968088011127}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5537265966253379894}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 5537265966504662697}
   - component: {fileID: 5537265966504662696}
   - component: {fileID: 5537265966504662703}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_2_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 5537265966700026013}
   - component: {fileID: 5537265966700026012}
   - component: {fileID: 924322505181778240}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_1_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 5537265966814901521}
   - component: {fileID: 5537265966814901522}
   - component: {fileID: 5537265966814901523}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_1_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 5537265967284498678}
   - component: {fileID: 5537265967284498677}
   - component: {fileID: 5537265967284498676}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_2_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 5537265967804727980}
   - component: {fileID: 5537265967804727982}
   - component: {fileID: 5537265967804727981}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 5537265967844371815}
   - component: {fileID: 5537265967844371808}
   - component: {fileID: 5537265967844371809}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,7 +798,7 @@ GameObject:
   - component: {fileID: 5537265968087649627}
   - component: {fileID: 5537265968084749689}
   - component: {fileID: 5537265968085749689}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light01_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -879,7 +879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5537265968344237847}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

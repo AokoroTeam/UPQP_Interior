@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2895105280295400083}
   - component: {fileID: 2166795883575268305}
   - component: {fileID: 9147264543368982532}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle (2)_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5607038144925082194}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3332461114871252721}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 8983839406322902834}
   - component: {fileID: 4868350827951463670}
   - component: {fileID: 6497991517266398555}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle (2)_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 3633109831477947560}
   - component: {fileID: 1017868581677354133}
   - component: {fileID: 3392890118697679586}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5322603554573335115}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 4459249315687992316}
   - component: {fileID: 8707542614806967559}
   - component: {fileID: 582320103701452953}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle (2)_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

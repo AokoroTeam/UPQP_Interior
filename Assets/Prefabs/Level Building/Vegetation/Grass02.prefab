@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8384765655605029023}
   - component: {fileID: 5415337952585774133}
   - component: {fileID: 1079883247318952835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass02_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4749398382379360931}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739068250627591429}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 8684488410524305054}
   - component: {fileID: 1212949263866698823}
   - component: {fileID: 8730341677055534416}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 6960107384227622794}
   - component: {fileID: 8870632874608768392}
   - component: {fileID: 1216202812789073838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass02_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 1024414602848484499}
   - component: {fileID: 1537094007348803588}
   - component: {fileID: 2740863199116661884}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass02_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3261558943981952584}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
