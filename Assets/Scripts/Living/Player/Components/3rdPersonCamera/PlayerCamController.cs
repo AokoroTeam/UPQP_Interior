@@ -12,8 +12,6 @@ namespace UPQP.CameraManagement
 {
     public class PlayerCamController : CinemachineInputProvider, ILivingComponent<PlayerManager>
     {
-        private CinemachineFreeLook freeLook;
-
         public PlayerManager Manager { get; set; }
 
         public bool HasUpdate => true;
@@ -29,35 +27,18 @@ namespace UPQP.CameraManagement
         private float verticalSpeed;
         [SerializeField, Range(.01f, 4)]
         private float horizontalSpeed;
-        [SerializeField, Range(0, 1)]
-        private float speed;
 
-        [Header("Heading")]
-        [SerializeField] private float headingStrenght;
-
-        public ComplexeProperty<Vector3> Heading = new ComplexeProperty<Vector3>();
-
-        private PlayerCharacter playerCharacter;
-
-        public void Initiate(PlayerManager manager)
+        public virtual void Initiate(PlayerManager manager)
         {
-            manager.GetLivingComponent(out playerCharacter);
 
-            freeLook = GetComponentInChildren<CinemachineFreeLook>();
             lookAction = Manager.playerInput.actions.FindActionMap("DefaultGameplay").FindAction("Look");
+            XYAxis.Set(lookAction);
+
             lookAction.Enable();
         }
 
         public void UpdateComponent()
         {
-            if(playerCharacter)
-            {
-                bool autoRecenter = playerCharacter.IsOnGround() && playerCharacter.GetVelocity().sqrMagnitude > .2f;
-
-                freeLook.m_RecenterToTargetHeading.m_enabled = autoRecenter;
-                freeLook.m_YAxisRecentering.m_enabled = autoRecenter;
-
-            }
         }
 
         public void FixedUpdateComponent()

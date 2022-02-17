@@ -48,20 +48,17 @@ namespace UPQP
                 try
                 {
                     Type type = component.GetType();
-                    if (type.IsGenericType)
+                    if (component is ILivingComponent<T> e)
                     {
-                        if (component is ILivingComponent<T> e)
-                        {
-                            T m = this as T;
-                            e.Manager = m;
-                            e.Initiate(m);
-                        }
-                        else
-                        {
-                            Debug.Log("Destroying uncompatible Component");
-                            Destroy(component as MonoBehaviour);
-                            continue;
-                        }
+                        T m = this as T;
+                        e.Manager = m;
+                        e.Initiate(m);
+                    }
+                    else if (!type.IsGenericType)
+                    {
+                        Debug.Log("Destroying uncompatible Component");
+                        Destroy(component as MonoBehaviour);
+                        continue;
                     }
 
                     viableComponents.Add(component);
