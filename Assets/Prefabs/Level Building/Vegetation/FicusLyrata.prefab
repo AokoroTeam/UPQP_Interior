@@ -625,6 +625,7 @@ GameObject:
   - component: {fileID: 5470995205806401011}
   - component: {fileID: 5470995205803009491}
   - component: {fileID: 5470995205804107539}
+  - component: {fileID: 4042178365467192604}
   m_Layer: 0
   m_Name: FicusLyrata_0_LOD_0
   m_TagString: Untagged
@@ -697,6 +698,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4042178365467192604
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470995205806307795}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3348073418656815306, guid: d8751dcbf63d5c24684997e981e64b1d, type: 3}
 --- !u!1 &5470995205806307797
 GameObject:
   m_ObjectHideFlags: 0
