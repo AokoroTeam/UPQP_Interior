@@ -12,7 +12,6 @@ namespace UPQP.CameraManagement
         {
             base.Initiate(manager);
             transform.SetParent(null);
-            Debug.Log("a");
         }
     }
 }

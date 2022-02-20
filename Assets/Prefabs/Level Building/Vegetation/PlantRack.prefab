@@ -190,7 +190,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 7293171484909038676}
   - component: {fileID: 4193274753553949529}
   - component: {fileID: 8395311089858433804}
+  - component: {fileID: 3206215053539341997}
   m_Layer: 3
   m_Name: PlantRack
   m_TagString: Untagged
@@ -307,6 +308,19 @@ LODGroup:
     - renderer: {fileID: 731964250037837485}
     - renderer: {fileID: 6228035408999506043}
   m_Enabled: 1
+--- !u!114 &3206215053539341997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5528156228592668213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbc09fb139a7b4448578f10ebbed9ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exportPath: Data/Meshes/Vegetation
 --- !u!1 &5809451526235484543
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +493,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 660129051190012392, guid: 75cf90c0308844747a616583590809c1, type: 3}
 --- !u!1 &7509335525494541526
