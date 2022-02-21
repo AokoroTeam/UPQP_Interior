@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UPQP.Movement;
+using UPQP.Player.Movement;
 
-namespace UPQP.Animations
+namespace UPQP.Player.Animations
 {
     public class PlayerAnimatorEventReceiver : MonoBehaviour
     {

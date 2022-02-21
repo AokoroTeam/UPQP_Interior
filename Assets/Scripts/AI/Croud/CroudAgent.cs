@@ -8,7 +8,7 @@ using NaughtyAttributes;
 using Aokoro.AI;
 using UPQP.Environnement.Intrests;
 
-namespace UPQP.Crouds
+namespace Aokoro.AI.Crouds
 {
 
     [AddComponentMenu("Aokoro/AI/Croud/Base Agent")]
@@ -20,7 +20,7 @@ namespace UPQP.Crouds
         [BoxGroup("Settings"), SerializeField] Vector2Int minMaxSpeed = new Vector2Int(1, 4);
         [BoxGroup("Settings"), SerializeField] float defaultSpeed = 2;
 
-        
+
         public PoolObject poolObject { get; set; }
         public CroudAgentController agentController => Controller as CroudAgentController;
 

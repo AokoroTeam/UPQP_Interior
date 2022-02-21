@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace UPQP
 {
-    public class PlayerManager : LivingBehaviour 
+    public class PlayerManager : LivingBehaviour
     {
         public event Action<string, string> OnMapChange;
         public event Action OnRespawn;
@@ -26,23 +26,23 @@ namespace UPQP
         {
             get
             {
-                if(localPlayer == null)
+                if (localPlayer == null)
                 {
                     GameObject player = GameObject.FindGameObjectWithTag("Player");
                     if (player != null)
                         localPlayer = player.GetComponent<PlayerManager>();
-                    
+
                 }
 
                 return localPlayer;
             }
         }
 
-        public AudioListener AudioListener 
-        { 
+        public AudioListener AudioListener
+        {
             get
             {
-                if(audioListener == null)
+                if (audioListener == null)
                     audioListener = Camera.main.GetComponent<AudioListener>();
 
                 return audioListener;

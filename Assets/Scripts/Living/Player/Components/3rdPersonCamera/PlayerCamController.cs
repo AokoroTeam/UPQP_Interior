@@ -6,9 +6,9 @@ using Cinemachine;
 using UnityEngine.InputSystem;
 using Aokoro.Tools;
 using static Cinemachine.AxisState;
-using UPQP.Movement;
+using UPQP.Player.Movement;
 
-namespace UPQP.CameraManagement
+namespace UPQP.Player.CameraManagement
 {
     public class PlayerCamController : CinemachineInputProvider, ILivingComponent<PlayerManager>
     {

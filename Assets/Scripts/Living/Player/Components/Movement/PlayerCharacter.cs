@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UPQP.Movement
+namespace UPQP.Player.Movement
 {
     public class PlayerCharacter : Character, ILivingComponent<PlayerManager>
     {
@@ -25,11 +25,11 @@ namespace UPQP.Movement
 
         protected override void Animate()
         {
-            if(animator)
+            if (animator)
             {
                 Vector3 currentVelocity = GetVelocity();
                 float speed = GetSpeed();
-                
+
                 if (GetMovementInput().sqrMagnitude > .1f)
                 {
                     var normVelocity = transform.InverseTransformDirection(currentVelocity).normalized;

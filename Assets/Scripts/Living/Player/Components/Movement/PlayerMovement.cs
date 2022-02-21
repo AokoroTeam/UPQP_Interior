@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
-namespace UPQP.Movement
+namespace UPQP.Player.Movement
 {
     public class PlayerMovement : MonoBehaviour, ILivingComponent<PlayerManager>
     {
@@ -18,7 +18,7 @@ namespace UPQP.Movement
 
         public bool HasLateUpdate => false;
 
-        
+
         public PlayerManager Manager { get; set; }
         #endregion
 
@@ -41,12 +41,12 @@ namespace UPQP.Movement
 
         public void UpdateComponent()
         {
-           
+
         }
 
         public void Foot_R()
         {
-            
+
         }
 
         public void Foot_L()

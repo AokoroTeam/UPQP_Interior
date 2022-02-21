@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace UPQP.CameraManagement
+namespace UPQP.Player.CameraManagement
 {
 
     public class FirstPersonCameraController : PlayerCamController

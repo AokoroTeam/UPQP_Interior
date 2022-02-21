@@ -5,7 +5,7 @@ using Cinemachine;
 using Aokoro.Tools;
 using System;
 
-namespace UPQP.CameraManagement
+namespace UPQP.Player.CameraManagement
 {
 
     [RequireComponent(typeof(CinemachineBrain))]

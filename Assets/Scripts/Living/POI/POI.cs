@@ -10,7 +10,7 @@ namespace UPQP.Environnement.Intrests
     {
         public Transform LookAt => lookAt;
 
-        [Range(0,200)]
+        [Range(0, 200)]
         public int priority;
         [SerializeField]
         private Transform lookAt;
@@ -23,8 +23,8 @@ namespace UPQP.Environnement.Intrests
         private void OnTriggerEnter(Collider other)
         {
             int length = tags.Length;
-            
-            if(length > 0)
+
+            if (length > 0)
             {
                 bool accepted = false;
                 for (int i = 0; i < length; i++)
@@ -39,7 +39,7 @@ namespace UPQP.Environnement.Intrests
                     return;
             }
 
-            if(other.TryGetComponent(out POI_Looker looker))
+            if (other.TryGetComponent(out POI_Looker looker))
                 looker.RegisterPoi(this);
         }
 

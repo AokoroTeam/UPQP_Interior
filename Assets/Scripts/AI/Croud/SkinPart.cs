@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UPQP.Crouds
+namespace Aokoro.AI.Crouds
 {
     public enum SkinBodyPart
     {

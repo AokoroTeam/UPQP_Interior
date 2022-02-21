@@ -7,15 +7,14 @@ using Aokoro.Pooling;
 using Aokoro.AI.Grid;
 using Aokoro.AI.Paths;
 using NaughtyAttributes;
-using Aokoro.AI;
 
-namespace UPQP.Crouds
+namespace Aokoro.AI.Crouds
 {
     [AddComponentMenu("Aokoro/AI/Croud/CroudAgentController")]
     public class CroudAgentController : AIAgentController<CroudAgent, AIGrid>
     {
         [BoxGroup("Agents"), SerializeField] PoolResource agentsPrefab;
-        
+
 
         [BoxGroup("Paths")]
         [SerializeField] private float arrivingDistance;
@@ -98,7 +97,7 @@ namespace UPQP.Crouds
 
                 if (sqrDistance < arrivingDistance * arrivingDistance && !path.MoveNext())
                     RemoveAgent(agent);
-            } 
+            }
         }
         protected override void RemoveAgent(CroudAgent agent)
         {
@@ -106,6 +105,6 @@ namespace UPQP.Crouds
             paths.Remove(agent);
         }
 
-        public bool GetPath(CroudAgent agent, out AIAgentPath path) =>  paths.TryGetValue(agent, out path);
+        public bool GetPath(CroudAgent agent, out AIAgentPath path) => paths.TryGetValue(agent, out path);
     }
 }

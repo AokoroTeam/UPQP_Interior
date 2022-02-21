@@ -7,7 +7,7 @@ using Cinemachine;
 namespace UPQP.SliceView
 {
 
-    public class SliceViewManager : MonoBehaviour
+    public class SliceViewManager : Singleton<SliceViewManager>
     {
         [SerializeField]
         Transform levelRoot;
@@ -16,11 +16,13 @@ namespace UPQP.SliceView
 
         private LODGroup[] lods;
 
-        private void Awake()
+        protected override void Awake()
         {
             Build();
+            base.Awake();
         }
-        
+
+
         [Button]
         public void Build()
         {
@@ -36,7 +38,7 @@ namespace UPQP.SliceView
                 lODGroup.ForceLOD(lODGroup.lodCount - 1);
             }
 
-            virtualCamera.gameObject.SetActive(true);
+            virtualCamera.enabled = true;
         }
 
         [Button]
@@ -45,11 +47,15 @@ namespace UPQP.SliceView
             for (int i = 0; i < lods.Length; i++)
             {
                 LODGroup lODGroup = lods[i];
-                lODGroup.ForceLOD(lODGroup.lodCount - 1);
+                lODGroup.ForceLOD(-1);
             }
 
-            //virtualCamera.gameObject.SetActive(false);
+            virtualCamera.enabled = false;
         }
 
+        protected override void OnExistingInstanceFound(SliceViewManager existingInstance)
+        {
+            Destroy(gameObject);
+        }
     }
 }

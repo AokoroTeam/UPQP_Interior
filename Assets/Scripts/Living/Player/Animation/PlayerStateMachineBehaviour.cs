@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UPQP
+namespace UPQP.Player.Animations
 {
     public abstract class PlayerStateMachineBehaviour<T> : StateMachineBehaviour where T : MonoBehaviour
     {
@@ -66,7 +66,7 @@ namespace UPQP
             {
                 CurrentStateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
                 clips = animator.GetCurrentAnimatorClipInfo(layerIndex);
-                
+
                 Exiting = animator.IsInTransition(layerIndex);
                 Entring = false;
             }
