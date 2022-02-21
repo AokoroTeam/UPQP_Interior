@@ -20,40 +20,60 @@ namespace UPQP.Player
         protected override void Awake()
         {
             base.Awake();
-
+            mapIds = new Dictionary<PlayerFeature, InputActionMap>();
+            startActions = new Dictionary<PlayerFeature, InputAction>();
             features = GetComponentsInChildren<PlayerFeature>();
 
             int length = Mathf.Min(features.Length, 10);
+
+            InputActionAsset actions = playerInput.actions;
+            InputActionMap inputActionMap = actions.FindActionMap(playerInput.defaultActionMap);
+            inputActionMap.Disable();
+
             for (int i = 0; i < length; i++)
             {
                 PlayerFeature feature = features[i];
-                InputActionAsset actions = playerInput.actions;
 
-                InputAction startAction = actions.FindActionMap(playerInput.defaultActionMap).AddAction(
+                //Creates an action to start executing the feature
+                InputAction startAction = inputActionMap.AddAction(
                     $"Start {feature.name}",
                     InputActionType.Button,
-                    $"<keyboard>{(i == 9 ? 0 : i + 1)}");
+                    $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
 
+                //Links it to the correct callback
                 startAction.Enable();
-                startAction.performed += ExecuteFeature;
+                startAction.performed += ctx => ExecuteFeatureCallback(ctx, feature);
 
                 InputActionMap map = feature.GetActionMap();
                 playerInput.actions.AddActionMap(map);
-                mapIds.Add(feature, map);
 
+                startActions.Add(feature, startAction);
+                mapIds.Add(feature, map);
             }
 
+            inputActionMap.Enable();
         }
 
-        private void ExecuteFeature(InputAction.CallbackContext context)
+        private void ExecuteFeatureCallback(InputAction.CallbackContext context, PlayerFeature feature)
         {
-            if (currentFeature != null)
-                return;
+            if (context.performed)
+                ExecuteFeature(feature);
+        }
+        public void ExecuteFeature(PlayerFeature feature)
+        {
+            foreach (var actionsPair in startActions)
+            {
+                if (feature == actionsPair.Key)
+                    feature.EnterFeature(this);
+
+                actionsPair.Value.Disable();
+            }
         }
 
-        private void EndFeature(InputAction.CallbackContext context)
+        private void EndFeature(PlayerFeature feature)
         {
-
+            foreach (var actionsPair in startActions)
+                actionsPair.Value.Enable();
         }
     }
 }

@@ -10,12 +10,14 @@ namespace UPQP.SliceView
     {
         public override void EnterFeature(PlayerManager player)
         {
-            throw new System.NotImplementedException();
+            SliceViewManager.Instance.EnterSliceView();
+            player.Freezed.Subscribe(this, 20, true);
         }
 
         public override void ExitFeature(PlayerManager player)
         {
-            throw new System.NotImplementedException();
+            SliceViewManager.Instance.ExitSliceView();
+            player.Freezed.Unsubscribe(this);
         }
     }
 }

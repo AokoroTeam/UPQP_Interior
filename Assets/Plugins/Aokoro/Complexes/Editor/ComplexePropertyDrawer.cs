@@ -22,7 +22,7 @@ namespace Aokoro.Editor
 
         static Color green1 = new Color(47f / 250f, 203f / 250f, 113f / 250f);
         static Color green2 = new Color(87f / 250f, 214f / 250f, 140f / 250f);
-        
+
         static Color black1 = Color.HSVToRGB(0, 0, 0.19f);
         static Color black2 = Color.HSVToRGB(0, 0, 0.32f);
 
@@ -39,7 +39,7 @@ namespace Aokoro.Editor
         {
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             EditorGUI.BeginProperty(position, label, property);
-            
+
             BindingFlags all = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
 
@@ -51,9 +51,9 @@ namespace Aokoro.Editor
             FieldInfo complexepropertyField = targetType.GetField(property.name, all);
             var complexeProperty = complexepropertyField.GetValue(targetObject);
 
-            if(interactionField == null)
+            if (interactionField == null)
                 interactionField = complexeProperty.GetType().GetField("interactionsDict", BindingFlags.Instance | BindingFlags.NonPublic);
-            if(outputKeyProperty == null)
+            if (outputKeyProperty == null)
                 outputKeyProperty = complexeProperty.GetType().GetField("outputKey", BindingFlags.Instance | BindingFlags.NonPublic);
 
             var interactions = interactionField.GetValue(complexeProperty);
@@ -62,7 +62,7 @@ namespace Aokoro.Editor
             if (interactions is IDictionary dic)
             {
                 EditorGUI.indentLevel = 1;
-                
+
                 if (dic.Count > 0)
                 {
                     opened = EditorGUI.BeginFoldoutHeaderGroup(position, opened, GUIContent.none);
@@ -88,7 +88,7 @@ namespace Aokoro.Editor
                             var value = EntryValueInfos.GetValue(kv.Value);
 
                             bool isPriority = outputKey == kv.Key;
-                            DrawCells(from, priority.ToString(), value.ToString(), isPriority? green1 : gray1, isPriority ? green2 : gray2, EditorGUIUtility.singleLineHeight);
+                            DrawCells(from, priority.ToString(), value.ToString(), isPriority ? green1 : gray1, isPriority ? green2 : gray2, EditorGUIUtility.singleLineHeight);
                         }
                     }
                 }
@@ -103,7 +103,7 @@ namespace Aokoro.Editor
 
                 EditorGUI.EndFoldoutHeaderGroup();
             }
-            
+
             EditorGUI.indentLevel = 0;
             EditorGUI.EndProperty();
         }
@@ -168,8 +168,7 @@ namespace Aokoro.Editor
             if (style == null || !(style is GUISkin guiSkin))
             {
                 complexePropertySkin = GUI.skin;
-                Debug.Log(style == null);
-                Debug.LogError("Couldn't find ComplexePropertyStyle GUIStyle at " + path);
+                //Debug.LogError("Couldn't find ComplexePropertyStyle GUIStyle at " + path);
                 return;
             }
             complexePropertySkin = guiSkin;

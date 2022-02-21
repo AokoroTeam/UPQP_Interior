@@ -30,7 +30,7 @@ namespace UPQP.SliceView
         }
 
         [Button]
-        public void EnterInSliceView()
+        public void EnterSliceView()
         {
             for (int i = 0; i < lods.Length; i++)
             {
@@ -42,7 +42,7 @@ namespace UPQP.SliceView
         }
 
         [Button]
-        public void ExitInSliceView()
+        public void ExitSliceView()
         {
             for (int i = 0; i < lods.Length; i++)
             {

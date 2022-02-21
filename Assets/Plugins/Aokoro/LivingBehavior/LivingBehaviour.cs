@@ -51,36 +51,37 @@ namespace UPQP
 
         private ILivingComponent[] SetupComponents<T>(ILivingComponent[] components) where T : LivingBehaviour
         {
+            Type targetInterface = typeof(ILivingComponent<T>);
+
             List<ILivingComponent> componentsList = new List<ILivingComponent>();
             int count = components.Length;
 
             for (int i = 0; i < count; i++)
             {
                 ILivingComponent component = components[i];
-                try
-                {
-                    Type[] interfaces = component.GetType().GetInterfaces();
+                Type componentType = component.GetType();
+                Type[] implementedInterfaces = componentType.GetInterfaces();
 
-                    for (int j = 0; j < interfaces.Length; j++)
+                for (int j = 0; j < implementedInterfaces.Length; j++)
+                {
+                    Type interfaceType = implementedInterfaces[j];
+                    if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(ILivingComponent<>))
                     {
-                        Type _interface = interfaces[j].GetGenericTypeDefinition();
-                        //Specific
-                        if (_interface == typeof(ILivingComponent<T>))
+                        var ga = interfaceType.GetGenericArguments()[0];
+                        if (ga == typeof(T) || ga.IsSubclassOf(typeof(T)))
                         {
-                            T m = this as T;
                             var c = (component as ILivingComponent<T>);
 
-                            c.Manager = m;
+                            c.Manager = this as T;
                             c.Initiate(this as T);
+                            break;
                         }
-
+                        else
+                        {
+                            Debug.LogError("Wrong manager for this living component");
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    MonoBehaviour mono = component as MonoBehaviour;
-                    Debug.Log("Error on " + mono.name, mono);
-                    throw e;
+
                 }
 
                 componentsList.Add(component);
