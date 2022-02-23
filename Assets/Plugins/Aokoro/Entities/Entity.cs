@@ -46,6 +46,10 @@ namespace Aokoro.Entities
                     lateUpdatesList.Add(lu);
             }
 
+            Ucomponents = updatesList.ToArray();
+            FUcomponents = fixedUpdatesList.ToArray();
+            LUcomponents = lateUpdatesList.ToArray();
+
         }
 
         private IEntityComponent[] SetupComponents<T>(IEntityComponent[] ChildComponents) where T : Entity

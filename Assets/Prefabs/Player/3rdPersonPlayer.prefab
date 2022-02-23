@@ -472,7 +472,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.6366024, y: 1}
+    m_SensorSize: {x: 0.9500876, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -667,13 +667,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 22734087555316767}
-  - component: {fileID: 353358818436344015}
   - component: {fileID: 19192453517161167}
   - component: {fileID: 7703965360415617818}
   - component: {fileID: 3690061323768010338}
   - component: {fileID: 5602805372937922186}
   - component: {fileID: 8211786350873182967}
   - component: {fileID: 506713300638409367}
+  - component: {fileID: 6262526384506568253}
+  - component: {fileID: 353358818436344015}
   - component: {fileID: 1596070223}
   m_Layer: 3
   m_Name: 3rdPersonPlayer
@@ -702,21 +703,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &353358818436344015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19192453517161163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0dfb92f3ce69a4b8683b88bd0b8390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorComponents:
-  - key: PlayerAnimator
-    component: {fileID: 0}
 --- !u!114 &19192453517161167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +894,33 @@ MonoBehaviour:
     impartPlatformRotation: 0
     impartPlatformVelocity: 0
   _minSlopeLimit: 0.7069833
+--- !u!114 &6262526384506568253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19192453517161163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496316fd2296baf4db01810e9b014ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &353358818436344015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19192453517161163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0dfb92f3ce69a4b8683b88bd0b8390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorComponents:
+  - key: PlayerAnimator
+    component: {fileID: 1078295807553263887}
 --- !u!114 &1596070223
 MonoBehaviour:
   m_ObjectHideFlags: 0

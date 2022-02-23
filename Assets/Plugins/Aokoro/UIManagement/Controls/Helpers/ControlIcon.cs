@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.InputSystem;
 
 namespace Aokoro.UIManagement.Controls
 {
-    public struct ControlData
+    public abstract class ControlIcon
     {
-        public string path;
-        public GameObject representation;
+        public abstract void SetupIcon(string path);
+
     }
 }

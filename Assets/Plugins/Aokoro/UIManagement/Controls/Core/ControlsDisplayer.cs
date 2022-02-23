@@ -1,27 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 
 namespace Aokoro.UIManagement.Controls
 {
     public class ControlsDisplayer : MonoBehaviour
     {
+
         [SerializeField]
         string text;
 
         [SerializeField]
         TextMeshProUGUI description;
 
-        private void Awake()
-        {
+        [SerializeField]
+        private Transform controlsListParent;
 
-        }
 
-        private void Setup()
+        public void Setup(GameObject[] allControls)
         {
             description.text = text;
 
         }
+
+
     }
 }
