@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Editor;
 
-namespace Aokoro.UIManagement.InputRepresentation
+namespace Aokoro.UIManagement.Controls
 {
     [CreateAssetMenu(menuName = "Aokoro/UI/Inputs/DeviceInputs")]
-    public class DeviceInputs : ScriptableObject
+    public class DeviceControlIcons : ScriptableObject
     {
+        string device;
+
+        
     }
 }

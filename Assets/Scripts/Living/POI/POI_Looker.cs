@@ -1,3 +1,4 @@
+using Aokoro.Entities;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine.Animations.Rigging;
 
 namespace UPQP.Environnement.Intrests
 {
-    public class POI_Looker : MonoBehaviour, ILivingComponent
+    public class POI_Looker : MonoBehaviour, IUpdateEntityComponent
     {
         [SerializeField]
         private Transform root;
@@ -22,11 +23,6 @@ namespace UPQP.Environnement.Intrests
 
         public bool HasPOI => currentPOI != null;
 
-        public bool HasUpdate => true;
-
-        public bool HasFixedUpdate => false;
-
-        public bool HasLateUpdate => false;
 
         [SerializeField, ReadOnly]
         private List<POI> surroundingPois;
@@ -50,17 +46,17 @@ namespace UPQP.Environnement.Intrests
             if (HasPOI)
             {
                 Vector3 scaling = new Vector3(1, 0, 1);
-                
+
                 Vector3 poiPosition = currentPOI.LookAt.position;
                 Vector3 toPOI = poiPosition - root.transform.position;
-                
+
                 Vector3 dir = root.TransformDirection(orientation);
 
                 toPOI.Scale(scaling);
                 dir.Scale(scaling);
 
                 float angle = Vector3.Angle(dir, toPOI);
-                
+
                 if (angle < maxHeadAngle)
                 {
                     position = poiPosition;
@@ -115,7 +111,7 @@ namespace UPQP.Environnement.Intrests
 
         private void OnDrawGizmos()
         {
-            if(root != null)
+            if (root != null)
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireSphere(root.TransformPoint(neutralOffset), .05f);
@@ -125,14 +121,6 @@ namespace UPQP.Environnement.Intrests
         public void UpdateComponent()
         {
             AimPoi();
-        }
-
-        public void FixedUpdateComponent()
-        {
-        }
-
-        public void LateUpdateComponent()
-        {
         }
     }
 }

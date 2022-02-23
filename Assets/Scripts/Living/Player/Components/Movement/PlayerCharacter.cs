@@ -1,3 +1,4 @@
+using Aokoro.Entities;
 using EasyCharacterMovement;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,16 +6,9 @@ using UnityEngine;
 
 namespace UPQP.Player.Movement
 {
-    public class PlayerCharacter : Character, ILivingComponent<PlayerManager>
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>
     {
         public PlayerManager Manager { get; set; }
-
-        public bool HasUpdate => false;
-
-        public bool HasFixedUpdate => false;
-
-        public bool HasLateUpdate => false;
-
         public override bool CanJump() => false;
 
 
@@ -42,21 +36,6 @@ namespace UPQP.Player.Movement
                 animator.SetBool("IsRunning", IsSprinting());
                 animator.SetFloat("Speed", speed);
             }
-        }
-
-        public void UpdateComponent()
-        {
-
-        }
-
-        public void FixedUpdateComponent()
-        {
-
-        }
-
-        public void LateUpdateComponent()
-        {
-
         }
     }
 }

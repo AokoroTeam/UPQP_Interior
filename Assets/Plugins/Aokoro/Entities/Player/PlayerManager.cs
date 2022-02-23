@@ -1,4 +1,5 @@
-﻿using Aokoro.Tools.Cinematiques;
+﻿using Aokoro.Entities;
+using Aokoro.Tools.Cinematiques;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace UPQP
 {
-    public class PlayerManager : LivingBehaviour
+    public class PlayerManager : Entity
     {
         public event Action<string, string> OnMapChange;
         public event Action OnRespawn;

@@ -5,20 +5,15 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 using Aokoro.Tools;
+using Aokoro.Entities;
 using static Cinemachine.AxisState;
 using UPQP.Player.Movement;
 
 namespace UPQP.Player.CameraManagement
 {
-    public class PlayerCamController : CinemachineInputProvider, ILivingComponent<PlayerManager>
+    public class PlayerCamController : CinemachineInputProvider, IEntityComponent<PlayerManager>
     {
         public PlayerManager Manager { get; set; }
-
-        public bool HasUpdate => true;
-
-        public bool HasFixedUpdate => false;
-
-        public bool HasLateUpdate => false;
 
         private InputAction lookAction;
 
@@ -35,21 +30,6 @@ namespace UPQP.Player.CameraManagement
             XYAxis.Set(lookAction);
 
             lookAction.Enable();
-        }
-
-        public void UpdateComponent()
-        {
-        }
-
-        public void FixedUpdateComponent()
-        {
-
-        }
-
-        public void LateUpdateComponent()
-        {
-
-
         }
 
         public void DisableInputs()
