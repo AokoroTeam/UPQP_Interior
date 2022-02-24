@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Aokoro.Entities.Player;
 using Aokoro.Entities;
-using UPQP;
 using System;
 
 namespace Aokoro.UIManagement.Controls
 {
-    public class PlayerControls : ControlMapProvider, ILateUpdateLivingComponent<UPQP.PlayerManager>
+    public class PlayerControls : ControlMapProvider, ILateUpdateLivingComponent<PlayerManager>
     {
         private PlayerInput playerInput;
         public PlayerManager Manager { get; set; }
@@ -23,9 +23,10 @@ namespace Aokoro.UIManagement.Controls
         {
             playerInput = GetComponent<PlayerInput>();
         }
+
         private void Start()
         {
-            ControlsManager.TriggerControlChanges(playerInput.defaultControlScheme);
+            playerInput.SwitchCurrentControlScheme(InputSystem.devices.ToArray());
         }
         private void OnEnable()
         {

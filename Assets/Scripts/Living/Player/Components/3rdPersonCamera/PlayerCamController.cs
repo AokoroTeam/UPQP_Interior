@@ -1,13 +1,9 @@
-﻿using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Cinemachine;
-using UnityEngine.InputSystem;
-using Aokoro.Tools;
+﻿
 using Aokoro.Entities;
-using static Cinemachine.AxisState;
-using UPQP.Player.Movement;
+using Aokoro.Entities.Player;
+using Cinemachine;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UPQP.Player.CameraManagement
 {

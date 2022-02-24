@@ -35,26 +35,26 @@ namespace Aokoro.UIManagement.Controls
 
             foreach (var action in actions)
             {
+                var isFirstControl = true;
+                string controlsText = "";
+
                 for (int i = 0; i < action.bindings.Count; i++)
                 {
+                    if (action.bindings[i].isPartOfComposite)
+                        continue;
+
                     //Get all kind of info from action that will be used for matching the correct sprite with the correct binding
                     string bindingString = action.GetBindingDisplayString(i, out string deviceLayoutName, out string controlPath);
+                    if (!isFirstControl)
+                        controlsText += " or ";
 
-                    if (!string.IsNullOrEmpty(deviceLayoutName) && !string.IsNullOrEmpty(controlPath))
-                    {
-                        Debug.Log(controlPath);
-                        if (controls.GetMatchingControl(deviceLayoutName, controlPath, out ControlData data))
-                        {
-                            //ControlsDisplayer display = GameObject.Instantiate(displayPrefab, transform).GetComponent<ControlsDisplayer>();
-                        }
-                        else
-                        {
-                            //No matching
-                        }
-                    }
+                    isFirstControl = false;
+                    controlsText += bindingString;
                 }
+               Debug.Log(controlsText);
             }
-        }
 
+            actionMap.Enable();
+        }
     }
 }

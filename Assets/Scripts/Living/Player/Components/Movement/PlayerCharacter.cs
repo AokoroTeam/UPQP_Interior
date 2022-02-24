@@ -3,20 +3,21 @@ using EasyCharacterMovement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Aokoro.Entities.Player;
+using UnityEngine.InputSystem;
 
 namespace UPQP.Player.Movement
 {
-    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider
     {
         public PlayerManager Manager { get; set; }
-        public override bool CanJump() => false;
-
+        public InputActionAsset Actions { get => inputActions; set => inputActions = value; }
 
         public void Initiate(PlayerManager manager)
         {
-
+            inputActions = manager.playerInput.actions;
+            
         }
-
         protected override void Animate()
         {
             if (animator)

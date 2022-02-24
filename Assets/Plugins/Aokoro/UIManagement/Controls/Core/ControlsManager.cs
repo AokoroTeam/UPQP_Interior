@@ -52,7 +52,7 @@ namespace Aokoro.UIManagement.Controls
                 if (controls[i].device == device)
                     return controls[i];
             }
-            Debug.Log("Unkown device, returning default");
+            Debug.Log($"Unkown device {device}, returning default");
             return controls[0];
         }
     }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace UPQP
+namespace Aokoro.Entities.Player
 {
     public class PlayerManager : Entity
     {
@@ -65,6 +65,9 @@ namespace UPQP
                 localPlayer = this;
 
             playerInput = GetComponent<PlayerInput>();
+            playerInput.actions = GenerateInputActionAsset();
+            SetupActionAsset(playerInput.actions);
+
             anim = GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
             timelineActor = GetComponent<TimelineActor>();
@@ -75,6 +78,32 @@ namespace UPQP
             Cursor.visible = false;
         }
 
+        private void SetupActionAsset(InputActionAsset actions)
+        {
+            actions.Enable();
+        }
+        protected virtual InputActionAsset GenerateInputActionAsset()
+        {
+            var asset = ScriptableObject.CreateInstance<InputActionAsset>();
+            IPlayerInputAssetProvider[] inputProviders = GetComponentsInChildren<IPlayerInputAssetProvider>();
+
+            for (int i = 0; i < inputProviders.Length; i++)
+            {
+                IPlayerInputAssetProvider inputProvider = inputProviders[i];
+                InputActionAsset subAsset = inputProvider.Actions;
+
+                //ControlSchemes
+                foreach (var scheme in subAsset.controlSchemes)
+                {
+                    if (!asset.FindControlScheme(scheme.name).HasValue)
+                        asset.AddControlScheme(scheme);
+                }
+
+                foreach (InputActionMap map in subAsset.actionMaps)
+                    asset.AddActionMap(map.Clone());
+            }
+            return asset;
+        }
 
         public void Respawn(Vector3 position, Quaternion rotation)
         {

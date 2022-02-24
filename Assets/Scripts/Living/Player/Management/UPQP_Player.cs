@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aokoro.Entities.Player;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,45 +14,48 @@ namespace UPQP.Player
 
         private PlayerFeature currentFeature;
 
-
-        private Dictionary<PlayerFeature, InputActionMap> mapIds;
         private Dictionary<PlayerFeature, InputAction> startActions;
+        [ReadOnly]
+        public InputActionMap executeFeatures;
 
         protected override void Awake()
         {
             base.Awake();
-            mapIds = new Dictionary<PlayerFeature, InputActionMap>();
+        }
+
+        private void Start()
+        {
+            MergeInputsfromFeatures();
+            playerInput.SwitchCurrentActionMap("DefaultGameplay");
+        }
+
+
+        private void MergeInputsfromFeatures()
+        {
             startActions = new Dictionary<PlayerFeature, InputAction>();
             features = GetComponentsInChildren<PlayerFeature>();
 
             int length = Mathf.Min(features.Length, 10);
 
-            InputActionAsset actions = playerInput.actions;
-            InputActionMap inputActionMap = actions.FindActionMap(playerInput.defaultActionMap);
-            inputActionMap.Disable();
+            executeFeatures = new InputActionMap("executeFeatures");
+            executeFeatures.Disable();
 
             for (int i = 0; i < length; i++)
             {
                 PlayerFeature feature = features[i];
 
                 //Creates an action to start executing the feature
-                InputAction startAction = inputActionMap.AddAction(
+                InputAction startAction = executeFeatures.AddAction(
                     $"Start {feature.name}",
                     InputActionType.Button,
                     $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
 
                 //Links it to the correct callback
-                startAction.Enable();
                 startAction.performed += ctx => ExecuteFeatureCallback(ctx, feature);
-
-                InputActionMap map = feature.GetActionMap();
-                playerInput.actions.AddActionMap(map);
-
                 startActions.Add(feature, startAction);
-                mapIds.Add(feature, map);
             }
 
-            inputActionMap.Enable();
+            executeFeatures.Enable();
         }
 
         private void ExecuteFeatureCallback(InputAction.CallbackContext context, PlayerFeature feature)
@@ -61,19 +65,14 @@ namespace UPQP.Player
         }
         public void ExecuteFeature(PlayerFeature feature)
         {
-            foreach (var actionsPair in startActions)
-            {
-                if (feature == actionsPair.Key)
-                    feature.EnterFeature(this);
-
-                actionsPair.Value.Disable();
-            }
+            feature.ExecuteFeature(this);
+            executeFeatures.Disable();
         }
 
         private void EndFeature(PlayerFeature feature)
         {
-            foreach (var actionsPair in startActions)
-                actionsPair.Value.Enable();
+            feature.EndFeature(this);
+            executeFeatures.Disable();
         }
     }
 }

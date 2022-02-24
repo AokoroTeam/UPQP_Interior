@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+using Aokoro.Entities.Player;
 
 namespace UPQP.Player.CameraManagement
 {

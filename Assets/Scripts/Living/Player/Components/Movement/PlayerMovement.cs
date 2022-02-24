@@ -1,4 +1,5 @@
-﻿using Aokoro.Entities;
+﻿using Aokoro.Entities.Player;
+using Aokoro.Entities;
 using Aokoro.Tools;
 
 using NaughtyAttributes;

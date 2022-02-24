@@ -1,3 +1,4 @@
+using Aokoro.Entities.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,25 +8,13 @@ using UPQP.Features;
 namespace UPQP.Features
 {
 
-    public abstract class PlayerFeature : MonoBehaviour
+    public abstract class PlayerFeature : MonoBehaviour, IPlayerInputAssetProvider
     {
         [SerializeField] string featureName;
-        [Space]
-        [SerializeField] private InputActionMap actionMap;
+        [SerializeField] private InputActionAsset actions;
+        public InputActionAsset Actions { get => actions; set => actions = value; }
 
-        public InputActionMap GetActionMap()
-        {
-            InputActionMap map = new InputActionMap(featureName);
-            for (int i = 0; i < actionMap.actions.Count; i++)
-            {
-                InputAction inputAction = actionMap.actions[i];
-                map.AddAction(inputAction.name, inputAction.type, inputAction.GetBindingDisplayString(), inputAction.interactions, inputAction.processors);
-            }
-
-            return map;
-        }
-
-        public abstract void EnterFeature(PlayerManager player);
-        public abstract void ExitFeature(PlayerManager player);
+        public abstract void ExecuteFeature(PlayerManager player);
+        public abstract void EndFeature(PlayerManager player);
     }
 }

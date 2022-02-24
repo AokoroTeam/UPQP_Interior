@@ -1,3 +1,4 @@
+using Aokoro.Entities.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,13 @@ namespace UPQP.SliceView
 
     public class PlayerSliceView : PlayerFeature
     {
-        public override void EnterFeature(PlayerManager player)
+        public override void ExecuteFeature(PlayerManager player)
         {
             SliceViewManager.Instance.EnterSliceView();
             player.Freezed.Subscribe(this, 20, true);
         }
 
-        public override void ExitFeature(PlayerManager player)
+        public override void EndFeature(PlayerManager player)
         {
             SliceViewManager.Instance.ExitSliceView();
             player.Freezed.Unsubscribe(this);
