@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Aokoro.Entities.Player;
 using UnityEngine;
 using Cinemachine;
 using NaughtyAttributes;
-using UPQP;
 
 public class CinemachinePlayerBinder : MonoBehaviour
 {

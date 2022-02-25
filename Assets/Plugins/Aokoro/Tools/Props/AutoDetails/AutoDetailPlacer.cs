@@ -107,9 +107,10 @@ namespace Aokoro.Tools.AutoDetails
         [Button]
         public void CleanDetails()
         {
-            int length = instiantiatedDetails.Length;
-            if (instiantiatedDetails != null && length > 0)
+
+            if (instiantiatedDetails != null && instiantiatedDetails.Length > 0)
             {
+                int length = instiantiatedDetails.Length;
                 for (int i = 0; i < length; i++)
                 {
 #if UNITY_EDITOR

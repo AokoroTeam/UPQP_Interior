@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Aokoro.Entities.Player;
 
-
-namespace UPQP.CameraManagement
+namespace UPQP.Player.CameraManagement
 {
 
     public class FirstPersonCameraController : PlayerCamController
@@ -12,7 +9,6 @@ namespace UPQP.CameraManagement
         {
             base.Initiate(manager);
             transform.SetParent(null);
-            Debug.Log("a");
         }
     }
 }

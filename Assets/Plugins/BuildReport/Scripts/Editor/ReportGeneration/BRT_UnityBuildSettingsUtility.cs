@@ -258,8 +258,8 @@ namespace BuildReportTool
 			PopulatePackageSettings(settings);
 		}
 
-
-		public static void PopulateGeneralSettings(UnityBuildSettings settings)
+        [Obsolete]
+        public static void PopulateGeneralSettings(UnityBuildSettings settings)
 		{
 			settings.CompanyName = PlayerSettings.companyName;
 			settings.ProductName = PlayerSettings.productName;

@@ -1,35 +1,30 @@
+using Aokoro.Entities;
 using EasyCharacterMovement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Aokoro.Entities.Player;
+using UnityEngine.InputSystem;
 
-namespace UPQP.Movement
+namespace UPQP.Player.Movement
 {
-    public class PlayerCharacter : Character, ILivingComponent<PlayerManager>
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider
     {
         public PlayerManager Manager { get; set; }
-
-        public bool HasUpdate => false;
-
-        public bool HasFixedUpdate => false;
-
-        public bool HasLateUpdate => false;
-
-        public override bool CanJump() => false;
-
+        public InputActionAsset Actions { get => inputActions; set => inputActions = value; }
 
         public void Initiate(PlayerManager manager)
         {
-
+            inputActions = manager.playerInput.actions;
+            
         }
-
         protected override void Animate()
         {
-            if(animator)
+            if (animator)
             {
                 Vector3 currentVelocity = GetVelocity();
                 float speed = GetSpeed();
-                
+
                 if (GetMovementInput().sqrMagnitude > .1f)
                 {
                     var normVelocity = transform.InverseTransformDirection(currentVelocity).normalized;
@@ -42,21 +37,6 @@ namespace UPQP.Movement
                 animator.SetBool("IsRunning", IsSprinting());
                 animator.SetFloat("Speed", speed);
             }
-        }
-
-        public void UpdateComponent()
-        {
-
-        }
-
-        public void FixedUpdateComponent()
-        {
-
-        }
-
-        public void LateUpdateComponent()
-        {
-
         }
     }
 }
