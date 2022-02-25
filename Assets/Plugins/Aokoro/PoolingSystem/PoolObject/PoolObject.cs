@@ -27,7 +27,7 @@ namespace Aokoro.Pooling
         }
         private bool activeInPool;
 
-        private bool beingDestroyed;
+        public bool BeingDestroyed { get; private set; }
 
         private void Awake()
         {
@@ -36,7 +36,7 @@ namespace Aokoro.Pooling
 
         private void OnDestroy()
         {
-            beingDestroyed = true;
+            BeingDestroyed = true;
             if (!PoolingManager.Quitting && Pool != null)
                 PoolingManager.LogError("This pooled object has been manually destroyed. You should never destroy a Pooled object");
         }
