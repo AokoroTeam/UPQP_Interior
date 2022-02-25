@@ -12,26 +12,21 @@ namespace Aokoro.UIManagement.Controls
         public string device;
         public ControlData[] controls;
 
-        public bool GetMatchingControl(string actionDevice, string controlPath, out ControlData data)
+        public bool GetMatchingControl(string controlPath, out ControlData data)
         {
             data = default;
-
-            if (InputSystem.IsFirstLayoutBasedOnSecond(actionDevice, this.device))
+            for (int i = 0; i < controls.Length; i++)
             {
-                for (int i = 0; i < controls.Length; i++)
+                ControlData controlData = controls[i];
+                for (int j = 0; j < controlData.matchPaths.Length; j++)
                 {
-                    ControlData controlData = controls[i];
-                    for (int j = 0; j < controlData.matchPaths.Length; j++)
+                    if (controlData.matchPaths[j] == controlPath)
                     {
-                        if (controlData.matchPaths[j] == controlPath)
-                        {
-                            data = controlData;
-                            return true;
-                        }
+                        data = controlData;
+                        return true;
                     }
                 }
             }
-
             return false;
         }
     }

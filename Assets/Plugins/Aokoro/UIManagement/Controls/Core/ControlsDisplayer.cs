@@ -8,23 +8,17 @@ namespace Aokoro.UIManagement.Controls
 {
     public class ControlsDisplayer : MonoBehaviour
     {
-
         [SerializeField]
         string text;
-
         [SerializeField]
         TextMeshProUGUI description;
-
         [SerializeField]
         private Transform controlsListParent;
 
-
-        public void Setup(GameObject[] allControls)
+        public void Setup(GameObject[] allControls, string actionName)
         {
             description.text = text;
 
         }
-
-
     }
 }

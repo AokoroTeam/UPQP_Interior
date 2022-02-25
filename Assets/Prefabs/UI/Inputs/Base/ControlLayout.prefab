@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 50
+  m_MinHeight: 25
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 5595791543192764705}
   - component: {fileID: 5595791543192764706}
   m_Layer: 5
-  m_Name: Buttons_1
+  m_Name: ControlLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 138.202}
+  m_SizeDelta: {x: 278.56, y: 80.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5595791543192764706
 MonoBehaviour:

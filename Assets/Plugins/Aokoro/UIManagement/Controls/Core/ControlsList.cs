@@ -28,10 +28,12 @@ namespace Aokoro.UIManagement.Controls
 
         private void OnDeviceChanges(string device)
         {
-            var controls = ControlsManager.GetControlsForDevice(device);
+            DeviceControls controls = ControlsManager.GetControlsForDevice(device);
             var actionMap = mapProvider.GetInputActionMap(mapName);
 
             var actions = actionMap.actions;
+
+            List<ControlBindings> bindings = new List<ControlBindings>();
 
             foreach (var action in actions)
             {
@@ -40,18 +42,26 @@ namespace Aokoro.UIManagement.Controls
 
                 for (int i = 0; i < action.bindings.Count; i++)
                 {
-                    if (action.bindings[i].isPartOfComposite)
+                    InputBinding binding = action.bindings[i];
+                    
+                    if (binding.isPartOfComposite)
                         continue;
-
+                    
                     //Get all kind of info from action that will be used for matching the correct sprite with the correct binding
-                    string bindingString = action.GetBindingDisplayString(i, out string deviceLayoutName, out string controlPath);
+                    string bindingString = action.GetBindingDisplayString(i);
+
+                    Debug.Log(bindingString);
+
+                    if(controls.GetMatchingControl(bindingString, out ControlData data))
+                    {
+                    }
                     if (!isFirstControl)
                         controlsText += " or ";
 
                     isFirstControl = false;
                     controlsText += bindingString;
                 }
-               Debug.Log(controlsText);
+               //Debug.Log(controlsText);
             }
 
             actionMap.Enable();

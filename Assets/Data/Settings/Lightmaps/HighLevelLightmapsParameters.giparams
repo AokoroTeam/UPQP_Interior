@@ -9,7 +9,7 @@ LightmapParameters:
   m_Name: HighLevelLightmapsParameters
   serializedVersion: 3
   resolution: 0.5
-  clusterResolution: 0.3
+  clusterResolution: 0.15
   irradianceBudget: 64
   irradianceQuality: 4096
   backFaceTolerance: 0.9

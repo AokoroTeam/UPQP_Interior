@@ -49,8 +49,10 @@ namespace Aokoro.UIManagement.Controls
 
             for (int i = 0; i < controls.Length; i++)
             {
-                if (controls[i].device == device)
+                if (InputSystem.IsFirstLayoutBasedOnSecond(controls[i].device, device))
+                {
                     return controls[i];
+                }
             }
             Debug.Log($"Unkown device {device}, returning default");
             return controls[0];
