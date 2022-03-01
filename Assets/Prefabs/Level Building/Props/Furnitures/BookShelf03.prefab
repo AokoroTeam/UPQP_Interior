@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8384855943928739693}
   - component: {fileID: 6737951827707755618}
   - component: {fileID: 7846318099295826284}
+  - component: {fileID: 5630997061058636100}
   m_Layer: 3
   m_Name: BookShelf03_0_LOD_0
   m_TagString: Untagged
@@ -86,6 +87,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5630997061058636100
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330252750969566787}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3449747051538648423, guid: 16bd9ec1043135545bbe63d002a7744f, type: 3}
 --- !u!1 &654578144538131518
 GameObject:
   m_ObjectHideFlags: 0
