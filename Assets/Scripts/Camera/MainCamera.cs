@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Aokoro.Tools;
+using Aokoro;
 using System;
 
 namespace UPQP.Player.CameraManagement

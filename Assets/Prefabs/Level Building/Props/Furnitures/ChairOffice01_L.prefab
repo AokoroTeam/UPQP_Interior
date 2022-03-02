@@ -177,6 +177,10 @@ GameObject:
   - component: {fileID: 7477017510677309276}
   - component: {fileID: 6557663040941797466}
   - component: {fileID: 8841401781918937402}
+  - component: {fileID: 5367947759405712796}
+  - component: {fileID: 7915189264367120686}
+  - component: {fileID: 1377758921407031566}
+  - component: {fileID: 4531124016910350906}
   m_Layer: 3
   m_Name: ChairOffice01_L_0_LOD_0
   m_TagString: Untagged
@@ -249,6 +253,58 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5367947759405712796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574620073551704991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6243657, y: 0.6850887, z: 0.5606148}
+  m_Center: {x: -0.027016938, y: -0.24928972, z: -0.009903491}
+--- !u!65 &7915189264367120686
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574620073551704991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.10703993, y: 0.55575716, z: 0.4635762}
+  m_Center: {x: 0.2387327, y: 0.31321365, z: 0.0007266104}
+--- !u!65 &1377758921407031566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574620073551704991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.36295366, y: 0.26343256, z: 0.031716824}
+  m_Center: {x: 0.044421844, y: 0.15287808, z: 0.25938964}
+--- !u!65 &4531124016910350906
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574620073551704991}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.36295366, y: 0.26343256, z: 0.034802914}
+  m_Center: {x: 0.04442171, y: 0.15287808, z: -0.2714827}
 --- !u!1 &7813167217629345419
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +412,6 @@ GameObject:
   - component: {fileID: 8681628652484335250}
   - component: {fileID: 8139061441039269217}
   - component: {fileID: 817666024}
-  - component: {fileID: 1898433638}
   - component: {fileID: 3336244807266833094}
   m_Layer: 3
   m_Name: ChairOffice01_L
@@ -412,20 +467,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!64 &1898433638
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8681628652483971762}
-  m_Material: {fileID: 13400000, guid: 262402f6c2a49814e9b8755fe4cba470, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7303382829436824954, guid: 4a054b23b8800b14dbd7be064fff5f2c, type: 3}
 --- !u!205 &3336244807266833094
 LODGroup:
   m_ObjectHideFlags: 0

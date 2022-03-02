@@ -566,8 +566,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5257837920929620397}
-  - {fileID: 999536412866584265}
   - {fileID: 8801852395088720581}
+  - {fileID: 999536412866584265}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -596,8 +596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedda5d1385e34f4ba8398de4850a720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: {fileID: 0}
-  vertical: {fileID: 0}
+  horizontal: {fileID: 8655167487559901565}
+  vertical: {fileID: 8924976865279118483}
 --- !u!1 &8655167487559901565
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ RectTransform:
   - {fileID: 1565011634651444401}
   - {fileID: 3112357673291586905}
   m_Father: {fileID: 8063274319592179019}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -667,7 +667,7 @@ RectTransform:
   - {fileID: 1827277028780902115}
   - {fileID: 6478529269298513462}
   m_Father: {fileID: 8063274319592179019}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
