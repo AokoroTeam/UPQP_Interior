@@ -10,7 +10,7 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-namespace Aokoro.Cinematiques
+namespace Aokoro.Cutscenes
 {
     public class TimelineBinding
     {

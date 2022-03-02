@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Aokoro.Cinematiques;
 
 namespace Aokoro.Entities.Player
 {
@@ -19,9 +18,6 @@ namespace Aokoro.Entities.Player
         public Animator anim;
         [HideInInspector]
         public Rigidbody rb;
-
-        [HideInInspector]
-        public TimelineActor timelineActor;
 
         public static PlayerManager LocalPlayer
         {
@@ -70,7 +66,6 @@ namespace Aokoro.Entities.Player
 
             anim = GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
-            timelineActor = GetComponent<TimelineActor>();
 
             Initiate<PlayerManager>();
 

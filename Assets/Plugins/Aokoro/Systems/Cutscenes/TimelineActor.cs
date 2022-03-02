@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.Cinematiques
+namespace Aokoro.Cutscenes
 {
     public class TimelineActor : MonoBehaviour
     {

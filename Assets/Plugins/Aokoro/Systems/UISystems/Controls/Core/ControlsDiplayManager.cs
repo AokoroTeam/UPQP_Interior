@@ -24,12 +24,12 @@ namespace Aokoro.UIManagement.ControlDisplay
             {
                 if (_controlsList == null)
                 {
-                    _controlsList = Resources.Load<CD_DeviceControlsList>("Aokoro/Controls/DeviceControlsList");
+                    _controlsList = Resources.Load<CD_DeviceControlsList>("DeviceControlsList");
 #if UNITY_EDITOR
                     if (_controlsList == null)
                     {
                         _controlsList = ScriptableObject.CreateInstance<CD_DeviceControlsList>();
-                        AssetDatabase.CreateAsset(_controlsList, Path.Combine("Resources", "Aokoro", "Controls", "DeviceControllist"));
+                        AssetDatabase.CreateAsset(_controlsList, Path.Combine("Resources", "DeviceControllist"));
                     }
 #endif
                 }

@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using System.Runtime.InteropServices;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 namespace AG_WebGLFPSAccelerator
 {
@@ -19,9 +21,6 @@ namespace AG_WebGLFPSAccelerator
         [DllImport("__Internal")]
         public static extern bool isiOS2();
 #endif
-        
-        [HideInInspector]
-        public GameObject warningText;
         
         [HideInInspector]
         public GameObject requiredSettings;
@@ -52,13 +51,6 @@ namespace AG_WebGLFPSAccelerator
 #if UNITY_WEBGL && !UNITY_EDITOR
             isiOS = isiOS2();
             isAndroid = isAndroid2();
-
-            if (isiOS || isAndroid)
-            {
-                GameObject webglFpsAcceleratorInGameUI = WebGLFPSAccelerator.instance.webglFpsAcceleratorInGameUI;
-                RectTransform rt = webglFpsAcceleratorInGameUI.GetComponent<RectTransform>();
-                rt.localScale = new Vector3(0.85f, 0.85f, 1);
-            }
 #endif
 
 #if UNITY_EDITOR
@@ -97,17 +89,12 @@ namespace AG_WebGLFPSAccelerator
 
         public void m1()
         {
-#if UNITY_EDITOR
-            if (warningText)
-                warningText.SetActive(true);
-#endif
-
+#if !UNITY_EDITOR
             if (requiredSettings)
             {
-#if !UNITY_EDITOR
                 requiredSettings.SetActive(false);
-#endif
             }
+#endif
         }
     }
 }
