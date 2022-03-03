@@ -2,38 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UIManagement.ControlsDiplaySystem
 {
-    public struct CD_Command
+    public struct CD_Command : IEnumerable<CD_InputCombination>
     {
         public string actionName;
-        private List<CD_CommandCombinaison> combinaisons;
+
+        private List<CD_InputCombination> inputs;
+        public int CombinationsCount => inputs.Count;
 
 
+        public CD_InputCombination this[int i] => inputs[i];
         public CD_Command(string actionName)
         {
             this.actionName = actionName;
-            combinaisons = new List<CD_CommandCombinaison>();
+            inputs = new List<CD_InputCombination>();
         }
 
-        public void Add(string[] bindings, GameObject[] prefabs)
+        public void Addcombination(params CD_Input[] inputs)
         {
-            combinaisons.Add(new CD_CommandCombinaison(bindings, prefabs));
+            this.inputs.Add(new CD_InputCombination(inputs));
         }
 
-        public struct CD_CommandCombinaison
-        {
-            public Dictionary<string, GameObject> bindings;
+        IEnumerator<CD_InputCombination> IEnumerable<CD_InputCombination>.GetEnumerator() => inputs.GetEnumerator();
 
-            public CD_CommandCombinaison(string[] bindingsPaths, GameObject[] bindingRepresentationPrefabs)
-            {
-                int length = Mathf.Min(bindingsPaths.Length, bindingRepresentationPrefabs.Length);
-                bindings = new Dictionary<string, GameObject>(length);
+        IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
 
-                for (int i = 0; i < length; i++)
-                    bindings.Add(bindingsPaths[i], bindingRepresentationPrefabs[i]);
-            }
-        }
+
     }
+    public struct CD_InputCombination : IEnumerable<CD_Input>
+    {
+        private CD_Input[] inputs;
+        public CD_InputCombination(CD_Input[] bindingRepresentationPrefabs)
+        {
+            inputs = bindingRepresentationPrefabs;
+        }
+        public CD_Input this[int i] => inputs[i];
+        public int Length => inputs == null ? inputs.Length : 0;
 
+        IEnumerator<CD_Input> IEnumerable<CD_Input>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<CD_Input>;
+
+        IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
+    }
 }

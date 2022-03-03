@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UIManagement.ControlsDiplaySystem
 {
     [ExecuteInEditMode]
     public class UIManager : Singleton<UIManager>

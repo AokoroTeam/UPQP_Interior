@@ -5,38 +5,48 @@ using System;
 using TMPro;
 using UnityEngine.InputSystem;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UIManagement.ControlsDiplaySystem
 {
-    public class CD_ControlsDisplayer : MonoBehaviour
+    public class CD_DisplayerManager : MonoBehaviour
     {
         [SerializeField]
-        private CD_ControlMapProvider mapProvider;
+        private CD_InputActionsProvider actionProvider;
         [SerializeField]
         string mapName;
         [SerializeField]
-        GameObject displayPrefab;
+        GameObject CommandLayout;
+
         [SerializeField]
         Transform root;
-        private List<CD_CommandDisplayer> displays;
+        private List<CD_DisplayCommand> displays;
 
         private void OnEnable()
         {
-            ControlsDiplayManager.OnDeviceChanges += OnDeviceChanges;
+            ControlsDiplaySystem.OnDeviceChanges += OnDeviceChanges;
         }
         private void OnDisable()
         {
-            ControlsDiplayManager.OnDeviceChanges -= OnDeviceChanges;
+            ControlsDiplaySystem.OnDeviceChanges -= OnDeviceChanges;
         }
 
         private void OnDeviceChanges(string device)
         {
-            CD_DeviceControls controls = ControlsDiplayManager.GetControlsForDevice(device);
-            List<CD_Command> commands = new List<CD_Command>();
-            
-            var actionMap = mapProvider.GetInputActionMap(mapName);
-            var actions = actionMap.actions;
+            CD_DeviceControls controls = ControlsDiplaySystem.GetControlsForDevice(device);
 
-            actionMap.Enable();
+            var actions = actionProvider.GetActions(mapName);
+
+            CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, controls);
+            DisplayCommands(commands);
+        }
+
+        private void DisplayCommands(CD_Command[] commands)
+        {
+            for (int i = 0; i < commands.Length; i++)
+            {
+                CD_DisplayCommand displayer = GameObject.Instantiate(CommandLayout).GetComponent<CD_DisplayCommand>();
+                CD_Command command = commands[i];
+                displayer.Fill(command);
+            }
         }
     }
 }

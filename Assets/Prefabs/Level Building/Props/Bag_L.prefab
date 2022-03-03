@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4677574053929274454}
   - component: {fileID: 6883264560032937882}
   - component: {fileID: 7174438363813032694}
-  - component: {fileID: 8596384874408753067}
   m_Layer: 0
   m_Name: Bag_L_LOD_00
   m_TagString: Untagged
@@ -84,33 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!205 &8596384874408753067
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714983187483346561}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.07506561, y: 0.5645962, z: 0.002070427}
-  m_Size: 51.987137
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.4086
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7174438363813032694}
-  - screenRelativeHeight: 0.071785145
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  - screenRelativeHeight: 0.018028563
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  m_Enabled: 1
 --- !u!1 &4446087567077812213
 GameObject:
   m_ObjectHideFlags: 0

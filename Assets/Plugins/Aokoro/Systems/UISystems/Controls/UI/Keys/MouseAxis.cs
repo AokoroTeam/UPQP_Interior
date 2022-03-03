@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Aokoro.UIManagement.ControlDisplay.UI
+namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
 {
     public class MouseAxis : ControlIcon
     {
-        
+
         [SerializeField]
         private GameObject horizontal;
         [SerializeField]
@@ -17,7 +17,7 @@ namespace Aokoro.UIManagement.ControlDisplay.UI
 
         public override void SetupIcon(string path)
         {
-            switch(path)
+            switch (path)
             {
                 case ("delta"):
                     horizontal.SetActive(true);
@@ -30,7 +30,7 @@ namespace Aokoro.UIManagement.ControlDisplay.UI
                 case ("delta/y"):
                     horizontal.SetActive(true);
                     vertical.SetActive(false);
-                    break; 
+                    break;
             }
         }
     }
