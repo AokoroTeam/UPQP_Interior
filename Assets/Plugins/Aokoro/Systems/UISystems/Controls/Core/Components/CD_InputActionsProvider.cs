@@ -9,6 +9,6 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
 {
     public abstract class CD_InputActionsProvider : MonoBehaviour
     {
-        public abstract InputAction[] GetActions(string mapName);
+        public abstract InputAction[] GetInputActions();
     }
 }

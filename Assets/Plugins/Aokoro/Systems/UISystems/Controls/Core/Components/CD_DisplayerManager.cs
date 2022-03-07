@@ -12,7 +12,7 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
         [SerializeField]
         private CD_InputActionsProvider actionProvider;
         [SerializeField]
-        string mapName;
+        private CD_InputActionConvertionSettings actionSettings;
         [SerializeField]
         GameObject CommandLayout;
 
@@ -32,10 +32,9 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
         private void OnDeviceChanges(string device)
         {
             CD_DeviceControls controls = ControlsDiplaySystem.GetControlsForDevice(device);
-
-            var actions = actionProvider.GetActions(mapName);
-
+            CD_InputAction[] actions = ControlsDiplaySystem.ConvertInputSystemActions(actionProvider.GetInputActions(), actionSettings);
             CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, controls);
+
             DisplayCommands(commands);
         }
 

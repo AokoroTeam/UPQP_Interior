@@ -4,16 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Aokoro;
+using UPQP.Features;
+using Michsky.UI.ModernUIPack;
 
-namespace UPQP.SliceView
+namespace UPQP.Features.SliceView
 {
-
-    public class SliceViewManager : Singleton<SliceViewManager>
+    public class SliceView_Manager : FeatureManager<SliceView_Manager, SliceView_Player>
     {
         [SerializeField]
         Transform levelRoot;
+        public CinemachineVirtualCamera virtualCamera;
         [SerializeField]
-        CinemachineVirtualCamera virtualCamera;
+        WindowManager windowManager;
 
         private LODGroup[] lods;
 
@@ -29,10 +31,10 @@ namespace UPQP.SliceView
         {
             lods = levelRoot.GetComponentsInChildren<LODGroup>();
         }
-
         [Button]
-        public void EnterSliceView()
+        public override void OnFeatureStarts()
         {
+            windowManager.OpenWindow("SliceView");
             for (int i = 0; i < lods.Length; i++)
             {
                 LODGroup lODGroup = lods[i];
@@ -43,8 +45,9 @@ namespace UPQP.SliceView
         }
 
         [Button]
-        public void ExitSliceView()
+        public override void OnFeatureEnds()
         {
+            windowManager.OpenWindow("Default");
             for (int i = 0; i < lods.Length; i++)
             {
                 LODGroup lODGroup = lods[i];
@@ -54,7 +57,7 @@ namespace UPQP.SliceView
             virtualCamera.enabled = false;
         }
 
-        protected override void OnExistingInstanceFound(SliceViewManager existingInstance)
+        protected override void OnExistingInstanceFound(SliceView_Manager existingInstance)
         {
             Destroy(gameObject);
         }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using NaughtyAttributes;
 
 namespace Aokoro.Entities.Player
 {
@@ -14,10 +15,15 @@ namespace Aokoro.Entities.Player
 
         [HideInInspector]
         public PlayerInput playerInput;
+        public string DefaultActionMap;
+
         [HideInInspector]
         public Animator anim;
         [HideInInspector]
         public Rigidbody rb;
+        [Space]
+        [ReadOnly]
+        public InputActionMap currentMap;
 
         public static PlayerManager LocalPlayer
         {
@@ -72,7 +78,10 @@ namespace Aokoro.Entities.Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
+        private void Start()
+        {
+            ChangeActionMap(DefaultActionMap);
+        }
         private void SetupActionAsset(InputActionAsset actions)
         {
             actions.Enable();
@@ -85,7 +94,7 @@ namespace Aokoro.Entities.Player
             for (int i = 0; i < inputProviders.Length; i++)
             {
                 IPlayerInputAssetProvider inputProvider = inputProviders[i];
-                InputActionAsset subAsset = inputProvider.Actions;
+                InputActionAsset subAsset = inputProvider.ActionAsset;
 
                 //ControlSchemes
                 foreach (var scheme in subAsset.controlSchemes)
@@ -107,15 +116,24 @@ namespace Aokoro.Entities.Player
             OnRespawn?.Invoke();
         }
 
+        public void ChangeActionMap() => ChangeActionMap(DefaultActionMap);
         public void ChangeActionMap(string targetMap)
         {
             if (playerInput.actions.FindActionMap(targetMap) != null)
             {
-                string currentMap = playerInput.currentActionMap.name;
+                InputActionMap currentActionMap = playerInput.currentActionMap;
+                if (currentActionMap != null)
+                {
+                    string currentMap = currentActionMap.name;
+                    OnMapChange?.Invoke(currentMap, targetMap);
+                }
+
                 playerInput.SwitchCurrentActionMap(targetMap);
 
-                OnMapChange?.Invoke(currentMap, targetMap);
+                currentMap = playerInput.currentActionMap;
             }
+            else
+                Debug.Log($"Map {targetMap} not found");
         }
     }
 }

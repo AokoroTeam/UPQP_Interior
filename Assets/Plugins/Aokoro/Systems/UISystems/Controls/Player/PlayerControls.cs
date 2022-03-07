@@ -8,7 +8,7 @@ using System;
 
 namespace Aokoro.UIManagement.ControlsDiplaySystem
 {
-    public class PlayerControls : CD_InputActionsProvider, ILateUpdateLivingComponent<PlayerManager>
+    public class PlayerControls : MonoBehaviour, ILateUpdateLivingComponent<PlayerManager>
     {
         private PlayerInput playerInput;
         public PlayerManager Manager { get; set; }
@@ -51,7 +51,5 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
                 ControlsDiplaySystem.TriggerControlChanges(playerInput.currentControlScheme);
             }
         }
-
-        public override InputAction[] GetActions(string mapName) => playerInput.actions.FindActionMap(mapName, false).actions.ToArray();
     }
 }

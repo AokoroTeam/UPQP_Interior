@@ -1,6 +1,6 @@
 {
     "name": "Aokoro.ControlDisplay",
-    "rootNamespace": "",
+    "rootNamespace": "Aokoro.UIManagement.ControlsDiplaySystem",
     "references": [
         "GUID:324bb285b201c5f4d92dbcc2c0fc5db0",
         "GUID:ab47457d686a2d44bb08495cf24277c1",

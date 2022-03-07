@@ -11,7 +11,12 @@ namespace UPQP.Player.Movement
     public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider
     {
         public PlayerManager Manager { get; set; }
-        public InputActionAsset Actions { get => inputActions; set => inputActions = value; }
+        public InputActionAsset ActionAsset { get => inputActions; set => inputActions = value; }
+
+        public void BindToNewActions(InputActionMap[] maps)
+        {
+
+        }
 
         public void Initiate(PlayerManager manager)
         {

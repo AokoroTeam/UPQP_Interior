@@ -54,7 +54,7 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
             return controls[0];
         }
 
-        public static CD_Command[] ExtractCommands(InputAction[] actions, CD_DeviceControls controls)
+        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_DeviceControls controls)
         {
             int length = actions.Length;
             CD_Command[] commands = new CD_Command[actions.Length];
@@ -62,9 +62,10 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
 
             for (int i = 0; i < length; i++)
             {
-                InputAction action = actions[i];
-                CD_Command command = new CD_Command(action.name);
+                CD_InputAction cd_action = actions[i];
+                InputAction action = cd_action.action;
 
+                CD_Command command = new CD_Command(cd_action.DisplayName);
                 for (int j = 0; j < action.bindings.Count; j++)
                 {
                     InputBinding binding = action.bindings[j];
@@ -101,6 +102,26 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
             }
 
             return true;
+        }
+
+        public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions, CD_InputActionConvertionSettings settings)
+        {
+            if (!settings.HasValue)
+                return ConvertInputSystemActions(actions);
+            else
+                return settings.ConvertInputSystemActions(actions);
+
+        }
+        public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions)
+        {
+            CD_InputAction[] cD_InputActions = new CD_InputAction[actions.Length];
+            for (int i = 0; i < actions.Length; i++)
+            {
+                InputAction action = actions[i];
+                cD_InputActions[i] = new CD_InputAction(action.name, action);
+            }
+
+            return cD_InputActions;
         }
     }
 }

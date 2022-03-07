@@ -15,19 +15,15 @@ namespace UPQP.Player
         private PlayerFeature currentFeature;
 
         private Dictionary<PlayerFeature, InputAction> startActions;
-        [ReadOnly]
+        [ReadOnly, Space]
         public InputActionMap executeFeatures;
 
         protected override void Awake()
         {
             base.Awake();
+            MergeInputsfromFeatures();
         }
 
-        private void Start()
-        {
-            MergeInputsfromFeatures();
-            playerInput.SwitchCurrentActionMap("DefaultGameplay");
-        }
 
 
         private void MergeInputsfromFeatures()
@@ -43,10 +39,11 @@ namespace UPQP.Player
             for (int i = 0; i < length; i++)
             {
                 PlayerFeature feature = features[i];
+                feature.player = this;
 
                 //Creates an action to start executing the feature
                 InputAction startAction = executeFeatures.AddAction(
-                    $"Start {feature.name}",
+                    $"Start {feature.featureName}",
                     InputActionType.Button,
                     $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
 
@@ -65,14 +62,17 @@ namespace UPQP.Player
         }
         public void ExecuteFeature(PlayerFeature feature)
         {
-            feature.ExecuteFeature(this);
+            feature.StartFeature();
+            ChangeActionMap(feature.featureName);
             executeFeatures.Disable();
         }
 
-        private void EndFeature(PlayerFeature feature)
+        public void EndFeature(PlayerFeature feature)
         {
-            feature.EndFeature(this);
-            executeFeatures.Disable();
+            feature.EndFeature();
+
+            ChangeActionMap(DefaultActionMap);
+            executeFeatures.Enable();
         }
     }
 }
