@@ -10,9 +10,13 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
     {
 
         [SerializeField]
-        private GameObject horizontal;
+        private GameObject horizontal1;
         [SerializeField]
-        private GameObject vertical;
+        private GameObject horizontal2;
+        [SerializeField]
+        private GameObject vertical1;
+        [SerializeField]
+        private GameObject vertical2;
 
 
         public override void SetupIcon(string path)
@@ -20,16 +24,22 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
             switch (path)
             {
                 case ("delta"):
-                    horizontal.SetActive(true);
-                    vertical.SetActive(true);
+                    horizontal1.SetActive(true);
+                    horizontal2.SetActive(true);
+                    vertical1.SetActive(true);
+                    vertical2.SetActive(true);
                     break;
-                case ("delta/x"):
-                    horizontal.SetActive(false);
-                    vertical.SetActive(true);
+                case ("delta x"):
+                    horizontal1.SetActive(true);
+                    horizontal2.SetActive(true);
+                    vertical1.SetActive(false);
+                    vertical2.SetActive(false);
                     break;
-                case ("delta/y"):
-                    horizontal.SetActive(true);
-                    vertical.SetActive(false);
+                case ("delta y"):
+                    horizontal1.SetActive(false);
+                    horizontal2.SetActive(false);
+                    vertical1.SetActive(true);
+                    vertical2.SetActive(true);
                     break;
             }
         }

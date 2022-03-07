@@ -8,39 +8,39 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
     {
         public string actionName;
 
-        private List<CD_InputCombination> inputs;
-        public int CombinationsCount => inputs.Count;
+        private List<CD_InputCombination> combinations;
+        public int CombinationsCount => combinations.Count;
 
 
-        public CD_InputCombination this[int i] => inputs[i];
+        public CD_InputCombination this[int i] => combinations[i];
         public CD_Command(string actionName)
         {
             this.actionName = actionName;
-            inputs = new List<CD_InputCombination>();
+            combinations = new List<CD_InputCombination>();
         }
 
-        public void Addcombination(params CD_Input[] inputs)
+        public void Addcombination(params MatchedInput[] inputs)
         {
-            this.inputs.Add(new CD_InputCombination(inputs));
+            this.combinations.Add(new CD_InputCombination(inputs));
         }
 
-        IEnumerator<CD_InputCombination> IEnumerable<CD_InputCombination>.GetEnumerator() => inputs.GetEnumerator();
+        IEnumerator<CD_InputCombination> IEnumerable<CD_InputCombination>.GetEnumerator() => combinations.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
 
 
     }
-    public struct CD_InputCombination : IEnumerable<CD_Input>
+    public struct CD_InputCombination : IEnumerable<MatchedInput>
     {
-        private CD_Input[] inputs;
-        public CD_InputCombination(CD_Input[] bindingRepresentationPrefabs)
+        private MatchedInput[] inputs;
+        public CD_InputCombination(MatchedInput[] matchedInputs)
         {
-            inputs = bindingRepresentationPrefabs;
+            inputs = matchedInputs;
         }
-        public CD_Input this[int i] => inputs[i];
-        public int Length => inputs == null ? inputs.Length : 0;
+        public MatchedInput this[int i] => inputs[i];
+        public int Length => inputs != null ? inputs.Length : 0;
 
-        IEnumerator<CD_Input> IEnumerable<CD_Input>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<CD_Input>;
+        IEnumerator<MatchedInput> IEnumerable<MatchedInput>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<MatchedInput>;
 
         IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
     }

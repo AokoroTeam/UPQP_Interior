@@ -31,7 +31,7 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
 
         public override void SetupIcon(string path)
         {
-            image.sprite = path switch
+            Image.sprite = path switch
             {
                 "LMB" => lmb,
                 "RMB" => rmb,

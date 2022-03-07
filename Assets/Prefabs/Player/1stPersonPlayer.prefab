@@ -147,7 +147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1853135964, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7784431
+      value: 1.8929336
       objectReference: {fileID: 0}
     - target: {fileID: 2055408090, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
       propertyPath: m_Layer
@@ -2044,6 +2044,14 @@ PrefabInstance:
     - target: {fileID: 5265432153380278692, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5602805372937922186, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
+      propertyPath: executeFeatures.m_Id
+      value: 00c4cb97-1a4b-4b1f-a9dd-4f9f55834ebe
+      objectReference: {fileID: 0}
+    - target: {fileID: 5602805372937922186, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
+      propertyPath: executeFeatures.m_Name
+      value: Execute Features
       objectReference: {fileID: 0}
     - target: {fileID: 7687904980491103201, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
       propertyPath: m_Layer

@@ -15,7 +15,7 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
         [SerializeField]
         private GameObject combinationLayout;
 
-        private CD_DisplayInputsCombination[] instantiatedCombinations;
+        private CD_DisplayCombination[] instantiatedCombinations;
         private bool or, and;
 
         public virtual void Fill(CD_Command command, bool withOr = true, bool withAnd = true)
@@ -26,36 +26,26 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
             description.text = command.actionName;
 
             Clear();
-            instantiatedCombinations = new CD_DisplayInputsCombination[command.CombinationsCount];
+            instantiatedCombinations = new CD_DisplayCombination[command.CombinationsCount];
             CreateCommandDisplays(command, instantiatedCombinations);
         }
 
 
-        protected virtual void CreateCommandDisplays(CD_Command command, CD_DisplayInputsCombination[] output)
+        protected virtual void CreateCommandDisplays(CD_Command command, CD_DisplayCombination[] output)
         {
             for (int i = 0; i < command.CombinationsCount; i++)
             {
-                if (or && i != 0)
-                {
-                }
-
-                CD_InputCombination combination = command[0];
+                CD_InputCombination combination = command[i];
                 output[i] = CreateCombinationDisplays(combination);
             }
         }
 
-        protected virtual CD_DisplayInputsCombination CreateCombinationDisplays(CD_InputCombination combination)
+        protected virtual CD_DisplayCombination CreateCombinationDisplays(CD_InputCombination combination)
         {
-            CD_DisplayInputsCombination display = Instantiate(combinationLayout, combinationsParents)
-                .GetComponent<CD_DisplayInputsCombination>();
+            CD_DisplayCombination display = Instantiate(combinationLayout, combinationsParents)
+                .GetComponent<CD_DisplayCombination>();
 
-            for (int j = 0; j < combination.Length; j++)
-            {
-                if (j != 0)
-                    Or(combinationsParents);
-
-                display.Fill(combination, this);
-            }
+            display.Fill(combination, this);
 
             return display;
         }

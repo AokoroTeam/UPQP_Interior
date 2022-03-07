@@ -72,8 +72,8 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
                     if (binding.isPartOfComposite)
                         continue;
 
-                    string[] bindings = action.GetBindingDisplayString(j).Split('+', StringSplitOptions.RemoveEmptyEntries);
-                    CD_Input[] inputs = new CD_Input[bindings.Length];
+                    string[] bindings = action.GetBindingDisplayString(j, InputBinding.DisplayStringOptions.DontIncludeInteractions).Split('+', StringSplitOptions.RemoveEmptyEntries);
+                    MatchedInput[] inputs = new MatchedInput[bindings.Length];
 
                     if (ConvertBindings(controls, bindings, inputs))
                         command.Addcombination(inputs);
@@ -85,19 +85,17 @@ namespace Aokoro.UIManagement.ControlsDiplaySystem
             return commands;
         }
 
-        private static bool ConvertBindings(CD_DeviceControls controls, string[] bindings, CD_Input[] inputs)
+        private static bool ConvertBindings(CD_DeviceControls controls, string[] bindings, MatchedInput[] inputs)
         {
 
             for (int k = 0; k < bindings.Length; k++)
             {
                 //Get all kind of info from action that will be used for matching the correct sprite with the correct binding
                 string bindingString = bindings[k];
-                CD_Input data = controls.GetMatchingControl(ref bindingString);
+                CD_Input data = controls.GetMatchingInput(ref bindingString);
                 if (data.HasValue)
-                {
-                    bindings[k] = bindingString;
-                    inputs[k] = data;
-                }
+                    inputs[k] = new MatchedInput(data, bindingString);
+
                 else
                     return false;
             }
