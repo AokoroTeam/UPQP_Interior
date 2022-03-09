@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     [System.Serializable]
     public struct CD_InputActionConvertionSettings

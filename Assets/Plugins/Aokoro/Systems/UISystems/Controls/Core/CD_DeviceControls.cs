@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     [CreateAssetMenu(menuName = "Aokoro/UI/Inputs/DeviceControls")]
     public class CD_DeviceControls : ScriptableObject

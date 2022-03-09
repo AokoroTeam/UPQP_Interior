@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
+namespace Aokoro.UI.ControlsDiplaySystem.UI
 {
     public class MouseAxis : ControlIcon
     {

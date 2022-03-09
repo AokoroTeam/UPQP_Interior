@@ -5,10 +5,12 @@ using System;
 using TMPro;
 using UnityEngine.InputSystem;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
-    public abstract class CD_InputActionsProvider : MonoBehaviour
+    public interface CD_InputActionsProvider
     {
-        public abstract InputAction[] GetInputActions();
+        public InputAction[] GetInputActions();
+
+        public string GetCurrentDeviceName();
     }
 }

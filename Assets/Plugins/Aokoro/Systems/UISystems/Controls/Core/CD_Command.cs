@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public struct CD_Command : IEnumerable<CD_InputCombination>
     {

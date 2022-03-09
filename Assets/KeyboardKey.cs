@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem.UI
+namespace Aokoro.UI.ControlsDiplaySystem.UI
 {
     public class KeyboardKey : ControlIcon
     {

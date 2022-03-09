@@ -5,7 +5,7 @@ using NaughtyAttributes;
 using UnityEngine.InputSystem;
 using System;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     [System.Serializable]
     public struct CD_Input

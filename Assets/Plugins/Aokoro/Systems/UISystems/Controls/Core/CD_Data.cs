@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     [CreateAssetMenu(menuName = "Aokoro/UI/Inputs/DeviceControlsList")]
     internal class CD_Data : ScriptableObject

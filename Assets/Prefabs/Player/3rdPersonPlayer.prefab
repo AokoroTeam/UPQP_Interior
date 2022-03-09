@@ -795,6 +795,13 @@ MonoBehaviour:
   DefaultActionMap: DefaultGameplay
   anim: {fileID: 0}
   rb: {fileID: 0}
+  currentMap:
+    m_Name: 
+    m_Id: 
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  FeaturesRoot: {fileID: 3394843229303778485}
   executeFeatures:
     m_Name: 
     m_Id: 

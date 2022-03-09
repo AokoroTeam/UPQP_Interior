@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEditor;
 #endif
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public static class ControlsDiplaySystem
     {

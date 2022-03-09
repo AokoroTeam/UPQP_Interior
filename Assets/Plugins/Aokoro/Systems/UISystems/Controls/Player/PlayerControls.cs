@@ -6,7 +6,7 @@ using Aokoro.Entities.Player;
 using Aokoro.Entities;
 using System;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public class PlayerControls : MonoBehaviour, ILateUpdateLivingComponent<PlayerManager>
     {

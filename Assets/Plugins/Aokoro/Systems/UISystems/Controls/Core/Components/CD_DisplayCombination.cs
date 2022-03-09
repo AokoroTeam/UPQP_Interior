@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
-using Aokoro.UIManagement.ControlsDiplaySystem.UI;
+using Aokoro.UI.ControlsDiplaySystem.UI;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public class CD_DisplayCombination : MonoBehaviour
     {

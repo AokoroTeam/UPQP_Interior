@@ -21,7 +21,7 @@ namespace UPQP.Player.Movement
         public void Initiate(PlayerManager manager)
         {
             inputActions = manager.playerInput.actions;
-            
+            camera = Camera.main;
         }
         protected override void Animate()
         {

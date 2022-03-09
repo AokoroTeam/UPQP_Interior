@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 
-namespace Aokoro.UIManagement.ControlsDiplaySystem
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public class CD_DisplayCommand : MonoBehaviour
     {
