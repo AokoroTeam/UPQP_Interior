@@ -38,6 +38,7 @@ namespace UPQP.Player.Movement
                     animator.SetFloat("Norm_Right_Speed", normVelocity.x, .1f, Time.deltaTime);
                     //animator.SetFloat("Angular_Speed", AngularVelocity.y);
                 }
+
                 animator.SetBool("IsMoving", speed > .05f);
                 animator.SetBool("IsRunning", IsSprinting());
                 animator.SetFloat("Speed", speed);

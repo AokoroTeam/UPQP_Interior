@@ -18,47 +18,37 @@ namespace Aokoro.UI.ControlsDiplaySystem
         Transform root;
 
         private List<CD_DisplayCommand> displays = new List<CD_DisplayCommand>();
-
-        private CD_DeviceControls currentControl;
-        public CD_DeviceControls CurrentControl => currentControl;
+        public CD_DeviceControls CurrentControl => ControlsDiplaySystem.GetControlsForDevice(actionProvider.GetCurrentDeviceName());
 
         private CD_InputActionsProvider actionProvider;
-        public CD_InputActionsProvider ActionProvider
-        {
-            get => actionProvider;
-            set
-            {
-                if (actionProvider != value)
-                {
-                    actionProvider = value;
-                    Refresh();
-                }
-            }
-        }
+
 
         private void OnEnable()
         {
-            ControlsDiplaySystem.OnDeviceChanges += ChangeDevice;
-            if (actionProvider != null)
-            {
-                if (CurrentControl == null)
-                    ChangeDevice(actionProvider.GetCurrentDeviceName());
-
-                Fill();
-            }
+            if(actionProvider != null)
+                actionProvider.OnResfreshNeeded += Refresh;
         }
 
         private void OnDisable()
         {
-            ControlsDiplaySystem.OnDeviceChanges -= ChangeDevice;
-            Clean();
+            if (actionProvider != null)
+                actionProvider.OnResfreshNeeded -= Refresh;
         }
 
-        private void ChangeDevice(string device)
-        {
-            currentControl = ControlsDiplaySystem.GetControlsForDevice(device);
 
-            Refresh();
+        public void AssignActionProvider(CD_InputActionsProvider value, bool triggerRefresh = true)
+        {
+            if (actionProvider != value)
+            {
+                if (actionProvider != null)
+                    actionProvider.OnResfreshNeeded -= Refresh;
+
+                actionProvider = value;
+                actionProvider.OnResfreshNeeded += Refresh;
+
+                if(triggerRefresh)
+                    Refresh();
+            }
         }
 
         public void Show()

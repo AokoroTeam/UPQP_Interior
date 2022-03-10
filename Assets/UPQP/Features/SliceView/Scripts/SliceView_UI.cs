@@ -17,10 +17,10 @@ namespace UPQP.Features.SliceView
         WindowManager windowManager;
         int lastWindow;
 
-        private void Awake()
+        protected override void Awake()
         {
             displayer = GetComponent<CD_Displayer>();
-
+            base.Awake();
         }
 
         protected override void Initiate()
@@ -32,7 +32,7 @@ namespace UPQP.Features.SliceView
             window.windowObject = gameObject;
 
             windowManager.windows.Add(window);
-            displayer.ActionProvider = _Feature.Player;
+            displayer.AssignActionProvider(_Feature.Player, false);
         }
 
         public void ShowCommands()

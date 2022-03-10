@@ -24,6 +24,17 @@ namespace Aokoro.Entities.Player
         [Space]
         [ReadOnly]
         public InputActionMap currentMap;
+        private AudioListener audioListener;
+        public AudioListener AudioListener
+        {
+            get
+            {
+                if (audioListener == null)
+                    audioListener = Camera.main.GetComponent<AudioListener>();
+
+                return audioListener;
+            }
+        }
 
         public static PlayerManager LocalPlayer
         {
@@ -40,52 +51,43 @@ namespace Aokoro.Entities.Player
                 return localPlayer;
             }
         }
-
-        public AudioListener AudioListener
-        {
-            get
-            {
-                if (audioListener == null)
-                    audioListener = Camera.main.GetComponent<AudioListener>();
-
-                return audioListener;
-            }
-        }
-
-        private AudioListener audioListener;
-
         private static PlayerManager localPlayer;
+
 
         protected override void Awake()
         {
-            if (localPlayer != this && localPlayer != null)
+            if (LocalPlayer != this)
             {
                 Destroy(gameObject);
                 return;
             }
-            else
-                localPlayer = this;
 
             playerInput = GetComponent<PlayerInput>();
-            playerInput.actions = GenerateInputActionAsset();
-            SetupActionAsset(playerInput.actions);
-
             anim = GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
-
-            Initiate<PlayerManager>();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        private void Start()
+
+        public virtual void OnAwake()
+        { 
+            SetupInputs();
+            Initiate<PlayerManager>();
+        }
+
+        protected virtual void Start()
         {
             ChangeActionMap(DefaultActionMap);
         }
-        private void SetupActionAsset(InputActionAsset actions)
+
+        protected void SetupInputs()
         {
-            actions.Enable();
+            playerInput.actions = GenerateInputActionAsset();
+            playerInput.ActivateInput();
+            playerInput.actions.Enable();
         }
+
         protected virtual InputActionAsset GenerateInputActionAsset()
         {
             var asset = ScriptableObject.CreateInstance<InputActionAsset>();
@@ -117,6 +119,7 @@ namespace Aokoro.Entities.Player
         }
 
         public void ChangeActionMap() => ChangeActionMap(DefaultActionMap);
+
         public void ChangeActionMap(string targetMap)
         {
             if (playerInput.actions.FindActionMap(targetMap) != null)
@@ -133,7 +136,11 @@ namespace Aokoro.Entities.Player
                 currentMap = playerInput.currentActionMap;
             }
             else
+            {
                 Debug.Log($"Map {targetMap} not found");
+                foreach(var map in playerInput.actions.actionMaps)
+                    Debug.Log(map.name);
+            }
         }
     }
 }

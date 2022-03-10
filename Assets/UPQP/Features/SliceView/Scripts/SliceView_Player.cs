@@ -15,12 +15,11 @@ namespace UPQP.Features.SliceView
 
         protected override void Initiate()
         {
-            Debug.Log("azzzz");
         }
 
         protected override void Start()
         {
-            //vCam = _Feature.Manager.virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            vCam = _Feature.Manager.virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             base.Start();
         }
 

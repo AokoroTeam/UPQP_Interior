@@ -11,10 +11,9 @@ namespace UPQP.Features.SliceView
 {
     public class SliceView_Manager : FeatureComponent<SliceView>
     {
-        [SerializeField]
-        Transform levelRoot;
         public CinemachineVirtualCamera virtualCamera;
 
+        private Transform levelRoot;
         private LODGroup[] lods;
 
 
@@ -25,7 +24,17 @@ namespace UPQP.Features.SliceView
         }
         public void Build()
         {
-            //lods = levelRoot.GetComponentsInChildren<LODGroup>();
+            SliceView_LevelRoot sliceView_LevelRoot = GameObject.FindObjectOfType<SliceView_LevelRoot>();
+            if (sliceView_LevelRoot == null)
+            {
+                Debug.LogError("Please add SliceView_LevelRoot component to the root of the level");
+                lods = new LODGroup[0];
+            }
+            else
+            {
+                levelRoot = sliceView_LevelRoot.transform;
+                lods = levelRoot.GetComponentsInChildren<LODGroup>();
+            }
         }
 
         public void OnFeatureStarts()

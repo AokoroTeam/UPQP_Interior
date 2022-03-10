@@ -9,7 +9,7 @@ namespace UPQP.Features
     public interface IPlayerFeature
     {
         public Feature @Feature { get; }
-        public string FeatureName { get; }
+        public string MapName { get; }
         public UPQP_Player Player { get; set; }
 
 

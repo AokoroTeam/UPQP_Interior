@@ -21,12 +21,11 @@ namespace UPQP.Player.CameraManagement
 
         public virtual void Initiate(PlayerManager manager)
         {
-
-            lookAction = Manager.playerInput.actions.FindActionMap("DefaultGameplay").FindAction("Look");
-            XYAxis.Set(lookAction);
-
+            lookAction = manager.playerInput.actions.FindActionMap("DefaultGameplay").FindAction("Look");
             lookAction.Enable();
+            XYAxis.Set(lookAction);
         }
+
 
         public void DisableInputs()
         {

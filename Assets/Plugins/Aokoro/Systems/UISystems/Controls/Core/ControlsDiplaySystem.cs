@@ -11,9 +11,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
 {
     public static class ControlsDiplaySystem
     {
-        internal static string CurrentDevice;
-        internal static event Action<string> OnDeviceChanges;
-
+        
         private static CD_Data _data;
         internal static CD_Data Data
         {
@@ -33,12 +31,6 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
                 return _data;
             }
-        }
-
-        public static void TriggerControlChanges(string newDevice)
-        {
-            OnDeviceChanges?.Invoke(newDevice);
-            CurrentDevice = newDevice;
         }
 
         public static CD_DeviceControls GetControlsForDevice(string device)

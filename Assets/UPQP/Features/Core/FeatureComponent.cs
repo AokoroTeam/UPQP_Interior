@@ -8,7 +8,7 @@ namespace UPQP.Features
     public abstract class FeatureComponent<T> : MonoBehaviour where T : Feature
     {
         public T _Feature { get; internal set; }
-        private void Awake()
+        protected virtual void Awake()
         {
             Feature.InitiateFeatureComponents += Feature_InitiateFeatureComponents;
         }

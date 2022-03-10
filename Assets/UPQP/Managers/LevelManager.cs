@@ -10,32 +10,44 @@ using UPQP.Player;
 namespace UPQP.Managers
 {
 
-    /// <summary>
-    /// Initialisation order : 
-    /// Level
-    /// Player
-    /// Entities
-    /// Other
-    /// </summary>
+    
     [DefaultExecutionOrder(-80)]
     public class LevelManager : Singleton<LevelManager>
     {
+        /// Initialisation order : 
+        /// Level
+        /// Player
+        /// Entities
+        /// Other
+        public string LevelInitiationPhase { get; private set; } = "None";
+
+        public const string levelPhase = "levelPhase";
+        public const string playerPhase = "playerPhase";
+        public const string EntitiesPhase = "entitiesPhase";
+        public const string DonePhase = "Done";
+
         [SerializeField] FeatureDataAsset[] GameFeatures;
         [SerializeField] GameObject PlayerPrefab;
         [SerializeField] Transform SpawnPoint;
 
         public UPQP_Player Player { get; private set; }
 
-
-        private Feature[] features;
-
-
         protected void Start()
         {
+            LevelInitiationPhase = levelPhase;
+            InitializeLevel();
+            LevelInitiationPhase = playerPhase;
             InitializePlayer();
+            LevelInitiationPhase = DonePhase;
+
         }
 
-        private void InitializePlayer()
+        protected virtual void InitializeLevel()
+        {
+
+        }
+
+        protected virtual void InitializePlayer()
         {
             //Player creation
             if (UPQP_Player.LocalPlayer == null)
@@ -43,13 +55,18 @@ namespace UPQP.Managers
             else
                 Player = UPQP_Player.LocalPlayer as UPQP_Player;
 
-            //Features
+            Player.OnAwake();
+        }
+
+        public Feature[] CreateLevelFeatures()
+        {
             int length = GameFeatures.Length;
 
-            features = new Feature[length];
+            var features = new Feature[length];
             for (int i = 0; i < length; i++)
                 features[i] = GameFeatures[i].GenerateFeature(this);
-            
+
+            return features;
         }
 
         protected override void OnExistingInstanceFound(LevelManager existingInstance)

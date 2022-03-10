@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UPQP.Features;
+using UPQP.Managers;
 
 namespace UPQP.Player
 {
@@ -12,50 +13,50 @@ namespace UPQP.Player
     {
         [BoxGroup("Features")]
         public Transform FeaturesRoot;
+        [BoxGroup("Features"), ReadOnly, SerializeField]
+        private Feature[] features;
         [BoxGroup("Features"), ReadOnly, Space]
         public InputActionMap executeFeatures;
 
 
-        private IPlayerFeature[] features;
-        private Dictionary<Feature, InputAction> startActions;
+        private IPlayerFeature[] playerFeatures;
+
 
         protected override void Awake()
         {
-            base.Awake();
+            if(LevelManager.Instance.LevelInitiationPhase != LevelManager.playerPhase)
+                Destroy(gameObject);
+            else
+                base.Awake();
+        }
+        public override void OnAwake()
+        {
+            features = LevelManager.Instance.CreateLevelFeatures();
+            SetupPlayerFeatures();
+            base.OnAwake();
         }
 
-        public void WhenFeaturesAreInitialized()
+        private void SetupPlayerFeatures()
         {
-            MergeInputsfromFeatures();
-        }
+            playerFeatures = GetComponentsInChildren<IPlayerFeature>();
 
-        private void MergeInputsfromFeatures()
-        {
-            startActions = new Dictionary<Feature, InputAction>();
-            features = GetComponentsInChildren<IPlayerFeature>();
-
-            int length = Mathf.Min(features.Length, 10);
+            int length = Mathf.Min(playerFeatures.Length, 10);
 
             executeFeatures = new InputActionMap("executeFeatures");
             executeFeatures.Disable();
 
             for (int i = 0; i < length; i++)
             {
-                Feature feature = features[i].Feature;
-                IPlayerFeature playerFeature = features[i];
+                IPlayerFeature playerFeature = playerFeatures[i];
 
-                //Binds to player
+                ///Binds to player
                 playerFeature.Player = this;
 
-                //Creates an action to start executing the feature
-                InputAction startAction = executeFeatures.AddAction(
-                    $"Start {playerFeature.FeatureName}",
-                    InputActionType.Button,
-                    $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
+                ///Creates an action to start executing the feature
+                InputAction startAction = executeFeatures.AddAction($"Start {playerFeature.MapName}", InputActionType.Button, $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
 
-                //Links it to the correct callback
+                ///Links it to the correct callback
                 startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature);
-                startActions.Add(feature, startAction);
             }
 
             executeFeatures.Enable();
@@ -69,7 +70,7 @@ namespace UPQP.Player
         public void ExecuteFeature(IPlayerFeature playerFeature)
         {
             playerFeature.ExecuteFeature();
-            ChangeActionMap(playerFeature.FeatureName);
+            ChangeActionMap(playerFeature.MapName);
             executeFeatures.Disable();
         }
 

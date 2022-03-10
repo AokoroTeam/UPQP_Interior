@@ -54,8 +54,6 @@ namespace Aokoro.Entities
 
         private IEntityComponent[] SetupComponents<T>(IEntityComponent[] ChildComponents) where T : Entity
         {
-            Type targetInterface = typeof(IEntityComponent<T>);
-
             List<IEntityComponent> componentsList = new List<IEntityComponent>();
             int count = ChildComponents.Length;
 

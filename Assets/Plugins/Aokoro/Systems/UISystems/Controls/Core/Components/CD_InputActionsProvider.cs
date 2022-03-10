@@ -10,7 +10,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
     public interface CD_InputActionsProvider
     {
         public InputAction[] GetInputActions();
-
         public string GetCurrentDeviceName();
+        public event Action OnResfreshNeeded;
     }
 }

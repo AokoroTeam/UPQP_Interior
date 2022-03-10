@@ -32,6 +32,10 @@ namespace UPQP.Features.SliceView
             Player = GameObject.Instantiate(P_PlayerComponent, manager.Player.FeaturesRoot).GetComponent<SliceView_Player>();
             //Add UI
             UI = GameObject.Instantiate(P_UI, GameUIManager.Instance.WindowsParent).GetComponent<SliceView_UI>();
+
+            Manager._Feature = this;
+            Player._Feature = this;
+            UI._Feature = this;
         }
 
         public override void Clean(LevelManager controller)
