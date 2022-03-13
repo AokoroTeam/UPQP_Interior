@@ -11,6 +11,10 @@ namespace UPQP.Player
 {
     public class UPQP_Player : PlayerManager
     {
+        [BoxGroup("UI")]
+        [SerializeField]
+        private string FirstWindowToShow;
+
         [BoxGroup("Features")]
         public Transform FeaturesRoot;
         [BoxGroup("Features"), ReadOnly, SerializeField]
@@ -36,6 +40,10 @@ namespace UPQP.Player
             base.OnAwake();
         }
 
+        private void Start()
+        {
+            
+        }
         private void SetupPlayerFeatures()
         {
             playerFeatures = GetComponentsInChildren<IPlayerFeature>();

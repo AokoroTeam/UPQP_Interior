@@ -5,17 +5,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using Aokoro.Entities.Player;
 using UnityEngine.InputSystem;
+using Aokoro.UI.ControlsDiplaySystem;
+using System;
+using NaughtyAttributes;
 
 namespace UPQP.Player.Movement
 {
-    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider
+    [AddComponentMenu("UPQP/Player/Movement/PlayerCharacter")]
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider, CD_InputActionsProvider
     {
+        [ReadOnly]
+        public PlayerMovementUI UI;
         public PlayerManager Manager { get; set; }
         public InputActionAsset ActionAsset { get => inputActions; set => inputActions = value; }
 
+        public event Action OnResfreshNeeded;
+
+        private PlayerControls playerControls;
+        
         public void BindToNewActions(InputActionMap[] maps)
         {
 
+        }
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+            playerControls = GetComponent<PlayerControls>();
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            ShowUI();
+        }
+        public void ShowUI() => UI?.Show();
+        public void HideUI() => UI?.Hide();
+
+        protected override void OnOnEnable()
+        {
+            base.OnOnEnable();
+            playerControls.OnControlChanges += TriggerRefresh;
+        }
+
+        protected override void OnOnDisable()
+        {
+            base.OnOnDisable();
+            playerControls.OnControlChanges -= TriggerRefresh;
         }
 
         public void Initiate(PlayerManager manager)
@@ -44,5 +79,14 @@ namespace UPQP.Player.Movement
                 animator.SetFloat("Speed", speed);
             }
         }
+
+
+        #region CD_InputActionsProvider
+        private void TriggerRefresh() => OnResfreshNeeded?.Invoke();
+        public string GetCurrentDeviceName() => Manager.playerInput.currentControlScheme;
+
+        public InputAction[] GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();
+
+        #endregion
     }
 }

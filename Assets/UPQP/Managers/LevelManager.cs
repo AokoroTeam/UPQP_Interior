@@ -1,4 +1,5 @@
 using Aokoro;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace UPQP.Managers
 
     
     [DefaultExecutionOrder(-80)]
+    [AddComponentMenu("UPQP/Managers/LevelManager")]
     public class LevelManager : Singleton<LevelManager>
     {
         /// Initialisation order : 
@@ -26,6 +28,9 @@ namespace UPQP.Managers
         public const string EntitiesPhase = "entitiesPhase";
         public const string DonePhase = "Done";
 
+
+        public static event Action<UPQP_Player> OnPlayerIsCreated;
+
         [SerializeField] FeatureDataAsset[] GameFeatures;
         [SerializeField] GameObject PlayerPrefab;
         [SerializeField] Transform SpawnPoint;
@@ -38,6 +43,7 @@ namespace UPQP.Managers
             InitializeLevel();
             LevelInitiationPhase = playerPhase;
             InitializePlayer();
+            OnPlayerIsCreated?.Invoke(Player); 
             LevelInitiationPhase = DonePhase;
 
         }
@@ -56,6 +62,7 @@ namespace UPQP.Managers
                 Player = UPQP_Player.LocalPlayer as UPQP_Player;
 
             Player.OnAwake();
+
         }
 
         public Feature[] CreateLevelFeatures()
@@ -74,5 +81,9 @@ namespace UPQP.Managers
             Destroy(gameObject);
         }
 
+        private void OnDisable()
+        {
+            OnPlayerIsCreated = null;
+        }
     }
 }

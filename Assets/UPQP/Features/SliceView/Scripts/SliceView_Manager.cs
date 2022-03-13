@@ -9,6 +9,7 @@ using Michsky.UI.ModernUIPack;
 
 namespace UPQP.Features.SliceView
 {
+    [AddComponentMenu("UPQP/Features/SliceView/Manager")]
     public class SliceView_Manager : FeatureComponent<SliceView>
     {
         public CinemachineVirtualCamera virtualCamera;

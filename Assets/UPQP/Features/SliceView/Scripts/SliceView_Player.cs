@@ -8,7 +8,7 @@ using UPQP.Features;
 
 namespace UPQP.Features.SliceView
 {
-
+    [AddComponentMenu("UPQP/Features/SliceView/Player")]
     public class SliceView_Player : PlayerFeatureComponent<SliceView>
     {
         private CinemachineOrbitalTransposer vCam;

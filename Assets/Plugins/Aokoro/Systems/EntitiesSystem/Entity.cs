@@ -160,6 +160,16 @@ namespace Aokoro.Entities
 
             return false;
         }
+        public T GetLivingComponent<T>() where T : IEntityComponent
+        {
+            for (int i = 0; i < components.Length; i++)
+            {
+                if (components[i] is T c)
+                    return c;
+            }
+
+            return default;
+        }
 
         public void Log(string message)
         {

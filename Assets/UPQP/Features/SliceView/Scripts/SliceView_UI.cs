@@ -2,13 +2,13 @@ using Aokoro.UI.ControlsDiplaySystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UPQP.Managers;
+
 using Michsky.UI.ModernUIPack;
-
-
+using Aokoro.UI;
 
 namespace UPQP.Features.SliceView
 {
+    [AddComponentMenu("UPQP/Features/SliceView/UI")]
     public class SliceView_UI : FeatureComponent<SliceView>
     {
         private const string windowName = "SliceViewWindow";
@@ -25,7 +25,7 @@ namespace UPQP.Features.SliceView
 
         protected override void Initiate()
         {
-            windowManager = GameManager.Instance.WindowManager;
+            windowManager = GameUIManager.WindowManager;
             WindowManager.WindowItem window = new WindowManager.WindowItem();
 
             window.windowName = windowName;

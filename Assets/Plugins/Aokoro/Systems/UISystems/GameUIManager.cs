@@ -1,3 +1,4 @@
+using Michsky.UI.ModernUIPack;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,14 +12,28 @@ namespace Aokoro.UI
         public Action OnUpdate;
         public Transform WindowsParent;
 
+        public static WindowManager WindowManager { get; private set; }
+
         protected override void OnExistingInstanceFound(GameUIManager existingInstance)
         {
             Destroy(gameObject);
         }
+        protected override void Awake()
+        {
+            base.Awake();
+            if(IsInstance)
+            {
+                WindowManager = GetComponent<WindowManager>();
+
+            }
+        }
+
+
 
         private void Update()
         {
             OnUpdate?.Invoke();
         }
+
     }
 }
