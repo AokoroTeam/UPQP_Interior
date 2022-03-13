@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
 
-namespace Aokoro.UIManagement.ControlDisplay.UI
+namespace Aokoro.UI.ControlsDiplaySystem.UI
 {
     public abstract class ControlIcon : MonoBehaviour
     {

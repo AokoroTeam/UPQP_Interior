@@ -5,74 +5,89 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UPQP.Features;
+using UPQP.Managers;
 
 namespace UPQP.Player
 {
     public class UPQP_Player : PlayerManager
     {
-        private PlayerFeature[] features;
+        [BoxGroup("UI")]
+        [SerializeField]
+        private string FirstWindowToShow;
 
-        private PlayerFeature currentFeature;
-
-        private Dictionary<PlayerFeature, InputAction> startActions;
-        [ReadOnly]
+        [BoxGroup("Features")]
+        public Transform FeaturesRoot;
+        [BoxGroup("Features"), ReadOnly, SerializeField]
+        private Feature[] features;
+        [BoxGroup("Features"), ReadOnly, Space]
         public InputActionMap executeFeatures;
+
+
+        private IPlayerFeature[] playerFeatures;
+
 
         protected override void Awake()
         {
-            base.Awake();
+            if(LevelManager.Instance.LevelInitiationPhase != LevelManager.playerPhase)
+                Destroy(gameObject);
+            else
+                base.Awake();
+        }
+        public override void OnAwake()
+        {
+            features = LevelManager.Instance.CreateLevelFeatures();
+            SetupPlayerFeatures();
+            base.OnAwake();
         }
 
         private void Start()
         {
-            MergeInputsfromFeatures();
-            playerInput.SwitchCurrentActionMap("DefaultGameplay");
+            
         }
-
-
-        private void MergeInputsfromFeatures()
+        private void SetupPlayerFeatures()
         {
-            startActions = new Dictionary<PlayerFeature, InputAction>();
-            features = GetComponentsInChildren<PlayerFeature>();
+            playerFeatures = GetComponentsInChildren<IPlayerFeature>();
 
-            int length = Mathf.Min(features.Length, 10);
+            int length = Mathf.Min(playerFeatures.Length, 10);
 
             executeFeatures = new InputActionMap("executeFeatures");
             executeFeatures.Disable();
 
             for (int i = 0; i < length; i++)
             {
-                PlayerFeature feature = features[i];
+                IPlayerFeature playerFeature = playerFeatures[i];
 
-                //Creates an action to start executing the feature
-                InputAction startAction = executeFeatures.AddAction(
-                    $"Start {feature.name}",
-                    InputActionType.Button,
-                    $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
+                ///Binds to player
+                playerFeature.Player = this;
 
-                //Links it to the correct callback
-                startAction.performed += ctx => ExecuteFeatureCallback(ctx, feature);
-                startActions.Add(feature, startAction);
+                ///Creates an action to start executing the feature
+                InputAction startAction = executeFeatures.AddAction($"Start {playerFeature.MapName}", InputActionType.Button, $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
+
+                ///Links it to the correct callback
+                startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature);
             }
 
             executeFeatures.Enable();
         }
 
-        private void ExecuteFeatureCallback(InputAction.CallbackContext context, PlayerFeature feature)
+        private void ExecuteFeatureCallback(InputAction.CallbackContext context, IPlayerFeature feature)
         {
             if (context.performed)
                 ExecuteFeature(feature);
         }
-        public void ExecuteFeature(PlayerFeature feature)
+        public void ExecuteFeature(IPlayerFeature playerFeature)
         {
-            feature.ExecuteFeature(this);
+            playerFeature.ExecuteFeature();
+            ChangeActionMap(playerFeature.MapName);
             executeFeatures.Disable();
         }
 
-        private void EndFeature(PlayerFeature feature)
+        public void EndFeature(IPlayerFeature playerFeature)
         {
-            feature.EndFeature(this);
-            executeFeatures.Disable();
+            playerFeature.EndFeature();
+
+            ChangeActionMap(DefaultActionMap);
+            executeFeatures.Enable();
         }
     }
 }

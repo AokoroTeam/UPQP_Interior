@@ -2,38 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UI.ControlsDiplaySystem
 {
-    public struct CD_Command
+    public struct CD_Command : IEnumerable<CD_InputCombination>
     {
         public string actionName;
-        private List<CD_CommandCombinaison> combinaisons;
+
+        private List<CD_InputCombination> combinations;
+        public int CombinationsCount => combinations.Count;
 
 
+        public CD_InputCombination this[int i] => combinations[i];
         public CD_Command(string actionName)
         {
             this.actionName = actionName;
-            combinaisons = new List<CD_CommandCombinaison>();
+            combinations = new List<CD_InputCombination>();
         }
 
-        public void Add(string[] bindings, GameObject[] prefabs)
+        public void Addcombination(params MatchedInput[] inputs)
         {
-            combinaisons.Add(new CD_CommandCombinaison(bindings, prefabs));
+            this.combinations.Add(new CD_InputCombination(inputs));
         }
 
-        public struct CD_CommandCombinaison
-        {
-            public Dictionary<string, GameObject> bindings;
+        IEnumerator<CD_InputCombination> IEnumerable<CD_InputCombination>.GetEnumerator() => combinations.GetEnumerator();
 
-            public CD_CommandCombinaison(string[] bindingsPaths, GameObject[] bindingRepresentationPrefabs)
-            {
-                int length = Mathf.Min(bindingsPaths.Length, bindingRepresentationPrefabs.Length);
-                bindings = new Dictionary<string, GameObject>(length);
+        IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
 
-                for (int i = 0; i < length; i++)
-                    bindings.Add(bindingsPaths[i], bindingRepresentationPrefabs[i]);
-            }
-        }
+
     }
+    public struct CD_InputCombination : IEnumerable<MatchedInput>
+    {
+        private MatchedInput[] inputs;
+        public CD_InputCombination(MatchedInput[] matchedInputs)
+        {
+            inputs = matchedInputs;
+        }
+        public MatchedInput this[int i] => inputs[i];
+        public int Length => inputs != null ? inputs.Length : 0;
 
+        IEnumerator<MatchedInput> IEnumerable<MatchedInput>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<MatchedInput>;
+
+        IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
+    }
 }

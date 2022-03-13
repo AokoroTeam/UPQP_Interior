@@ -2,7 +2,8 @@
     "name": "Aokoro.UI",
     "rootNamespace": "",
     "references": [
-        "GUID:324bb285b201c5f4d92dbcc2c0fc5db0"
+        "GUID:324bb285b201c5f4d92dbcc2c0fc5db0",
+        "GUID:559a13818d9deb8419c24cd726483f7e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

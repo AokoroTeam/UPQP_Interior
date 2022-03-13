@@ -14,7 +14,7 @@ namespace Aokoro
         public static bool HasInstance => m_Instance == null && FindObjectOfType<T>() == null;
         private static T m_Instance;
 
-
+        protected bool IsInstance => Instance == this;
 
         protected virtual void Awake()
         {

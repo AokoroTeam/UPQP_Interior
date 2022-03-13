@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Aokoro.UIManagement.ControlDisplay.UI
+namespace Aokoro.UI.ControlsDiplaySystem.UI
 {
     public class MouseKey : ControlIcon
     {
@@ -31,10 +31,10 @@ namespace Aokoro.UIManagement.ControlDisplay.UI
 
         public override void SetupIcon(string path)
         {
-            image.sprite = path switch
+            Image.sprite = path switch
             {
                 "LMB" => lmb,
-                "RMB" => rmb, 
+                "RMB" => rmb,
                 "MMB" => mmb,
                 _ => mmb,
             };

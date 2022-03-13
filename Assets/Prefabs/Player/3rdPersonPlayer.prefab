@@ -716,7 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 1a7299b20a6b5214485d750a3eb31bed, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -792,9 +792,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
+  DefaultActionMap: DefaultGameplay
   anim: {fileID: 0}
   rb: {fileID: 0}
-  timelineActor: {fileID: 0}
+  currentMap:
+    m_Name: Current Map
+    m_Id: 844be246-0a17-40a2-b0d4-e48ba93d1a6e
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  FeaturesRoot: {fileID: 3394843229303778485}
+  executeFeatures:
+    m_Name: Execute Features
+    m_Id: d5618bc5-a766-4f58-94f0-cdabbcfaecd3
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
 --- !u!114 &8211786350873182967
 MonoBehaviour:
   m_ObjectHideFlags: 0

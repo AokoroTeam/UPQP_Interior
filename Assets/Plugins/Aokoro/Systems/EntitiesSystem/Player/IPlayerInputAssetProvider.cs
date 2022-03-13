@@ -7,6 +7,8 @@ namespace Aokoro.Entities.Player
 {
     public interface IPlayerInputAssetProvider 
     {
-        public InputActionAsset Actions { get; set; }
+        public InputActionAsset ActionAsset { get; set; }
+
+        void BindToNewActions(InputActionMap[] maps);
     }
 }

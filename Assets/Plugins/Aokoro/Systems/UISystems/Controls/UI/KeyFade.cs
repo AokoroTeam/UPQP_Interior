@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public class KeyFade : UIItem
     {

@@ -1,29 +1,42 @@
+using NaughtyAttributes;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     [CreateAssetMenu(menuName = "Aokoro/UI/Inputs/DeviceControls")]
     public class CD_DeviceControls : ScriptableObject
     {
-        public string device;
-        public CD_ControlRepresentation[] controls;
+        public string Device => device;
 
-        public bool GetMatchingControl(ref string controlPath, out CD_ControlRepresentation data)
+        [SerializeField]
+        private string device;
+
+        private CD_Input defaultControl;
+        [SerializeField]
+        private CD_Input[] SpecialControls;
+
+        internal CD_Input GetMatchingInput(ref string controlPath)
         {
-            data = default;
-            for (int i = 0; i < controls.Length; i++)
+            for (int i = 0; i < SpecialControls.Length; i++)
             {
-                CD_ControlRepresentation controlData = controls[i];
-                for (int j = 0; j < controlData.matchPaths.Length; j++)
-                {
-                    if (controlData.matchPaths[j] == controlPath)
-                    {
-                        data = controlData;
-                        return true;
-                    }
-                }
+                CD_Input controlData = SpecialControls[i];
+                if (!defaultControl.HasValue && controlData.isDefault)
+                    defaultControl = controlData;
+
+                if (controlData.MatchesPath(controlPath))
+                    return controlData;
+
             }
-            return false;
+
+            return defaultControl;
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            for (int i = 0; i < SpecialControls.Length; i++)
+                SpecialControls[i].Validate();
+        }
+#endif
     }
 }

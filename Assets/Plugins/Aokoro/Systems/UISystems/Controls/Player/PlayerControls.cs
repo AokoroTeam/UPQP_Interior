@@ -6,10 +6,11 @@ using Aokoro.Entities.Player;
 using Aokoro.Entities;
 using System;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UI.ControlsDiplaySystem
 {
-    public class PlayerControls : CD_ControlMapProvider, ILateUpdateLivingComponent<PlayerManager>
+    public class PlayerControls : MonoBehaviour, ILateUpdateLivingComponent<PlayerManager>
     {
+        public event Action OnControlChanges;
         private PlayerInput playerInput;
         public PlayerManager Manager { get; set; }
 
@@ -40,7 +41,7 @@ namespace Aokoro.UIManagement.ControlDisplay
         }
         private void OnControlsChanges(PlayerInput playerInput)
         {
-            ControlsDiplayManager.TriggerControlChanges(playerInput.currentControlScheme);
+            OnControlChanges?.Invoke();
         }
 
         public void LateUpdateComponent()
@@ -48,10 +49,8 @@ namespace Aokoro.UIManagement.ControlDisplay
             if (lastMap != playerInput.currentActionMap)
             {
                 lastMap = playerInput.currentActionMap;
-                ControlsDiplayManager.TriggerControlChanges(playerInput.currentControlScheme);
+                OnControlsChanges(playerInput);
             }
         }
-
-        public override InputActionMap GetInputActionMap(string mapName) => playerInput.actions.FindActionMap(mapName, false);
     }
 }

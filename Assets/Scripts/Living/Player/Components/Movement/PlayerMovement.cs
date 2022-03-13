@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace UPQP.Player.Movement
 {
+    [AddComponentMenu("UPQP/Player/Movement/PlayerMovement")]
     public class PlayerMovement : MonoBehaviour, IFixedUpdateLivingComponent<PlayerManager>, IUpdateLivingComponent<PlayerManager>
     {
         public PlayerManager Manager { get; set; }
