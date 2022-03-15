@@ -1,4 +1,5 @@
 using Aokoro;
+using Aokoro.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,14 @@ using UPQP.Player;
 namespace UPQP.Managers
 {
 
-    
+
     [DefaultExecutionOrder(-80)]
     [AddComponentMenu("UPQP/Managers/LevelManager")]
     public class LevelManager : Singleton<LevelManager>
     {
+
+        public GameUIManager mainUI;
+
         /// Initialisation order : 
         /// Level
         /// Player
@@ -37,13 +41,19 @@ namespace UPQP.Managers
 
         public UPQP_Player Player { get; private set; }
 
+        protected override void Awake()
+        {
+            base.Awake();
+            GameUIManager.MainUI = mainUI;
+        }
+
         protected void Start()
         {
             LevelInitiationPhase = levelPhase;
             InitializeLevel();
             LevelInitiationPhase = playerPhase;
             InitializePlayer();
-            OnPlayerIsCreated?.Invoke(Player); 
+            OnPlayerIsCreated?.Invoke(Player);
             LevelInitiationPhase = DonePhase;
 
         }

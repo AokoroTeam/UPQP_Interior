@@ -14,7 +14,6 @@ namespace UPQP.Features.SliceView
         private const string windowName = "SliceViewWindow";
 
         CD_Displayer displayer;
-        WindowManager windowManager;
         int lastWindow;
 
         protected override void Awake()
@@ -25,27 +24,21 @@ namespace UPQP.Features.SliceView
 
         protected override void Initiate()
         {
-            windowManager = GameUIManager.WindowManager;
-            WindowManager.WindowItem window = new WindowManager.WindowItem();
+            GameUIManager.MainUI.AddWindow(windowName, gameObject);
 
-            window.windowName = windowName;
-            window.windowObject = gameObject;
-
-            windowManager.windows.Add(window);
             displayer.AssignActionProvider(_Feature.Player, false);
         }
 
         public void ShowCommands()
         {
-            lastWindow = windowManager.currentWindowIndex;
-            windowManager.OpenWindow(windowName);
+            GameUIManager.MainUI.OpenWindow(windowName);
             displayer.Show();
         }
 
         public void HideCommands()
         {
             displayer.Hide();
-            windowManager.OpenWindowByIndex(lastWindow);
+            GameUIManager.MainUI.OpenWindow(GameUIManager.MainUI.DefaultWindow);
         }
     }
 }

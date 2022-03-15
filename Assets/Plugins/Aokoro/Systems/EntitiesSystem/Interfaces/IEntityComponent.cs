@@ -5,18 +5,21 @@ using UnityEngine;
 namespace Aokoro.Entities
 {
 
-    public interface IEntityComponent { }
+    public interface IEntityComponent 
+    {
+        string ComponentName { get; }
+    }
 
     public interface IUpdateEntityComponent : IEntityComponent
     {
-        void UpdateComponent();
+        void OnUpdate();
     }
     public interface ILateUpdateEntityComponent : IEntityComponent
     {
-        void LateUpdateComponent();
+        void OnLateUpdate();
     }
     public interface IFixedUpdateEntityComponent : IEntityComponent
     {
-        void FixedUpdateComponent();
+        void OnFixedUpdate();
     }
 }

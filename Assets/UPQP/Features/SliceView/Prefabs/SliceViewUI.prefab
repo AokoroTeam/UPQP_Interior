@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 1
+  m_HorizontalFit: 2
   m_VerticalFit: 1
 --- !u!1 &2630192172289993484
 GameObject:
@@ -259,18 +259,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91635624fad8d7a4b81bbbe326c0347e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CommandLayout: {fileID: 5595791543192764704, guid: 5431aca153f90b547abd30b109b6a349, type: 3}
+  root: {fileID: 2630192171946747660}
   actionSettings:
     selectActions:
     - displayName: Rotate
       outputName: Regarder
-    - displayName: Interact
-      outputName: Interargir
-    - displayName: Zoom
-      outputName: Zoomer
     - displayName: Exit
       outputName: Sortir
-  CommandLayout: {fileID: 5595791543192764704, guid: 5431aca153f90b547abd30b109b6a349, type: 3}
-  root: {fileID: 2630192171946747660}
+  displays: []
+  _actionProviderReference: {fileID: 0}
 --- !u!114 &2630192172289993478
 MonoBehaviour:
   m_ObjectHideFlags: 0

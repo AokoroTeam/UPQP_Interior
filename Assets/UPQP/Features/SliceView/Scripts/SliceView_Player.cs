@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UPQP.Features;
+using Aokoro.UI;
 
 namespace UPQP.Features.SliceView
 {
@@ -24,28 +25,31 @@ namespace UPQP.Features.SliceView
         }
 
 
-        public override void ExecuteFeature()
+        public override void OnFeatureEnables()
         {
-            _Feature.Manager.OnFeatureStarts();
-            player.Freezed.Subscribe(this, 20, true);
+            Player.ChangeActionMap(MapName);
+            Player.Freezed.Subscribe(this, 20, true);
         }
 
-        public override void EndFeature()
+        public override void OnFeatureDisables()
         {
-            _Feature.Manager.OnFeatureEnds();
-            player.Freezed.Unsubscribe(this);
+            Player.ChangeActionMap(Player.DefaultActionMap);
+            Player.Freezed.Unsubscribe(this);
         }
 
-        public override void BindToNewActions(InputActionMap[] maps) 
+        public override void BindToNewActions(InputActionAsset asset)
         {
-            var map = maps[0];
+            var map = asset.FindActionMap(MapName);
             map.FindAction("Rotate").performed += OnRotate_performed;
+            map.FindAction("Rotate").canceled += OnRotate_performed;
+            map.FindAction("Rotate").started += OnRotate_performed;
+
             map.FindAction("Exit").performed += OnExit_performed;
         }
 
-        private void OnExit_performed(InputAction.CallbackContext ctx) => player.EndFeature(this);
+        private void OnExit_performed(InputAction.CallbackContext ctx) => Player.EndFeature(Feature);
 
-        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = ctx.ReadValue<float>();
+        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = ctx.ReadValue<float>() * Time.deltaTime;
 
     }
 }

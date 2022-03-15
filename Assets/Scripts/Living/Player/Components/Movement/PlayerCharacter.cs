@@ -12,18 +12,20 @@ using NaughtyAttributes;
 namespace UPQP.Player.Movement
 {
     [AddComponentMenu("UPQP/Player/Movement/PlayerCharacter")]
-    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider, CD_InputActionsProvider
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider, ICD_InputActionsProvider
     {
         [ReadOnly]
         public PlayerMovementUI UI;
         public PlayerManager Manager { get; set; }
         public InputActionAsset ActionAsset { get => inputActions; set => inputActions = value; }
 
-        public event Action OnResfreshNeeded;
+        string IEntityComponent.ComponentName => "PlayerCharacter";
+
+        public event Action OnActionsNeedRefresh;
 
         private PlayerControls playerControls;
-        
-        public void BindToNewActions(InputActionMap[] maps)
+
+        public void BindToNewActions(InputActionAsset asset)
         {
 
         }
@@ -68,7 +70,6 @@ namespace UPQP.Player.Movement
                 if (GetMovementInput().sqrMagnitude > .1f)
                 {
                     var normVelocity = transform.InverseTransformDirection(currentVelocity).normalized;
-                    Debug.DrawRay(base.GetPosition(), currentVelocity.normalized * 15);
                     animator.SetFloat("Norm_Forward_Speed", normVelocity.z, .1f, Time.deltaTime);
                     animator.SetFloat("Norm_Right_Speed", normVelocity.x, .1f, Time.deltaTime);
                     //animator.SetFloat("Angular_Speed", AngularVelocity.y);
@@ -82,7 +83,7 @@ namespace UPQP.Player.Movement
 
 
         #region CD_InputActionsProvider
-        private void TriggerRefresh() => OnResfreshNeeded?.Invoke();
+        private void TriggerRefresh() => OnActionsNeedRefresh?.Invoke();
         public string GetCurrentDeviceName() => Manager.playerInput.currentControlScheme;
 
         public InputAction[] GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();

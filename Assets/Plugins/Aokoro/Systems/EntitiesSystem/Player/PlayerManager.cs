@@ -22,7 +22,7 @@ namespace Aokoro.Entities.Player
         [HideInInspector]
         public Rigidbody rb;
         [Space]
-        [ReadOnly]
+        [ReadOnly, BoxGroup("DEBUG")]
         public InputActionMap currentMap;
         private AudioListener audioListener;
         public AudioListener AudioListener
@@ -71,7 +71,7 @@ namespace Aokoro.Entities.Player
         }
 
         public virtual void OnAwake()
-        { 
+        {
             SetupInputs();
             Initiate<PlayerManager>();
         }
@@ -108,6 +108,10 @@ namespace Aokoro.Entities.Player
                 foreach (InputActionMap map in subAsset.actionMaps)
                     asset.AddActionMap(map.Clone());
             }
+
+            for (int i = 0; i < inputProviders.Length; i++)
+                inputProviders[i].BindToNewActions(asset);
+
             return asset;
         }
 
@@ -138,7 +142,7 @@ namespace Aokoro.Entities.Player
             else
             {
                 Debug.Log($"Map {targetMap} not found");
-                foreach(var map in playerInput.actions.actionMaps)
+                foreach (var map in playerInput.actions.actionMaps)
                     Debug.Log(map.name);
             }
         }

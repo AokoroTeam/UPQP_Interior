@@ -16,34 +16,37 @@ namespace Aokoro.Entities
         ILateUpdateEntityComponent[] LUcomponents;
         IFixedUpdateEntityComponent[] FUcomponents;
 
-        IEntityComponent[] components;
+        Dictionary<string, IEntityComponent> components;
 
-        public ComplexeProperty<bool> Freezed;
+        public InfluencedProperty<bool> Freezed;
 
         protected virtual void Awake()
         {
-            Freezed = new ComplexeProperty<bool>(false);
+            Freezed = new InfluencedProperty<bool>(false);
             Initiate<Entity>();
         }
 
         protected virtual void Initiate<T>() where T : Entity
         {
 
-            components = SetupComponents<T>(GetComponentsInChildren<IEntityComponent>());
+            var componentsArray = SetupComponents<T>(GetComponentsInChildren<IEntityComponent>());
+            components = new Dictionary<string, IEntityComponent>(componentsArray.Length);
 
             List<IUpdateEntityComponent> updatesList = new();
             List<ILateUpdateEntityComponent> lateUpdatesList = new();
             List<IFixedUpdateEntityComponent> fixedUpdatesList = new();
 
-            for (int i = 0; i < components.Length; i++)
+            for (int i = 0; i < componentsArray.Length; i++)
             {
-                IEntityComponent component = components[i];
+                IEntityComponent component = componentsArray[i];
                 if (component is IUpdateEntityComponent u)
                     updatesList.Add(u);
                 if (component is IFixedUpdateEntityComponent fu)
                     fixedUpdatesList.Add(fu);
                 if (component is ILateUpdateEntityComponent lu)
                     lateUpdatesList.Add(lu);
+
+                components.Add(component.ComponentName, component);
             }
 
             Ucomponents = updatesList.ToArray();
@@ -93,13 +96,13 @@ namespace Aokoro.Entities
 
         protected virtual void Update()
         {
-            if (!Freezed.Output)
+            if (!Freezed.Value)
             {
                 for (int i = 0; i < Ucomponents.Length; i++)
                 {
                     try
                     {
-                        Ucomponents[i].UpdateComponent();
+                        Ucomponents[i].OnUpdate();
                     }
                     catch (Exception e)
                     {
@@ -111,13 +114,13 @@ namespace Aokoro.Entities
 
         protected virtual void FixedUpdate()
         {
-            if (!Freezed.Output)
+            if (!Freezed.Value)
             {
                 for (int i = 0; i < FUcomponents.Length; i++)
                 {
                     try
                     {
-                        FUcomponents[i].FixedUpdateComponent();
+                        FUcomponents[i].OnFixedUpdate();
                     }
                     catch (Exception e)
                     {
@@ -129,17 +132,17 @@ namespace Aokoro.Entities
 
         protected virtual void LateUpdate()
         {
-            if (!Freezed.Output)
+            if (!Freezed.Value)
             {
                 for (int i = 0; i < LUcomponents.Length; i++)
                 {
                     try
                     {
-                        LUcomponents[i].LateUpdateComponent();
+                        LUcomponents[i].OnLateUpdate();
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError(e, LUcomponents[i] as MonoBehaviour);
+                        Debug.LogException(e);
                     }
                 }
             }
@@ -149,28 +152,44 @@ namespace Aokoro.Entities
         public bool GetLivingComponent<T>(out T component) where T : IEntityComponent
         {
             component = default;
-            for (int i = 0; i < components.Length; i++)
+            foreach (IEntityComponent c1 in components.Values)
             {
-                if (components[i] is T c)
+                if (c1 is T c)
                 {
                     component = c;
                     return true;
                 }
             }
-
             return false;
         }
         public T GetLivingComponent<T>() where T : IEntityComponent
         {
-            for (int i = 0; i < components.Length; i++)
+            foreach (IEntityComponent c1 in components.Values)
             {
-                if (components[i] is T c)
+                if (c1 is T c)
                     return c;
             }
 
             return default;
         }
+        public T GetLivingComponent<T>(string name) where T : IEntityComponent
+        {
+            if (components.TryGetValue(name, out IEntityComponent entityComponent) && entityComponent is T result)
+                return result;
+            
+            return default;
+        }
+        public bool GetLivingComponent<T>(string name, out T component) where T : IEntityComponent
+        {
+            if (components.TryGetValue(name, out IEntityComponent entityComponent) && entityComponent is T result)
+            {
+                component = result;
+                return true;
+            }
 
+            component = default;
+            return false;
+        }
         public void Log(string message)
         {
             Debug.Log(string.Concat("[", gameObject.name, "] => ", message));

@@ -9,6 +9,7 @@ namespace UPQP.Player.CameraManagement
 {
     public class PlayerCamController : CinemachineInputProvider, IEntityComponent<PlayerManager>
     {
+        string IEntityComponent.ComponentName => "PlayerCamController";
         public PlayerManager Manager { get; set; }
 
         private InputAction lookAction;
