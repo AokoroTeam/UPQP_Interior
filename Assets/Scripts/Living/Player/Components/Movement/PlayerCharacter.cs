@@ -12,7 +12,7 @@ using NaughtyAttributes;
 namespace UPQP.Player.Movement
 {
     [AddComponentMenu("UPQP/Player/Movement/PlayerCharacter")]
-    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider, CD_InputActionsProvider
+    public class PlayerCharacter : Character, IEntityComponent<PlayerManager>, IPlayerInputAssetProvider, ICD_InputActionsProvider
     {
         [ReadOnly]
         public PlayerMovementUI UI;
@@ -21,13 +21,13 @@ namespace UPQP.Player.Movement
 
         string IEntityComponent.ComponentName => "PlayerCharacter";
 
-        public event Action OnResfreshNeeded;
+        public event Action OnActionsNeedRefresh;
 
         private PlayerControls playerControls;
-         
+
         public void BindToNewActions(InputActionAsset asset)
         {
-            
+
         }
         protected override void OnAwake()
         {
@@ -83,7 +83,7 @@ namespace UPQP.Player.Movement
 
 
         #region CD_InputActionsProvider
-        private void TriggerRefresh() => OnResfreshNeeded?.Invoke();
+        private void TriggerRefresh() => OnActionsNeedRefresh?.Invoke();
         public string GetCurrentDeviceName() => Manager.playerInput.currentControlScheme;
 
         public InputAction[] GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();

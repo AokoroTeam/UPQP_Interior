@@ -24,21 +24,21 @@ namespace UPQP.Features.SliceView
 
         protected override void Initiate()
         {
-            GameUIManager.AddWindow(windowName, gameObject);
-            
+            GameUIManager.MainUI.AddWindow(windowName, gameObject);
+
             displayer.AssignActionProvider(_Feature.Player, false);
         }
 
         public void ShowCommands()
         {
-            GameUIManager.OpenWindow(windowName);
+            GameUIManager.MainUI.OpenWindow(windowName);
             displayer.Show();
         }
 
         public void HideCommands()
         {
             displayer.Hide();
-            GameUIManager.OpenWindow("Default");
+            GameUIManager.MainUI.OpenWindow(GameUIManager.MainUI.DefaultWindow);
         }
     }
 }

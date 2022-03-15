@@ -33,11 +33,11 @@ namespace UPQP.Features.SliceView
 
         public override void OnFeatureDisables()
         {
-            Player.ChangeActionMap("Default");
+            Player.ChangeActionMap(Player.DefaultActionMap);
             Player.Freezed.Unsubscribe(this);
         }
 
-        public override void BindToNewActions(InputActionAsset asset) 
+        public override void BindToNewActions(InputActionAsset asset)
         {
             var map = asset.FindActionMap(MapName);
             map.FindAction("Rotate").performed += OnRotate_performed;
@@ -47,9 +47,9 @@ namespace UPQP.Features.SliceView
             map.FindAction("Exit").performed += OnExit_performed;
         }
 
-        private void OnExit_performed(InputAction.CallbackContext ctx) => Feature.DisableFeature();
+        private void OnExit_performed(InputAction.CallbackContext ctx) => Player.EndFeature(Feature);
 
-        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = -ctx.ReadValue<float>() * Time.deltaTime;
+        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = ctx.ReadValue<float>() * Time.deltaTime;
 
     }
 }

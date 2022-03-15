@@ -12,9 +12,10 @@ namespace UPQP.Managers
     [AddComponentMenu("UPQP/Managers/GameManager")]
     public class GameManager : Singleton<GameManager>
     {
-        public GameUIManager mainUI;
-        
-
+        protected override void Awake()
+        {
+            base.Awake();
+        }
         protected override void OnExistingInstanceFound(GameManager existingInstance)
         {
             Destroy(gameObject);

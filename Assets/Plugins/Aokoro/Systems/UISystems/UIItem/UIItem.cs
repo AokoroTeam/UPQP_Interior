@@ -7,8 +7,24 @@ namespace Aokoro.UI.ControlsDiplaySystem
 {
     public abstract class UIItem : MonoBehaviour
     {
-        protected virtual void OnEnable() => GameUIManager.Instance.OnUpdate += OnUpdate;
-        protected virtual void OnDisable() => GameUIManager.Instance.OnUpdate -= OnUpdate;
+        GameUIManager uIManager;
+
+        private void Awake()
+        {
+            uIManager = GetComponentInParent<GameUIManager>();
+            if (uIManager == null)
+                Destroy(this);
+        }
+        protected virtual void OnEnable()
+        {
+            if (uIManager != null)
+                uIManager.OnUpdate += OnUpdate;
+        }
+        protected virtual void OnDisable()
+        {
+            if (uIManager != null)
+                uIManager.OnUpdate -= OnUpdate;
+        }
 
         protected abstract void OnUpdate();
     }

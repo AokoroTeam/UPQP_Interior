@@ -31,7 +31,7 @@ namespace UPQP.Features.SliceView
             //Add player Component
             Player = GameObject.Instantiate(P_PlayerComponent, manager.Player.FeaturesRoot).GetComponent<SliceView_Player>();
             //Add UI
-            UI = GameObject.Instantiate(P_UI, GameUIManager.Instance.WindowsParent).GetComponent<SliceView_UI>();
+            UI = GameObject.Instantiate(P_UI, GameUIManager.MainUI.WindowsParent).GetComponent<SliceView_UI>();
 
             Manager._Feature = this;
             Player._Feature = this;
@@ -47,6 +47,9 @@ namespace UPQP.Features.SliceView
 
         public override void EnableFeature()
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+
             UI.ShowCommands();
             Manager.OnFeatureEnables();
             Player.OnFeatureEnables();
@@ -54,7 +57,9 @@ namespace UPQP.Features.SliceView
 
         public override void DisableFeature()
         {
-            Debug.Log("Wesh");
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             UI.HideCommands();
             Manager.OnFeatureDisables();
             Player.OnFeatureDisables();
