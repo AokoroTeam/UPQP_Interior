@@ -14,12 +14,14 @@ namespace Aokoro.Cutscenes
         private void Awake()
         {
             trackedDolly = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTrackedDolly>();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         private void Update()
         {
             float direction = Input.GetAxis("Horizontal");
-            trackedDolly.m_PathPosition += direction * speed;
+            trackedDolly.m_PathPosition += direction * speed * Time.deltaTime;
         }
     }
 }
