@@ -108,6 +108,10 @@ namespace Aokoro.Entities.Player
                 foreach (InputActionMap map in subAsset.actionMaps)
                     asset.AddActionMap(map.Clone());
             }
+
+            for (int i = 0; i < inputProviders.Length; i++)
+                inputProviders[i].BindToNewActions(asset);
+
             return asset;
         }
 

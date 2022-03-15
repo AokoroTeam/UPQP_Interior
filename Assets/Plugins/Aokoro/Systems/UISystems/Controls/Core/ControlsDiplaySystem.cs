@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -58,24 +59,64 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 InputAction action = cd_action.action;
 
                 CD_Command command = new CD_Command(cd_action.DisplayName);
-                for (int j = 0; j < action.bindings.Count; j++)
+
+
+                UnityEngine.InputSystem.Utilities.ReadOnlyArray<InputBinding> bindings = action.bindings;
+                for (int j = 0; j < bindings.Count; j++)
                 {
-                    InputBinding binding = action.bindings[j];
+                    InputBinding binding = bindings[j];
+                    string displayString = action.GetBindingDisplayString(j, out string device, out string controlPath, InputBinding.DisplayStringOptions.DontIncludeInteractions);
 
-                    if (binding.isPartOfComposite)
-                        continue;
+                    if (binding.isComposite)
+                    {
+                        List<string> compositePaths = new List<string>();
+                        int compositeIndex = j + 1;
 
-                    string[] bindings = action.GetBindingDisplayString(j, InputBinding.DisplayStringOptions.DontIncludeInteractions).Split('+', StringSplitOptions.RemoveEmptyEntries);
-                    MatchedInput[] inputs = new MatchedInput[bindings.Length];
+                        while (bindings[compositeIndex].isPartOfComposite)
+                        {
+                            string compositeDisplayString = action.GetBindingDisplayString(compositeIndex, out device, out controlPath, InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                            string compositePath = string.IsNullOrWhiteSpace(controlPath) ? compositeDisplayString : controlPath;
 
-                    if (ConvertBindings(controls, bindings, inputs))
-                        command.Addcombination(inputs);
+                            compositePaths.Add(compositePath);
+                            Debug.Log("adding " + compositePath);
+                            compositeIndex++;
+                        }
+
+                        string[] paths = compositePaths.ToArray();
+                        //Modifiers
+                        if (displayString.Contains('+'))
+                        {
+                            MatchedInput[] inputs = new MatchedInput[paths.Length];
+                            if (ConvertBindings(controls, paths, inputs))
+                                command.Addcombination(inputs);
+                        }
+                        //Axis
+                        else
+                        {
+                            string pathData = string.Join('/', paths);
+                            Debug.Log(pathData);
+                            AddBindingToCommand(controls, ref command, binding.GetNameOfComposite(), pathData);
+                        }
+
+                        j = compositeIndex - 1;
+                    }
+                    else
+                        AddBindingToCommand(controls, ref command, controlPath, controlPath);
                 }
 
                 commands[i] = command;
             }
 
             return commands;
+
+            static void AddBindingToCommand(CD_DeviceControls controls, ref CD_Command command, string matchingString, string pathData)
+            {
+                CD_Input data = controls.GetMatchingInput(ref matchingString);
+                if (data.HasValue)
+                    command.Addcombination(new MatchedInput(data, pathData));
+                else
+                    Debug.LogError($"Cannot find binding {matchingString}");
+            }
         }
 
         private static bool ConvertBindings(CD_DeviceControls controls, string[] bindings, MatchedInput[] inputs)

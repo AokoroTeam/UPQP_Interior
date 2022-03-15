@@ -33,9 +33,9 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         {
             Image.sprite = path switch
             {
-                "LMB" => lmb,
-                "RMB" => rmb,
-                "MMB" => mmb,
+                "leftButton" => lmb,
+                "rightButton" => rmb,
+                "middleButton" => mmb,
                 _ => mmb,
             };
         }

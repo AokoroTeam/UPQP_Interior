@@ -8,10 +8,11 @@ using System.Linq;
 using System.Reflection;
 
 using System.IO;
+using UnityEngine.UIElements;
 
 namespace Aokoro.Editor
 {
-    [CustomPropertyDrawer(typeof(ComplexeProperty<>))]
+    [CustomPropertyDrawer(typeof(InfluencedProperty<>))]
     public class ComplexePropertyDrawer : PropertyDrawer
     {
         private bool opened = true;
@@ -33,14 +34,17 @@ namespace Aokoro.Editor
             return base.CanCacheInspectorGUI(property);
         }
 
-
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            return base.CreatePropertyGUI(property);
+        }
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             EditorGUI.BeginProperty(position, label, property);
 
+            /*
             BindingFlags all = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-
 
             //Script where object is serialized
             object targetObject = property.serializedObject.targetObject;
@@ -104,6 +108,7 @@ namespace Aokoro.Editor
             }
 
             EditorGUI.indentLevel = 0;
+            */
             EditorGUI.EndProperty();
         }
 

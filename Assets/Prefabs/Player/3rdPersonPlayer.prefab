@@ -801,6 +801,7 @@ MonoBehaviour:
     m_Asset: {fileID: 0}
     m_Actions: []
     m_Bindings: []
+  FirstWindowToShow: 
   FeaturesRoot: {fileID: 3394843229303778485}
   executeFeatures:
     m_Name: Execute Features
@@ -836,7 +837,7 @@ MonoBehaviour:
   _maxFlySpeed: 10
   _brakingDecelerationFlying: 0
   _flyingFriction: 0.5
-  _canEverSwim: 1
+  _canEverSwim: 0
   _maxSwimSpeed: 3
   _brakingDecelerationSwimming: 0
   _swimmingFriction: 0.5
@@ -870,6 +871,7 @@ MonoBehaviour:
   _pushForceScale: 2
   _standingDownwardForceScale: 1
   _camera: {fileID: 0}
+  UI: {fileID: 0}
 --- !u!114 &506713300638409367
 MonoBehaviour:
   m_ObjectHideFlags: 0

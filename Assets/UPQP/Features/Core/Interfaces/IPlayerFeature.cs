@@ -11,9 +11,5 @@ namespace UPQP.Features
         public Feature @Feature { get; }
         public string MapName { get; }
         public UPQP_Player Player { get; set; }
-
-
-        public void ExecuteFeature();
-        public void EndFeature();
     }
 }

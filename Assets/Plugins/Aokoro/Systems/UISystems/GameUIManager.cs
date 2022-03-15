@@ -12,7 +12,7 @@ namespace Aokoro.UI
         public Action OnUpdate;
         public Transform WindowsParent;
 
-        public static WindowManager WindowManager { get; private set; }
+        private WindowManager windowManager;
 
         protected override void OnExistingInstanceFound(GameUIManager existingInstance)
         {
@@ -22,10 +22,7 @@ namespace Aokoro.UI
         {
             base.Awake();
             if(IsInstance)
-            {
-                WindowManager = GetComponent<WindowManager>();
-
-            }
+                windowManager = GetComponent<WindowManager>();
         }
 
 
@@ -35,5 +32,20 @@ namespace Aokoro.UI
             OnUpdate?.Invoke();
         }
 
+        public static void OpenWindow(string windowName) => Instance.windowManager.OpenWindow(windowName);
+        public static void ShowCurrentWindow() => Instance.windowManager.ShowCurrentWindow();
+        public static void HideCurrentWindow() => Instance.windowManager.HideCurrentWindow();
+        public static WindowManager.WindowItem CurrentWindow() => Instance.windowManager.windows[Instance.windowManager.currentWindowIndex];
+        public static WindowManager.WindowItem AddWindow(string windowName, GameObject windowObject)
+        {
+            WindowManager.WindowItem window = new WindowManager.WindowItem();
+
+            window.windowName = windowName;
+            window.windowObject = windowObject;
+
+            Instance.windowManager.windows.Add(window);
+
+            return window;
+        }
     }
 }

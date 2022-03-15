@@ -29,13 +29,13 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                     vertical1.SetActive(true);
                     vertical2.SetActive(true);
                     break;
-                case ("delta x"):
+                case ("delta/x"):
                     horizontal1.SetActive(true);
                     horizontal2.SetActive(true);
                     vertical1.SetActive(false);
                     vertical2.SetActive(false);
                     break;
-                case ("delta y"):
+                case ("delta/y"):
                     horizontal1.SetActive(false);
                     horizontal2.SetActive(false);
                     vertical1.SetActive(true);

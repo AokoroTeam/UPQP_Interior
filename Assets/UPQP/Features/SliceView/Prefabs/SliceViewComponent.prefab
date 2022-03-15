@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e71d57bcb28fc498ea78084035408a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  featureName: SliceView
+  mapName: SliceView
   actions: {fileID: -944628639613478452, guid: 2dfa225a2c8e39f4ea40c7c866057fe2, type: 3}

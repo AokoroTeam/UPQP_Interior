@@ -6,6 +6,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
     [CreateAssetMenu(menuName = "Aokoro/UI/Inputs/DeviceControls")]
     public class CD_DeviceControls : ScriptableObject
     {
+        
         public string Device => device;
 
         [SerializeField]
@@ -27,9 +28,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     return controlData;
 
             }
-
+            Debug.LogError($"{controlPath} was not found in {device}", this);
             return defaultControl;
         }
+
 
 #if UNITY_EDITOR
         private void OnValidate()

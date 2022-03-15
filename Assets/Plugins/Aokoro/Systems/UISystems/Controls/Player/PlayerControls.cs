@@ -10,6 +10,8 @@ namespace Aokoro.UI.ControlsDiplaySystem
 {
     public class PlayerControls : MonoBehaviour, ILateUpdateLivingComponent<PlayerManager>
     {
+        string IEntityComponent.ComponentName => "PlayerControls";
+
         public event Action OnControlChanges;
         private PlayerInput playerInput;
         public PlayerManager Manager { get; set; }
@@ -44,7 +46,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
             OnControlChanges?.Invoke();
         }
 
-        public void LateUpdateComponent()
+        public void OnLateUpdate()
         {
             if (lastMap != playerInput.currentActionMap)
             {

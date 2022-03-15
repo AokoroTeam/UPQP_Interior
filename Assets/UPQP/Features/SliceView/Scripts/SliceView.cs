@@ -24,10 +24,10 @@ namespace UPQP.Features.SliceView
             this.P_UI = P_UI;
         }
 
-        protected override void Generate(LevelManager manager)
+        protected override void GenerateNeededContent(LevelManager manager)
         {
             //Add Manager
-            Manager = GameObject.Instantiate(P_Manager, GameManager.Instance.transform).GetComponent<SliceView_Manager>();
+            Manager = GameObject.FindObjectOfType<SliceView_Manager>(false);
             //Add player Component
             Player = GameObject.Instantiate(P_PlayerComponent, manager.Player.FeaturesRoot).GetComponent<SliceView_Player>();
             //Add UI
@@ -40,9 +40,25 @@ namespace UPQP.Features.SliceView
 
         public override void Clean(LevelManager controller)
         {
-            GameObject.Destroy(Player.gameObject);
+            GameObject.Destroy(Player);
             GameObject.Destroy(Manager.gameObject);
             GameObject.Destroy(UI.gameObject);
         }
+
+        public override void EnableFeature()
+        {
+            UI.ShowCommands();
+            Manager.OnFeatureEnables();
+            Player.OnFeatureEnables();
+        }
+
+        public override void DisableFeature()
+        {
+            Debug.Log("Wesh");
+            UI.HideCommands();
+            Manager.OnFeatureDisables();
+            Player.OnFeatureDisables();
+        }
+
     }
 }

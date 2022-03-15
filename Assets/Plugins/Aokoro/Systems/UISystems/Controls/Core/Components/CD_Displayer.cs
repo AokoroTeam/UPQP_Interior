@@ -41,19 +41,21 @@ namespace Aokoro.UI.ControlsDiplaySystem
             if (actionProvider != value)
             {
                 if (actionProvider != null)
+                {
                     actionProvider.OnResfreshNeeded -= Refresh;
+                    if (triggerRefresh)
+                        Refresh();
+                }
 
                 actionProvider = value;
                 actionProvider.OnResfreshNeeded += Refresh;
-
-                if(triggerRefresh)
-                    Refresh();
             }
         }
 
         public void Show()
         {
             root.gameObject.SetActive(true);
+            Refresh();
         }
 
         public void Hide()
@@ -63,14 +65,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
         public void Refresh()
         {
-            Clean();
-            Fill();
+            foreach (var display in displays)
+                Destroy(display.gameObject);
+            displays.Clear();
 
-            //Canvas.ForceUpdateCanvases();
-        }
-
-        private void Fill()
-        {
             CD_InputAction[] actions = ControlsDiplaySystem.ConvertInputSystemActions(actionProvider.GetInputActions(), actionSettings);
             CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, CurrentControl);
 
@@ -78,15 +76,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
             {
                 CD_DisplayCommand displayer = GameObject.Instantiate(CommandLayout, root).GetComponent<CD_DisplayCommand>();
                 displays.Add(displayer);
-
                 displayer.Fill(commands[i]);
             }
-        }
 
-        private void Clean()
-        {
-            foreach (var display in displays)
-                Destroy(display.gameObject);
+            //Canvas.ForceUpdateCanvases();
         }
     }
 }

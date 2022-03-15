@@ -12,11 +12,14 @@ namespace UPQP.Features
 
         internal void Setup(LevelManager controller)
         {
-            Generate(controller);
+            GenerateNeededContent(controller);
             InitiateFeatureComponents?.Invoke(this);
         }
 
-        protected abstract void Generate(LevelManager controller);
+        protected abstract void GenerateNeededContent(LevelManager controller);
         public abstract void Clean(LevelManager controller);
+
+        public abstract void EnableFeature();
+        public abstract void DisableFeature();
     }
 }

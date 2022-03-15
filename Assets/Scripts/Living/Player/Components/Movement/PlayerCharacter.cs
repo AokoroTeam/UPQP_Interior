@@ -19,13 +19,15 @@ namespace UPQP.Player.Movement
         public PlayerManager Manager { get; set; }
         public InputActionAsset ActionAsset { get => inputActions; set => inputActions = value; }
 
+        string IEntityComponent.ComponentName => "PlayerCharacter";
+
         public event Action OnResfreshNeeded;
 
         private PlayerControls playerControls;
-        
-        public void BindToNewActions(InputActionMap[] maps)
+         
+        public void BindToNewActions(InputActionAsset asset)
         {
-
+            
         }
         protected override void OnAwake()
         {
@@ -68,7 +70,6 @@ namespace UPQP.Player.Movement
                 if (GetMovementInput().sqrMagnitude > .1f)
                 {
                     var normVelocity = transform.InverseTransformDirection(currentVelocity).normalized;
-                    Debug.DrawRay(base.GetPosition(), currentVelocity.normalized * 15);
                     animator.SetFloat("Norm_Forward_Speed", normVelocity.z, .1f, Time.deltaTime);
                     animator.SetFloat("Norm_Right_Speed", normVelocity.x, .1f, Time.deltaTime);
                     //animator.SetFloat("Angular_Speed", AngularVelocity.y);

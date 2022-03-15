@@ -12,10 +12,13 @@ namespace UPQP.Features
     public abstract class PlayerFeatureComponent<T> : FeatureComponent<T>, IPlayerFeature, CD_InputActionsProvider, IPlayerInputAssetProvider where T : Feature
     {
         public event Action OnResfreshNeeded;
+        public Feature Feature => _Feature;
+        public string MapName => mapName;
 
-        [SerializeField] public string featureName;
+        [SerializeField] private string mapName;
         [SerializeField] private InputActionAsset actions;
-        [ReadOnly] public UPQP_Player player;
+
+        public UPQP_Player Player { get; set; }
         private PlayerControls playerControls;
 
         public InputActionAsset ActionAsset { get => actions; set => actions = value; }
@@ -43,10 +46,10 @@ namespace UPQP.Features
         }
         private void TriggerRefresh() => OnResfreshNeeded?.Invoke();
 
-        public abstract void ExecuteFeature();
-        public abstract void EndFeature();
+        public abstract void OnFeatureEnables();
+        public abstract void OnFeatureDisables();
 
-        public abstract void BindToNewActions(InputActionMap[] maps);
+        public abstract void BindToNewActions(InputActionAsset actions);
 
 
 
@@ -54,13 +57,10 @@ namespace UPQP.Features
 
         InputAction[]  CD_InputActionsProvider.GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();
 
-        string CD_InputActionsProvider.GetCurrentDeviceName() => player.playerInput.currentControlScheme;
+        string CD_InputActionsProvider.GetCurrentDeviceName() => Player.playerInput.currentControlScheme;
 
-        Feature IPlayerFeature.Feature => _Feature;
-
-        string IPlayerFeature.MapName => featureName;
-
-        UPQP_Player IPlayerFeature.Player { get => player; set => player = value; }
+       
+        
 
         #endregion
     }

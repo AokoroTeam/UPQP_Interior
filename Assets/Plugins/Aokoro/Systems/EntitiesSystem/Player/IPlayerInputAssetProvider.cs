@@ -9,6 +9,6 @@ namespace Aokoro.Entities.Player
     {
         public InputActionAsset ActionAsset { get; set; }
 
-        void BindToNewActions(InputActionMap[] maps);
+        void BindToNewActions(InputActionAsset asset);
     }
 }

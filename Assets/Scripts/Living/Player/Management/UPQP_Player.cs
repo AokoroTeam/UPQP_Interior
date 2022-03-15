@@ -17,14 +17,8 @@ namespace UPQP.Player
 
         [BoxGroup("Features")]
         public Transform FeaturesRoot;
-        [BoxGroup("Features"), ReadOnly, SerializeField]
-        private Feature[] features;
         [BoxGroup("Features"), ReadOnly, Space]
         public InputActionMap executeFeatures;
-
-
-        private IPlayerFeature[] playerFeatures;
-
 
         protected override void Awake()
         {
@@ -35,20 +29,18 @@ namespace UPQP.Player
         }
         public override void OnAwake()
         {
-            features = LevelManager.Instance.CreateLevelFeatures();
-            SetupPlayerFeatures();
+            SetupPlayerFeatures(LevelManager.Instance.CreateLevelFeatures());
             base.OnAwake();
         }
 
-        private void Start()
+        private void SetupPlayerFeatures(Feature[] features)
         {
-            
-        }
-        private void SetupPlayerFeatures()
-        {
-            playerFeatures = GetComponentsInChildren<IPlayerFeature>();
+            var playerFeatures = GetComponentsInChildren<IPlayerFeature>();
+            for (int i = 0; i < playerFeatures.Length; i++)
+                playerFeatures[i].Player = this;
 
-            int length = Mathf.Min(playerFeatures.Length, 10);
+
+            int length = Mathf.Min(features.Length, 10);
 
             executeFeatures = new InputActionMap("executeFeatures");
             executeFeatures.Disable();
@@ -64,29 +56,26 @@ namespace UPQP.Player
                 InputAction startAction = executeFeatures.AddAction($"Start {playerFeature.MapName}", InputActionType.Button, $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
 
                 ///Links it to the correct callback
-                startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature);
+                startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature.Feature);
             }
 
             executeFeatures.Enable();
         }
 
-        private void ExecuteFeatureCallback(InputAction.CallbackContext context, IPlayerFeature feature)
+        private void ExecuteFeatureCallback(InputAction.CallbackContext context, Feature feature)
         {
             if (context.performed)
                 ExecuteFeature(feature);
         }
-        public void ExecuteFeature(IPlayerFeature playerFeature)
+        public void ExecuteFeature(Feature feature)
         {
-            playerFeature.ExecuteFeature();
-            ChangeActionMap(playerFeature.MapName);
+            feature.EnableFeature();
             executeFeatures.Disable();
         }
 
-        public void EndFeature(IPlayerFeature playerFeature)
+        public void EndFeature(Feature feature)
         {
-            playerFeature.EndFeature();
-
-            ChangeActionMap(DefaultActionMap);
+            feature.DisableFeature();
             executeFeatures.Enable();
         }
     }
