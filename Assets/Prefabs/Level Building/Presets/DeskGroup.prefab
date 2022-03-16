@@ -274,14 +274,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1545459941680996993}
     m_Modifications:
-    - target: {fileID: 348443705904530820, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
-      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.43960965
-      objectReference: {fileID: 0}
-    - target: {fileID: 348443705904530820, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
-      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.1859265
-      objectReference: {fileID: 0}
     - target: {fileID: 1088685092208296298, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -326,17 +318,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2121166185401796368, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
-      propertyPath: m_ScaleInLightmap
-      value: 0.743706
-      objectReference: {fileID: 0}
     - target: {fileID: 4125456181835608953, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
       propertyPath: m_Name
       value: Desk02 (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8112362601780843354, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
-      propertyPath: m_ScaleInLightmap
-      value: 0.8792193
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75d12387f30188241af1b73ab3be88a0, type: 3}
