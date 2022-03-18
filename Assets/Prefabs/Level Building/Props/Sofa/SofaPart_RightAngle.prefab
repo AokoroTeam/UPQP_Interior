@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 482145595776844629}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347281711069020333}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3391561, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1007499942002117629}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494432186502644747}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3391561, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 3674987447010525387}
   - component: {fileID: 7475094878517995503}
   - component: {fileID: 4771168753557228390}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle_0_LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 1888486518103768742}
   - component: {fileID: 1606291593484601201}
   - component: {fileID: 4233867664646213053}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ Transform:
   m_GameObject: {fileID: 1888486518103768741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25.548557, y: 0.3290203, z: 15.292}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1007499942002117629}
@@ -191,17 +191,17 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888486518103768741}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0.32238033, z: -0.00030106306}
-  m_Size: 1.5262159
+  m_LocalReferencePoint: {x: -0.0015333295, y: -0.016724288, z: 0.024692327}
+  m_Size: 1.5772476
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.25411502
+  - screenRelativeHeight: 0.26717603
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5183886176805000385}
-  - screenRelativeHeight: 0.04904757
+  - screenRelativeHeight: 0.06816217
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5407904400439725088}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 8562485086098974604}
   - component: {fileID: 5183886176805000385}
   - component: {fileID: 8858920242815144915}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle_0_LOD_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3320198054832836342}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LOD_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7836267432644993451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3391561, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 6904018875822011069}
   - component: {fileID: 1409261809059748560}
   - component: {fileID: 5407904400439725088}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SofaPart_RightAngle_0_LOD_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7961034811993053813}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

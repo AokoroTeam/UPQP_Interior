@@ -9,6 +9,7 @@ namespace UPQP.Player.CameraManagement
 {
     public class PlayerCamController : CinemachineInputProvider, IEntityComponent<PlayerManager>
     {
+        string IEntityComponent.ComponentName => "PlayerCamController";
         public PlayerManager Manager { get; set; }
 
         private InputAction lookAction;
@@ -21,12 +22,11 @@ namespace UPQP.Player.CameraManagement
 
         public virtual void Initiate(PlayerManager manager)
         {
-
-            lookAction = Manager.playerInput.actions.FindActionMap("DefaultGameplay").FindAction("Look");
-            XYAxis.Set(lookAction);
-
+            lookAction = manager.playerInput.actions.FindActionMap("DefaultGameplay").FindAction("Look");
             lookAction.Enable();
+            XYAxis.Set(lookAction);
         }
+
 
         public void DisableInputs()
         {

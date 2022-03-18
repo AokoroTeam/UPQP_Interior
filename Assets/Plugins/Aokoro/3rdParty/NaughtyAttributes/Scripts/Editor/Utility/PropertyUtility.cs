@@ -7,368 +7,371 @@ using UnityEngine;
 
 namespace NaughtyAttributes.Editor
 {
-	public static class PropertyUtility
-	{
-		public static T GetAttribute<T>(SerializedProperty property) where T : class
-		{
-			T[] attributes = GetAttributes<T>(property);
-			return (attributes.Length > 0) ? attributes[0] : null;
-		}
+    public static class PropertyUtility
+    {
+        public static T GetAttribute<T>(SerializedProperty property) where T : class
+        {
+            if (property == null)
+                return null;
 
-		public static T[] GetAttributes<T>(SerializedProperty property) where T : class
-		{
-			FieldInfo fieldInfo = ReflectionUtility.GetField(GetTargetObjectWithProperty(property), property.name);
-			if (fieldInfo == null)
-			{
-				return new T[] { };
-			}
+            T[] attributes = GetAttributes<T>(property);
+            return (attributes.Length > 0) ? attributes[0] : null;
+        }
 
-			return (T[])fieldInfo.GetCustomAttributes(typeof(T), true);
-		}
+        public static T[] GetAttributes<T>(SerializedProperty property) where T : class
+        {
+            FieldInfo fieldInfo = ReflectionUtility.GetField(GetTargetObjectWithProperty(property), property.name);
+            if (fieldInfo == null)
+            {
+                return new T[] { };
+            }
 
-		public static GUIContent GetLabel(SerializedProperty property)
-		{
-			LabelAttribute labelAttribute = GetAttribute<LabelAttribute>(property);
-			string labelText = (labelAttribute == null)
-				? property.displayName
-				: labelAttribute.Label;
+            return (T[])fieldInfo.GetCustomAttributes(typeof(T), true);
+        }
 
-			GUIContent label = new GUIContent(labelText);
-			return label;
-		}
+        public static GUIContent GetLabel(SerializedProperty property)
+        {
+            LabelAttribute labelAttribute = GetAttribute<LabelAttribute>(property);
+            string labelText = (labelAttribute == null)
+                ? property.displayName
+                : labelAttribute.Label;
 
-		public static void CallOnValueChangedCallbacks(SerializedProperty property)
-		{
-			OnValueChangedAttribute[] onValueChangedAttributes = GetAttributes<OnValueChangedAttribute>(property);
-			if (onValueChangedAttributes.Length == 0)
-			{
-				return;
-			}
+            GUIContent label = new GUIContent(labelText);
+            return label;
+        }
 
-			object target = GetTargetObjectWithProperty(property);
-			property.serializedObject.ApplyModifiedProperties(); // We must apply modifications so that the new value is updated in the serialized object
+        public static void CallOnValueChangedCallbacks(SerializedProperty property)
+        {
+            OnValueChangedAttribute[] onValueChangedAttributes = GetAttributes<OnValueChangedAttribute>(property);
+            if (onValueChangedAttributes.Length == 0)
+            {
+                return;
+            }
 
-			foreach (var onValueChangedAttribute in onValueChangedAttributes)
-			{
-				MethodInfo callbackMethod = ReflectionUtility.GetMethod(target, onValueChangedAttribute.CallbackName);
-				if (callbackMethod != null &&
-					callbackMethod.ReturnType == typeof(void) &&
-					callbackMethod.GetParameters().Length == 0)
-				{
-					callbackMethod.Invoke(target, new object[] { });
-				}
-				else
-				{
-					string warning = string.Format(
-						"{0} can invoke only methods with 'void' return type and 0 parameters",
-						onValueChangedAttribute.GetType().Name);
+            object target = GetTargetObjectWithProperty(property);
+            property.serializedObject.ApplyModifiedProperties(); // We must apply modifications so that the new value is updated in the serialized object
 
-					Debug.LogWarning(warning, property.serializedObject.targetObject);
-				}
-			}
-		}
+            foreach (var onValueChangedAttribute in onValueChangedAttributes)
+            {
+                MethodInfo callbackMethod = ReflectionUtility.GetMethod(target, onValueChangedAttribute.CallbackName);
+                if (callbackMethod != null &&
+                    callbackMethod.ReturnType == typeof(void) &&
+                    callbackMethod.GetParameters().Length == 0)
+                {
+                    callbackMethod.Invoke(target, new object[] { });
+                }
+                else
+                {
+                    string warning = string.Format(
+                        "{0} can invoke only methods with 'void' return type and 0 parameters",
+                        onValueChangedAttribute.GetType().Name);
 
-		public static bool IsEnabled(SerializedProperty property)
-		{
-			ReadOnlyAttribute readOnlyAttribute = GetAttribute<ReadOnlyAttribute>(property);
-			if (readOnlyAttribute != null)
-			{
-				return false;
-			}
+                    Debug.LogWarning(warning, property.serializedObject.targetObject);
+                }
+            }
+        }
 
-			EnableIfAttributeBase enableIfAttribute = GetAttribute<EnableIfAttributeBase>(property);
-			if (enableIfAttribute == null)
-			{
-				return true;
-			}
+        public static bool IsEnabled(SerializedProperty property)
+        {
+            ReadOnlyAttribute readOnlyAttribute = GetAttribute<ReadOnlyAttribute>(property);
+            if (readOnlyAttribute != null)
+            {
+                return false;
+            }
 
-			object target = GetTargetObjectWithProperty(property);
+            EnableIfAttributeBase enableIfAttribute = GetAttribute<EnableIfAttributeBase>(property);
+            if (enableIfAttribute == null)
+            {
+                return true;
+            }
 
-			// deal with enum conditions
-			if (enableIfAttribute.EnumValue != null)
-			{
-				Enum value = GetEnumValue(target, enableIfAttribute.Conditions[0]);
-				if (value != null)
-				{
-					bool matched = value.GetType().GetCustomAttribute<FlagsAttribute>() == null
-						? enableIfAttribute.EnumValue.Equals(value)
-						: value.HasFlag(enableIfAttribute.EnumValue);
+            object target = GetTargetObjectWithProperty(property);
 
-					return matched != enableIfAttribute.Inverted;
-				}
+            // deal with enum conditions
+            if (enableIfAttribute.EnumValue != null)
+            {
+                Enum value = GetEnumValue(target, enableIfAttribute.Conditions[0]);
+                if (value != null)
+                {
+                    bool matched = value.GetType().GetCustomAttribute<FlagsAttribute>() == null
+                        ? enableIfAttribute.EnumValue.Equals(value)
+                        : value.HasFlag(enableIfAttribute.EnumValue);
 
-				string message = enableIfAttribute.GetType().Name + " needs a valid enum field, property or method name to work";
-				Debug.LogWarning(message, property.serializedObject.targetObject);
+                    return matched != enableIfAttribute.Inverted;
+                }
 
-				return false;
-			}
+                string message = enableIfAttribute.GetType().Name + " needs a valid enum field, property or method name to work";
+                Debug.LogWarning(message, property.serializedObject.targetObject);
 
-			// deal with normal conditions
-			List<bool> conditionValues = GetConditionValues(target, enableIfAttribute.Conditions);
-			if (conditionValues.Count > 0)
-			{
-				bool enabled = GetConditionsFlag(conditionValues, enableIfAttribute.ConditionOperator, enableIfAttribute.Inverted);
-				return enabled;
-			}
-			else
-			{
-				string message = enableIfAttribute.GetType().Name + " needs a valid boolean condition field, property or method name to work";
-				Debug.LogWarning(message, property.serializedObject.targetObject);
+                return false;
+            }
 
-				return false;
-			}
-		}
+            // deal with normal conditions
+            List<bool> conditionValues = GetConditionValues(target, enableIfAttribute.Conditions);
+            if (conditionValues.Count > 0)
+            {
+                bool enabled = GetConditionsFlag(conditionValues, enableIfAttribute.ConditionOperator, enableIfAttribute.Inverted);
+                return enabled;
+            }
+            else
+            {
+                string message = enableIfAttribute.GetType().Name + " needs a valid boolean condition field, property or method name to work";
+                Debug.LogWarning(message, property.serializedObject.targetObject);
 
-		public static bool IsVisible(SerializedProperty property)
-		{
-			ShowIfAttributeBase showIfAttribute = GetAttribute<ShowIfAttributeBase>(property);
-			if (showIfAttribute == null)
-			{
-				return true;
-			}
+                return false;
+            }
+        }
 
-			object target = GetTargetObjectWithProperty(property);
+        public static bool IsVisible(SerializedProperty property)
+        {
+            ShowIfAttributeBase showIfAttribute = GetAttribute<ShowIfAttributeBase>(property);
+            if (showIfAttribute == null)
+            {
+                return true;
+            }
 
-			// deal with enum conditions
-			if (showIfAttribute.EnumValue != null)
-			{
-				Enum value = GetEnumValue(target, showIfAttribute.Conditions[0]);
-				if (value != null)
-				{
-					bool matched = value.GetType().GetCustomAttribute<FlagsAttribute>() == null
-						? showIfAttribute.EnumValue.Equals(value)
-						: value.HasFlag(showIfAttribute.EnumValue);
+            object target = GetTargetObjectWithProperty(property);
 
-					return matched != showIfAttribute.Inverted;
-				}
+            // deal with enum conditions
+            if (showIfAttribute.EnumValue != null)
+            {
+                Enum value = GetEnumValue(target, showIfAttribute.Conditions[0]);
+                if (value != null)
+                {
+                    bool matched = value.GetType().GetCustomAttribute<FlagsAttribute>() == null
+                        ? showIfAttribute.EnumValue.Equals(value)
+                        : value.HasFlag(showIfAttribute.EnumValue);
 
-				string message = showIfAttribute.GetType().Name + " needs a valid enum field, property or method name to work";
-				Debug.LogWarning(message, property.serializedObject.targetObject);
+                    return matched != showIfAttribute.Inverted;
+                }
 
-				return false;
-			}
+                string message = showIfAttribute.GetType().Name + " needs a valid enum field, property or method name to work";
+                Debug.LogWarning(message, property.serializedObject.targetObject);
 
-			// deal with normal conditions
-			List<bool> conditionValues = GetConditionValues(target, showIfAttribute.Conditions);
-			if (conditionValues.Count > 0)
-			{
-				bool enabled = GetConditionsFlag(conditionValues, showIfAttribute.ConditionOperator, showIfAttribute.Inverted);
-				return enabled;
-			}
-			else
-			{
-				string message = showIfAttribute.GetType().Name + " needs a valid boolean condition field, property or method name to work";
-				Debug.LogWarning(message, property.serializedObject.targetObject);
+                return false;
+            }
 
-				return false;
-			}
-		}
+            // deal with normal conditions
+            List<bool> conditionValues = GetConditionValues(target, showIfAttribute.Conditions);
+            if (conditionValues.Count > 0)
+            {
+                bool enabled = GetConditionsFlag(conditionValues, showIfAttribute.ConditionOperator, showIfAttribute.Inverted);
+                return enabled;
+            }
+            else
+            {
+                string message = showIfAttribute.GetType().Name + " needs a valid boolean condition field, property or method name to work";
+                Debug.LogWarning(message, property.serializedObject.targetObject);
 
-		/// <summary>
-		///		Gets an enum value from reflection.
-		/// </summary>
-		/// <param name="target">The target object.</param>
-		/// <param name="enumName">Name of a field, property, or method that returns an enum.</param>
-		/// <returns>Null if can't find an enum value.</returns>
-		internal static Enum GetEnumValue(object target, string enumName)
-		{
-			FieldInfo enumField = ReflectionUtility.GetField(target, enumName);
-			if (enumField != null && enumField.FieldType.IsSubclassOf(typeof(Enum)))
-			{
-				return (Enum)enumField.GetValue(target);
-			}
+                return false;
+            }
+        }
 
-			PropertyInfo enumProperty = ReflectionUtility.GetProperty(target, enumName);
-			if (enumProperty != null && enumProperty.PropertyType.IsSubclassOf(typeof(Enum)))
-			{
-				return (Enum)enumProperty.GetValue(target);
-			}
+        /// <summary>
+        ///		Gets an enum value from reflection.
+        /// </summary>
+        /// <param name="target">The target object.</param>
+        /// <param name="enumName">Name of a field, property, or method that returns an enum.</param>
+        /// <returns>Null if can't find an enum value.</returns>
+        internal static Enum GetEnumValue(object target, string enumName)
+        {
+            FieldInfo enumField = ReflectionUtility.GetField(target, enumName);
+            if (enumField != null && enumField.FieldType.IsSubclassOf(typeof(Enum)))
+            {
+                return (Enum)enumField.GetValue(target);
+            }
 
-			MethodInfo enumMethod = ReflectionUtility.GetMethod(target, enumName);
-			if (enumMethod != null && enumMethod.ReturnType.IsSubclassOf(typeof(Enum)))
-			{
-				return (Enum)enumMethod.Invoke(target, null);
-			}
+            PropertyInfo enumProperty = ReflectionUtility.GetProperty(target, enumName);
+            if (enumProperty != null && enumProperty.PropertyType.IsSubclassOf(typeof(Enum)))
+            {
+                return (Enum)enumProperty.GetValue(target);
+            }
 
-			return null;
-		}
+            MethodInfo enumMethod = ReflectionUtility.GetMethod(target, enumName);
+            if (enumMethod != null && enumMethod.ReturnType.IsSubclassOf(typeof(Enum)))
+            {
+                return (Enum)enumMethod.Invoke(target, null);
+            }
 
-		internal static List<bool> GetConditionValues(object target, string[] conditions)
-		{
-			List<bool> conditionValues = new List<bool>();
-			foreach (var condition in conditions)
-			{
-				FieldInfo conditionField = ReflectionUtility.GetField(target, condition);
-				if (conditionField != null &&
-					conditionField.FieldType == typeof(bool))
-				{
-					conditionValues.Add((bool)conditionField.GetValue(target));
-				}
+            return null;
+        }
 
-				PropertyInfo conditionProperty = ReflectionUtility.GetProperty(target, condition);
-				if (conditionProperty != null &&
-					conditionProperty.PropertyType == typeof(bool))
-				{
-					conditionValues.Add((bool)conditionProperty.GetValue(target));
-				}
+        internal static List<bool> GetConditionValues(object target, string[] conditions)
+        {
+            List<bool> conditionValues = new List<bool>();
+            foreach (var condition in conditions)
+            {
+                FieldInfo conditionField = ReflectionUtility.GetField(target, condition);
+                if (conditionField != null &&
+                    conditionField.FieldType == typeof(bool))
+                {
+                    conditionValues.Add((bool)conditionField.GetValue(target));
+                }
 
-				MethodInfo conditionMethod = ReflectionUtility.GetMethod(target, condition);
-				if (conditionMethod != null &&
-					conditionMethod.ReturnType == typeof(bool) &&
-					conditionMethod.GetParameters().Length == 0)
-				{
-					conditionValues.Add((bool)conditionMethod.Invoke(target, null));
-				}
-			}
+                PropertyInfo conditionProperty = ReflectionUtility.GetProperty(target, condition);
+                if (conditionProperty != null &&
+                    conditionProperty.PropertyType == typeof(bool))
+                {
+                    conditionValues.Add((bool)conditionProperty.GetValue(target));
+                }
 
-			return conditionValues;
-		}
+                MethodInfo conditionMethod = ReflectionUtility.GetMethod(target, condition);
+                if (conditionMethod != null &&
+                    conditionMethod.ReturnType == typeof(bool) &&
+                    conditionMethod.GetParameters().Length == 0)
+                {
+                    conditionValues.Add((bool)conditionMethod.Invoke(target, null));
+                }
+            }
 
-		internal static bool GetConditionsFlag(List<bool> conditionValues, EConditionOperator conditionOperator, bool invert)
-		{
-			bool flag;
-			if (conditionOperator == EConditionOperator.And)
-			{
-				flag = true;
-				foreach (var value in conditionValues)
-				{
-					flag = flag && value;
-				}
-			}
-			else
-			{
-				flag = false;
-				foreach (var value in conditionValues)
-				{
-					flag = flag || value;
-				}
-			}
+            return conditionValues;
+        }
 
-			if (invert)
-			{
-				flag = !flag;
-			}
+        internal static bool GetConditionsFlag(List<bool> conditionValues, EConditionOperator conditionOperator, bool invert)
+        {
+            bool flag;
+            if (conditionOperator == EConditionOperator.And)
+            {
+                flag = true;
+                foreach (var value in conditionValues)
+                {
+                    flag = flag && value;
+                }
+            }
+            else
+            {
+                flag = false;
+                foreach (var value in conditionValues)
+                {
+                    flag = flag || value;
+                }
+            }
 
-			return flag;
-		}
+            if (invert)
+            {
+                flag = !flag;
+            }
 
-		public static Type GetPropertyType(SerializedProperty property)
-		{
-			object obj = GetTargetObjectOfProperty(property);
-			Type objType = obj.GetType();
+            return flag;
+        }
 
-			return objType;
-		}
+        public static Type GetPropertyType(SerializedProperty property)
+        {
+            object obj = GetTargetObjectOfProperty(property);
+            Type objType = obj.GetType();
 
-		/// <summary>
-		/// Gets the object the property represents.
-		/// </summary>
-		/// <param name="property"></param>
-		/// <returns></returns>
-		public static object GetTargetObjectOfProperty(SerializedProperty property)
-		{
-			if (property == null)
-			{
-				return null;
-			}
+            return objType;
+        }
 
-			string path = property.propertyPath.Replace(".Array.data[", "[");
-			object obj = property.serializedObject.targetObject;
-			string[] elements = path.Split('.');
+        /// <summary>
+        /// Gets the object the property represents.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static object GetTargetObjectOfProperty(SerializedProperty property)
+        {
+            if (property == null)
+            {
+                return null;
+            }
 
-			foreach (var element in elements)
-			{
-				if (element.Contains("["))
-				{
-					string elementName = element.Substring(0, element.IndexOf("["));
-					int index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
-					obj = GetValue_Imp(obj, elementName, index);
-				}
-				else
-				{
-					obj = GetValue_Imp(obj, element);
-				}
-			}
+            string path = property.propertyPath.Replace(".Array.data[", "[");
+            object obj = property.serializedObject.targetObject;
+            string[] elements = path.Split('.');
 
-			return obj;
-		}
+            foreach (var element in elements)
+            {
+                if (element.Contains("["))
+                {
+                    string elementName = element.Substring(0, element.IndexOf("["));
+                    int index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+                    obj = GetValue_Imp(obj, elementName, index);
+                }
+                else
+                {
+                    obj = GetValue_Imp(obj, element);
+                }
+            }
 
-		/// <summary>
-		/// Gets the object that the property is a member of
-		/// </summary>
-		/// <param name="property"></param>
-		/// <returns></returns>
-		public static object GetTargetObjectWithProperty(SerializedProperty property)
-		{
-			string path = property.propertyPath.Replace(".Array.data[", "[");
-			object obj = property.serializedObject.targetObject;
-			string[] elements = path.Split('.');
+            return obj;
+        }
 
-			for (int i = 0; i < elements.Length - 1; i++)
-			{
-				string element = elements[i];
-				if (element.Contains("["))
-				{
-					string elementName = element.Substring(0, element.IndexOf("["));
-					int index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
-					obj = GetValue_Imp(obj, elementName, index);
-				}
-				else
-				{
-					obj = GetValue_Imp(obj, element);
-				}
-			}
+        /// <summary>
+        /// Gets the object that the property is a member of
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static object GetTargetObjectWithProperty(SerializedProperty property)
+        {
+            string path = property.propertyPath.Replace(".Array.data[", "[");
+            object obj = property.serializedObject.targetObject;
+            string[] elements = path.Split('.');
 
-			return obj;
-		}
+            for (int i = 0; i < elements.Length - 1; i++)
+            {
+                string element = elements[i];
+                if (element.Contains("["))
+                {
+                    string elementName = element.Substring(0, element.IndexOf("["));
+                    int index = Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+                    obj = GetValue_Imp(obj, elementName, index);
+                }
+                else
+                {
+                    obj = GetValue_Imp(obj, element);
+                }
+            }
 
-		private static object GetValue_Imp(object source, string name)
-		{
-			if (source == null)
-			{
-				return null;
-			}
+            return obj;
+        }
 
-			Type type = source.GetType();
+        private static object GetValue_Imp(object source, string name)
+        {
+            if (source == null)
+            {
+                return null;
+            }
 
-			while (type != null)
-			{
-				FieldInfo field = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-				if (field != null)
-				{
-					return field.GetValue(source);
-				}
+            Type type = source.GetType();
 
-				PropertyInfo property = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-				if (property != null)
-				{
-					return property.GetValue(source, null);
-				}
+            while (type != null)
+            {
+                FieldInfo field = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (field != null)
+                {
+                    return field.GetValue(source);
+                }
 
-				type = type.BaseType;
-			}
+                PropertyInfo property = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (property != null)
+                {
+                    return property.GetValue(source, null);
+                }
 
-			return null;
-		}
+                type = type.BaseType;
+            }
 
-		private static object GetValue_Imp(object source, string name, int index)
-		{
-			IEnumerable enumerable = GetValue_Imp(source, name) as IEnumerable;
-			if (enumerable == null)
-			{
-				return null;
-			}
+            return null;
+        }
 
-			IEnumerator enumerator = enumerable.GetEnumerator();
-			for (int i = 0; i <= index; i++)
-			{
-				if (!enumerator.MoveNext())
-				{
-					return null;
-				}
-			}
+        private static object GetValue_Imp(object source, string name, int index)
+        {
+            IEnumerable enumerable = GetValue_Imp(source, name) as IEnumerable;
+            if (enumerable == null)
+            {
+                return null;
+            }
 
-			return enumerator.Current;
-		}
-	}
+            IEnumerator enumerator = enumerable.GetEnumerator();
+            for (int i = 0; i <= index; i++)
+            {
+                if (!enumerator.MoveNext())
+                {
+                    return null;
+                }
+            }
+
+            return enumerator.Current;
+        }
+    }
 }

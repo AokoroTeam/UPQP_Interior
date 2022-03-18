@@ -9,6 +9,7 @@ namespace UPQP.Environnement.Intrests
 {
     public class POI_Looker : MonoBehaviour, IUpdateEntityComponent
     {
+        string IEntityComponent.ComponentName => "PlayerPOILooker";
         [SerializeField]
         private Transform root;
         [SerializeField]
@@ -118,7 +119,7 @@ namespace UPQP.Environnement.Intrests
             }
         }
 
-        public void UpdateComponent()
+        public void OnUpdate()
         {
             AimPoi();
         }

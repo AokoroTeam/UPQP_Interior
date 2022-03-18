@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using NaughtyAttributes;
 
 namespace Aokoro.Entities.Player
 {
@@ -14,10 +15,26 @@ namespace Aokoro.Entities.Player
 
         [HideInInspector]
         public PlayerInput playerInput;
+        public string DefaultActionMap;
+
         [HideInInspector]
         public Animator anim;
         [HideInInspector]
         public Rigidbody rb;
+        [Space]
+        [ReadOnly, BoxGroup("DEBUG")]
+        public InputActionMap currentMap;
+        private AudioListener audioListener;
+        public AudioListener AudioListener
+        {
+            get
+            {
+                if (audioListener == null)
+                    audioListener = Camera.main.GetComponent<AudioListener>();
+
+                return audioListener;
+            }
+        }
 
         public static PlayerManager LocalPlayer
         {
@@ -34,49 +51,43 @@ namespace Aokoro.Entities.Player
                 return localPlayer;
             }
         }
-
-        public AudioListener AudioListener
-        {
-            get
-            {
-                if (audioListener == null)
-                    audioListener = Camera.main.GetComponent<AudioListener>();
-
-                return audioListener;
-            }
-        }
-
-        private AudioListener audioListener;
-
         private static PlayerManager localPlayer;
+
 
         protected override void Awake()
         {
-            if (localPlayer != this && localPlayer != null)
+            if (LocalPlayer != this)
             {
                 Destroy(gameObject);
                 return;
             }
-            else
-                localPlayer = this;
 
             playerInput = GetComponent<PlayerInput>();
-            playerInput.actions = GenerateInputActionAsset();
-            SetupActionAsset(playerInput.actions);
-
             anim = GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
-
-            Initiate<PlayerManager>();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
-        private void SetupActionAsset(InputActionAsset actions)
+        public virtual void OnAwake()
         {
-            actions.Enable();
+            SetupInputs();
+            Initiate<PlayerManager>();
         }
+
+        protected virtual void Start()
+        {
+            ChangeActionMap(DefaultActionMap);
+        }
+
+        protected void SetupInputs()
+        {
+            playerInput.actions = GenerateInputActionAsset();
+            playerInput.ActivateInput();
+            playerInput.actions.Enable();
+        }
+
         protected virtual InputActionAsset GenerateInputActionAsset()
         {
             var asset = ScriptableObject.CreateInstance<InputActionAsset>();
@@ -85,7 +96,7 @@ namespace Aokoro.Entities.Player
             for (int i = 0; i < inputProviders.Length; i++)
             {
                 IPlayerInputAssetProvider inputProvider = inputProviders[i];
-                InputActionAsset subAsset = inputProvider.Actions;
+                InputActionAsset subAsset = inputProvider.ActionAsset;
 
                 //ControlSchemes
                 foreach (var scheme in subAsset.controlSchemes)
@@ -97,6 +108,10 @@ namespace Aokoro.Entities.Player
                 foreach (InputActionMap map in subAsset.actionMaps)
                     asset.AddActionMap(map.Clone());
             }
+
+            for (int i = 0; i < inputProviders.Length; i++)
+                inputProviders[i].BindToNewActions(asset);
+
             return asset;
         }
 
@@ -107,14 +122,28 @@ namespace Aokoro.Entities.Player
             OnRespawn?.Invoke();
         }
 
+        public void ChangeActionMap() => ChangeActionMap(DefaultActionMap);
+
         public void ChangeActionMap(string targetMap)
         {
             if (playerInput.actions.FindActionMap(targetMap) != null)
             {
-                string currentMap = playerInput.currentActionMap.name;
+                InputActionMap currentActionMap = playerInput.currentActionMap;
+                if (currentActionMap != null)
+                {
+                    string currentMap = currentActionMap.name;
+                    OnMapChange?.Invoke(currentMap, targetMap);
+                }
+
                 playerInput.SwitchCurrentActionMap(targetMap);
 
-                OnMapChange?.Invoke(currentMap, targetMap);
+                currentMap = playerInput.currentActionMap;
+            }
+            else
+            {
+                Debug.Log($"Map {targetMap} not found");
+                foreach (var map in playerInput.actions.actionMaps)
+                    Debug.Log(map.name);
             }
         }
     }

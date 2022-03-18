@@ -3,12 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Aokoro.UIManagement.ControlDisplay
+namespace Aokoro.UI.ControlsDiplaySystem
 {
     public abstract class UIItem : MonoBehaviour
     {
-        protected virtual void OnEnable() => UIManager.Instance.OnUpdate += OnUpdate;
-        protected virtual void OnDisable() => UIManager.Instance.OnUpdate -= OnUpdate;
+        GameUIManager uIManager;
+
+        private void Awake()
+        {
+            uIManager = GetComponentInParent<GameUIManager>();
+            if (uIManager == null)
+                Destroy(this);
+        }
+        protected virtual void OnEnable()
+        {
+            if (uIManager != null)
+                uIManager.OnUpdate += OnUpdate;
+        }
+        protected virtual void OnDisable()
+        {
+            if (uIManager != null)
+                uIManager.OnUpdate -= OnUpdate;
+        }
 
         protected abstract void OnUpdate();
     }
