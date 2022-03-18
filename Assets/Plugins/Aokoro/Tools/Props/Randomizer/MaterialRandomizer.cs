@@ -17,14 +17,22 @@ namespace Aokoro.Tools.Props
         private void Randomize()
         {
             LODGroup group = GetComponent<LODGroup>();
-            LOD[] lODs = group.GetLODs();
-            int bookCount = lODs[0].renderers.Length;
+            LOD[] LODs = group.GetLODs();
 
-            for (int i = 0; i < bookCount; i++)
+
+            int lenght = LODs.Select(ctx => ctx.renderers.Min(r => r.sharedMaterials.Length)).Min();
+            Material[] set = new Material[lenght];
+
+            for (int i = 0; i < lenght; i++)
             {
                 int rng = Random.Range(0, data.materials.Length);
-                for (int j = 0; j < group.lodCount; j++)
-                    lODs[j].renderers[i].material = data.materials[rng];
+                set[i] = data.materials[rng];
+            }
+
+            foreach (LOD lod in LODs)
+            {
+                foreach (Renderer renderer in lod.renderers)
+                    renderer.sharedMaterials = set;
             }
         }
 

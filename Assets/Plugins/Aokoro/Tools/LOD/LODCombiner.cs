@@ -1,9 +1,9 @@
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Formats.Fbx.Exporter;
 #endif
 
 using UnityEngine;
-using UnityEditor.Formats.Fbx.Exporter;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Aokoro.Tools.LODs
     {
         public string exportPath;
 
-
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (exportPath != null && exportPath.StartsWith("Assets/"))
@@ -69,7 +69,6 @@ namespace Aokoro.Tools.LODs
                     renderer.gameObject.name = newName;
                 }
             }
-#if UNITY_EDITOR
             string filePath = Path.Combine(Application.dataPath, exportPath, $"{gameObject.name}.fbx");
             string exportedPath = ModelExporter.ExportObjects(filePath, objectsToExport.ToArray());
 
@@ -97,8 +96,8 @@ namespace Aokoro.Tools.LODs
                     }
                 }
             }
-#endif
         }
+#endif
 
     }
 }
