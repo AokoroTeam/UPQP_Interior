@@ -62,6 +62,8 @@ namespace AG_WebGLFPSAccelerator
         [HideInInspector]
         public bool lastDynamicResolutionSystem;
 
+        [HideInInspector]
+        public bool lastShowHideUI;
 
         [HideInInspector]
         public bool urp;
@@ -80,6 +82,7 @@ namespace AG_WebGLFPSAccelerator
         void Start()
         {
             requestDefaultDPR();
+
             Invoke("waitForOneSecond", 1);
 
 #if USING_URP
@@ -103,6 +106,17 @@ namespace AG_WebGLFPSAccelerator
         defaultDPR = getDefaultDPR();
 #endif
         }
+
+        public void Toggle1Event()
+        {
+
+        }
+
+        public void Toggle2Event()
+        {
+
+        }
+
         public void getAverageFPS()
         {
             m_FpsAccumulator++;
@@ -170,12 +184,10 @@ namespace AG_WebGLFPSAccelerator
                     {
                         dpr = dpi;
 
-                        if (dpr != lastDPR)
-                        {
 #if USING_URP
+                        if (dpr != lastDPR)
                             urpAsset.renderScale = dpr;
 #endif
-                        }
                     }
                     else
                     {
@@ -197,6 +209,7 @@ namespace AG_WebGLFPSAccelerator
                         lastDynamicResolutionSystem = dynamicResolutionSystem;
                         m_FpsNextPeriod = Time.realtimeSinceStartup + measurePeriod;
                         m_FpsAccumulator = 0;
+
                         lastDPR = 0;
                     }
 
@@ -205,11 +218,9 @@ namespace AG_WebGLFPSAccelerator
             }
 
             dpi = (float)Math.Round(dpi * 100f) / 100f;
+
         }
-
-
-
-
+        
         public void waitForOneSecond()
         {
             wait = false;

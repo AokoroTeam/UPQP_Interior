@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 namespace AG_WebGLFPSAccelerator
 {
@@ -21,6 +19,9 @@ namespace AG_WebGLFPSAccelerator
         [DllImport("__Internal")]
         public static extern bool isiOS2();
 #endif
+        
+        [HideInInspector]
+        public GameObject warningText;
         
         [HideInInspector]
         public GameObject requiredSettings;
@@ -89,12 +90,17 @@ namespace AG_WebGLFPSAccelerator
 
         public void m1()
         {
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
+            if (warningText)
+                warningText.SetActive(true);
+#endif
+
             if (requiredSettings)
             {
+#if !UNITY_EDITOR
                 requiredSettings.SetActive(false);
-            }
 #endif
+            }
         }
     }
 }

@@ -36,14 +36,15 @@ namespace Aokoro.Editor
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
+            
             return base.CreatePropertyGUI(property);
         }
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
+        {/*
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             EditorGUI.BeginProperty(position, label, property);
 
-            /*
             BindingFlags all = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
             //Script where object is serialized
@@ -108,16 +109,15 @@ namespace Aokoro.Editor
             }
 
             EditorGUI.indentLevel = 0;
-            */
-            EditorGUI.EndProperty();
+            
+            EditorGUI.EndProperty();*/
         }
 
         private static void DrawCells(object from, string priority, string value,
             Color color1, Color color2,
            float height)
         {
-            GUIStyle ComplexePropertyStyle = ComplexePropertyImporter.ComplexePropertySkin.GetStyle("label");
-
+            GUIStyle ComplexePropertyStyle = UnityEditor.EditorStyles.label;
             EditorGUI.indentLevel = 2;
             EditorGUI.BeginDisabledGroup(true);
 
@@ -149,51 +149,5 @@ namespace Aokoro.Editor
         }
     }
 
-    public class ComplexePropertyImporter : AssetPostprocessor
-    {
-        private static bool dirty = true;
-        private static GUISkin complexePropertySkin;
-
-        public static GUISkin ComplexePropertySkin
-        {
-            get
-            {
-                if (complexePropertySkin == null || dirty)
-                    ImportStyle();
-
-                return complexePropertySkin;
-            }
-        }
-
-        public static void ImportStyle()
-        {
-            string path = Path.Combine("AokoroEditor", "GUIStyles", "ComplexePropertyStyle.guiskin");
-            object style = EditorGUIUtility.Load(path);
-            if (style == null || !(style is GUISkin guiSkin))
-            {
-                complexePropertySkin = GUI.skin;
-                //Debug.LogError("Couldn't find ComplexePropertyStyle GUIStyle at " + path);
-                return;
-            }
-            complexePropertySkin = guiSkin;
-        }
-        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
-        {
-            if (importedAssets.Length > 0 || movedAssets.Length > 0)
-            {
-                List<string> assets = new List<string>();
-                for (int i = 0; i < importedAssets.Length; i++)
-                    assets.Add(importedAssets[i]);
-                for (int i = 0; i < movedAssets.Length; i++)
-                    assets.Add(movedAssets[i]);
-
-                if (assets.Exists(ctx => Path.GetFileNameWithoutExtension(ctx) == "ComplexePropertyStyle"))
-                {
-                    ImportStyle();
-                    return;
-                }
-            }
-        }
-    }
 }
 #endif

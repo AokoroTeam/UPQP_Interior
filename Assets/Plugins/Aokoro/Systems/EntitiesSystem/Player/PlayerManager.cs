@@ -63,9 +63,15 @@ namespace Aokoro.Entities.Player
             }
 
             playerInput = GetComponent<PlayerInput>();
+            
             anim = GetComponent<Animator>();
             rb = GetComponent<Rigidbody>();
 
+            SetupCursorForPlayer();
+        }
+
+        protected virtual void SetupCursorForPlayer()
+        {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }

@@ -54,6 +54,7 @@ namespace Michsky.UI.ModernUIPack
             var showPopupValue = serializedObject.FindProperty("showPopupValue");
             var minValue = serializedObject.FindProperty("minValue");
             var maxValue = serializedObject.FindProperty("maxValue");
+            var invokeOnAwake = serializedObject.FindProperty("invokeOnAwake");
 
             switch (currentTab)
             {
@@ -106,13 +107,8 @@ namespace Michsky.UI.ModernUIPack
                 case 1:
                     MUIPEditorHandler.DrawHeader(customSkin, "Core Header", 6);
                     MUIPEditorHandler.DrawProperty(sliderObject, customSkin, "Slider Source");
-
-                    if (showValue.boolValue == true)
-                        MUIPEditorHandler.DrawProperty(valueText, customSkin, "Label Text");
-
-                    if (showPopupValue.boolValue == true)
-                        MUIPEditorHandler.DrawProperty(popupValueText, customSkin, "Popup Label Text");
-
+                    if (showValue.boolValue == true) { MUIPEditorHandler.DrawProperty(valueText, customSkin, "Label Text"); }
+                    if (showPopupValue.boolValue == true) { MUIPEditorHandler.DrawProperty(popupValueText, customSkin, "Popup Label Text"); }
                     GUILayout.Space(4);
                     break;
 
@@ -122,6 +118,7 @@ namespace Michsky.UI.ModernUIPack
                     showValue.boolValue = MUIPEditorHandler.DrawToggle(showValue.boolValue, customSkin, "Show Label");
                     showPopupValue.boolValue = MUIPEditorHandler.DrawToggle(showPopupValue.boolValue, customSkin, "Show Popup Label");
                     useRoundValue.boolValue = MUIPEditorHandler.DrawToggle(useRoundValue.boolValue, customSkin, "Use Round Value");
+                    invokeOnAwake.boolValue = MUIPEditorHandler.DrawToggle(invokeOnAwake.boolValue, customSkin, "Invoke On Awake");
                     enableSaving.boolValue = MUIPEditorHandler.DrawToggle(enableSaving.boolValue, customSkin, "Save Value");
 
                     if (enableSaving.boolValue == true)

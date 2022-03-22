@@ -10,6 +10,7 @@ namespace Michsky.UI.ModernUIPack
     {
         // Resources
         public Canvas mainCanvas;
+        public Camera targetCamera;
         public GameObject contextContent;
         public Animator contextAnimator;
         public GameObject contextButton;
@@ -19,6 +20,7 @@ namespace Michsky.UI.ModernUIPack
         // Settings
         public bool autoSubMenuPosition = true;
         public SubMenuBehaviour subMenuBehaviour;
+        public CameraSource cameraSource = CameraSource.Main;
 
         // Bounds
         [Range(-50, 50)] public int vBorderTop = -10;
@@ -30,7 +32,9 @@ namespace Michsky.UI.ModernUIPack
         Vector3 cursorPos;
         Vector3 contentPos = new Vector3(0, 0, 0);
         Vector3 contextVelocity = Vector3.zero;
+
         RectTransform contextRect;
+        RectTransform contentRect;
 
         [HideInInspector] public bool isOn;
         [HideInInspector] public bool bottomLeft;
@@ -38,53 +42,34 @@ namespace Michsky.UI.ModernUIPack
         [HideInInspector] public bool topLeft;
         [HideInInspector] public bool topRight;
 
+        public enum CameraSource { Main, Custom }
+
         public enum SubMenuBehaviour { Hover, Click }
 
-        void Start()
+        void Awake()
         {
-            if (mainCanvas == null)
-                mainCanvas = gameObject.GetComponentInParent<Canvas>();
-
-            if (contextAnimator == null)
-                contextAnimator = gameObject.GetComponent<Animator>();
+            if (mainCanvas == null) { mainCanvas = gameObject.GetComponentInParent<Canvas>(); }
+            if (contextAnimator == null) { contextAnimator = gameObject.GetComponent<Animator>(); }
+            if (cameraSource == CameraSource.Main) { targetCamera = Camera.main; }
 
             contextRect = gameObject.GetComponent<RectTransform>();
+            contentRect = contextContent.GetComponent<RectTransform>();
             contentPos = new Vector3(vBorderTop, hBorderLeft, 0);
             gameObject.transform.SetAsLastSibling();
         }
 
         public void CheckForBounds()
         {
-            if (uiPos.x <= -100)
-            {
-                contentPos = new Vector3(hBorderLeft, contentPos.y, 0);
-                contextContent.GetComponent<RectTransform>().pivot = new Vector2(0f, contextContent.GetComponent<RectTransform>().pivot.y);
-                bottomLeft = true;
-            }
+            if (uiPos.x <= -100) { contentPos = new Vector3(hBorderLeft, contentPos.y, 0); contentRect.pivot = new Vector2(0f, contentRect.pivot.y); bottomLeft = true; }
             else { bottomLeft = false; }
 
-            if (uiPos.x >= 100)
-            {
-                contentPos = new Vector3(hBorderRight, contentPos.y, 0);
-                contextContent.GetComponent<RectTransform>().pivot = new Vector2(1f, contextContent.GetComponent<RectTransform>().pivot.y);
-                bottomRight = true;
-            }
+            if (uiPos.x >= 100) { contentPos = new Vector3(hBorderRight, contentPos.y, 0); contentRect.pivot = new Vector2(1f, contentRect.pivot.y); bottomRight = true; }
             else { bottomRight = false; }
 
-            if (uiPos.y <= -75)
-            {
-                contentPos = new Vector3(contentPos.x, vBorderBottom, 0);
-                contextContent.GetComponent<RectTransform>().pivot = new Vector2(contextContent.GetComponent<RectTransform>().pivot.x, 0f);
-                topLeft = true;
-            }
+            if (uiPos.y <= -75) { contentPos = new Vector3(contentPos.x, vBorderBottom, 0); contentRect.pivot = new Vector2(contentRect.pivot.x, 0f); topLeft = true; }
             else { topLeft = false; }
 
-            if (uiPos.y >= 75)
-            {
-                contentPos = new Vector3(contentPos.x, vBorderTop, 0);
-                contextContent.GetComponent<RectTransform>().pivot = new Vector2(contextContent.GetComponent<RectTransform>().pivot.x, 1f);
-                topRight = true;
-            }
+            if (uiPos.y >= 75) { contentPos = new Vector3(contentPos.x, vBorderTop, 0); contentRect.pivot = new Vector2(contentRect.pivot.x, 1f); topRight = true; }
             else { topRight = false; }
         }
 
@@ -100,8 +85,8 @@ namespace Michsky.UI.ModernUIPack
 
             if (mainCanvas.renderMode == RenderMode.ScreenSpaceCamera || mainCanvas.renderMode == RenderMode.WorldSpace)
             {
-                cursorPos.z = gameObject.transform.position.z;
-                contextRect.position = Camera.main.ScreenToWorldPoint(cursorPos);
+                contextRect.position = targetCamera.ScreenToWorldPoint(cursorPos);
+                contextRect.localPosition = new Vector3(contextRect.localPosition.x, contextRect.localPosition.y, 0);
                 contextContent.transform.localPosition = Vector3.SmoothDamp(contextContent.transform.localPosition, contentPos, ref contextVelocity, 0);
             }
 
@@ -112,16 +97,12 @@ namespace Michsky.UI.ModernUIPack
             }
         }
 
-        public void OpenContextMenu()
-        {
-            contextAnimator.Play("Menu In");
-            isOn = true;
-        }
+        public void Open() { contextAnimator.Play("Menu Out"); isOn = false; }
+        public void Close() { contextAnimator.Play("Menu Out"); isOn = false; }
+      
+        // Obsolote
+        public void OpenContextMenu() { contextAnimator.Play("Menu In"); isOn = true; }
+        public void CloseOnClick() { contextAnimator.Play("Menu Out"); isOn = false; }
 
-        public void CloseOnClick()
-        {
-            contextAnimator.Play("Menu Out");
-            isOn = false;
-        }
     }
 }

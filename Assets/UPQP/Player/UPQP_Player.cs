@@ -50,6 +50,12 @@ namespace UPQP.Player
             base.OnAwake();
         }
 
+        protected override void SetupCursorForPlayer()
+        {
+            GameManager.Instance.cursorLockMode.Subscribe(this, Aokoro.PriorityTags.Small, CursorLockMode.Locked);
+            GameManager.Instance.cursorVisibility.Subscribe(this, Aokoro.PriorityTags.Small, false);
+        }
+
         private void SetupPlayerFeatures(Feature[] features)
         {
             //Find features that need to be started by the player

@@ -8,13 +8,13 @@ namespace Michsky.UI.ModernUIPack
     public class DemoListShadow : MonoBehaviour, IBeginDragHandler
     {
         [Header("Resources")]
-        public Scrollbar listScrollbar;
-        public CanvasGroup leftCG;
-        public CanvasGroup rightCG;
+        [SerializeField] private Scrollbar listScrollbar;
+        [SerializeField] private CanvasGroup leftCG;
+        [SerializeField] private CanvasGroup rightCG;
 
         [Header("Settings")]
-        public float scrollTime = 5;
-        public float transitionSpeed = 4;
+        [SerializeField] private float scrollTime = 5;
+        [SerializeField] private float transitionSpeed = 4;
 
         void Awake()
         {

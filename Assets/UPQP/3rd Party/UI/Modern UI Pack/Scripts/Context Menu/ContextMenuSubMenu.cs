@@ -44,9 +44,9 @@ namespace Michsky.UI.ModernUIPack
             {
                 bool nulLVariable = false;
 
-                if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.BUTTON && cmManager.contextButton != null)
+                if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.Button && cmManager.contextButton != null)
                     selectedItem = cmManager.contextButton;
-                else if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.SEPARATOR && cmManager.contextSeparator != null)
+                else if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.Separator && cmManager.contextSeparator != null)
                     selectedItem = cmManager.contextSeparator;
                 else
                 {
@@ -61,7 +61,7 @@ namespace Michsky.UI.ModernUIPack
                     GameObject go = Instantiate(selectedItem, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                     go.transform.SetParent(itemParent, false);
 
-                    if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.BUTTON)
+                    if (cmContent.contexItems[subMenuIndex].subMenuItems[i].contextItemType == ContextMenuContent.ContextItemType.Button)
                     {
                         setItemText = go.GetComponentInChildren<TextMeshProUGUI>();
                         textHelper = cmContent.contexItems[subMenuIndex].subMenuItems[i].itemText;

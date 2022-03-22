@@ -51,7 +51,7 @@ namespace Michsky.UI.ModernUIPack
             public UnityEvent onItemSelect = new UnityEvent();
         }
 
-        void Start()
+        void Awake()
         {
             if (selectorAnimator == null) { selectorAnimator = gameObject.GetComponent<Animator>(); }
             if (label == null || labelHelper == null)
@@ -312,7 +312,6 @@ namespace Michsky.UI.ModernUIPack
         {
             if (contentLayout != null) { contentLayout.spacing = contentSpacing; }
             if (contentLayoutHelper != null) { contentLayoutHelper.spacing = contentSpacing; }
-
             if (labelIcon != null)
             {
                 labelIcon.transform.localScale = new Vector3(iconScale, iconScale, iconScale);

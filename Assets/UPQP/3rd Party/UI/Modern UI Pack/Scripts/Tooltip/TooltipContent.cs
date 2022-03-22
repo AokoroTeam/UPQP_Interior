@@ -106,7 +106,7 @@ namespace Michsky.UI.ModernUIPack
 
         IEnumerator CalculateContentWidth()
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSecondsRealtime(0.05f);
             float tempWidth = descriptionText.GetComponent<RectTransform>().sizeDelta.x;
      
             if (tempWidth >= tpManager.preferredWidth + 1)
@@ -125,7 +125,7 @@ namespace Michsky.UI.ModernUIPack
 
         IEnumerator UpdateLayoutPosition()
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSecondsRealtime(0.05f);
             LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipAnimator.gameObject.GetComponent<RectTransform>());
         }
     }

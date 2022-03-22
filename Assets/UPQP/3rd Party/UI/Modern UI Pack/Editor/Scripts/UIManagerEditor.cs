@@ -9,7 +9,7 @@ namespace Michsky.UI.ModernUIPack
     public class UIManagerEditor : Editor
     {
         GUISkin customSkin;
-        protected static string buildID = "B16-20220215";
+        protected static string buildID = "B16-20220319";
         protected static float foldoutItemSpace = 2;
         protected static float foldoutTopSpace = 5;
         protected static float foldoutBottomSpace = 2;

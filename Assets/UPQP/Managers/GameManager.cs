@@ -10,74 +10,60 @@ namespace UPQP.Managers
     [AddComponentMenu("UPQP/Managers/GameManager")]
     public class GameManager : Singleton<GameManager>
     {
-        public bool IsGameFocused { get; private set; }
-
         [SerializeField] GameObject LoosedFocusUI;
-        [SerializeField] InputAction echapAction;
-        
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
+        public InfluencedProperty<CursorLockMode> cursorLockMode;
+        public InfluencedProperty<bool> cursorVisibility;
 
-        
-        private void Start()
-        {
-            IsGameFocused = Application.isFocused;
-            OnFocusLost();
-        }
-
-        
         private void OnEnable()
         {
-            echapAction.performed += EchapAction_performed;
-            Application.focusChanged += OnFocusChanged;
+            cursorLockMode.OnValueChanged += CursorLockMode_OnValueChanged;
+            cursorVisibility.OnValueChanged += CursorVisibility_OnValueChanged;
         }
 
         private void OnDisable()
         {
-            echapAction.performed -= EchapAction_performed;
-            Application.focusChanged -= OnFocusChanged;
+            cursorLockMode.OnValueChanged -= CursorLockMode_OnValueChanged;
+            cursorVisibility.OnValueChanged -= CursorVisibility_OnValueChanged;
         }
 
+        private void Start()
+        {
+            OnFocusLost();
+        }
+
+        private void CursorVisibility_OnValueChanged(bool value, object key)
+        {
+            Cursor.visible = value;
+        }
+        private void CursorLockMode_OnValueChanged(CursorLockMode value, object key) => Cursor.lockState = value;
 
         public void OnFocusLost()
         {
-            echapAction.Disable();
+            cursorLockMode.Subscribe(this, PriorityTags.Highest, CursorLockMode.Confined);
+            cursorVisibility.Subscribe(this, PriorityTags.Highest, true);
+
             LoosedFocusUI.SetActive(true);
+            
             Time.timeScale = 0;
         }
 
 
         public void OnFocusRegained()
         {
-            echapAction.Enable();
-            LoosedFocusUI.SetActive(false);
+            cursorLockMode.Unsubscribe(this);
+            cursorVisibility.Unsubscribe(this);
 
+            LoosedFocusUI.SetActive(false);
+            Screen.fullScreen = true;
             Time.timeScale = 1;
         }
 
-
-        private void OnFocusChanged(bool focus)
+        public void OnFocusRegainedAnimation()
         {
-            if (!Application.isEditor)
-            {
-                if(focus)
-                    OnFocusRegained();
-                else
-                    OnFocusLost();
-
-                LoosedFocusUI.SetActive(!focus);
-            }
-
-            Debug.Log(focus);
-            IsGameFocused = focus;
+            Invoke(nameof(OnFocusRegained), .5f);
         }
 
-        private void EchapAction_performed(InputAction.CallbackContext ctx) => OnFocusChanged(true);
-        
-        
         protected override void OnExistingInstanceFound(GameManager existingInstance)
         {
             Destroy(gameObject);

@@ -53,6 +53,8 @@ namespace Michsky.UI.ModernUIPack
             var vBorderBottom = serializedObject.FindProperty("vBorderBottom");
             var hBorderLeft = serializedObject.FindProperty("hBorderLeft");
             var hBorderRight = serializedObject.FindProperty("hBorderRight");
+            var cameraSource = serializedObject.FindProperty("cameraSource");
+            var targetCamera = serializedObject.FindProperty("targetCamera");
 
             switch (currentTab)
             {
@@ -77,6 +79,10 @@ namespace Michsky.UI.ModernUIPack
                     MUIPEditorHandler.DrawHeader(customSkin, "Options Header", 6);
                     autoSubMenuPosition.boolValue = MUIPEditorHandler.DrawToggle(autoSubMenuPosition.boolValue, customSkin, "Auto Sub Menu Position");
                     MUIPEditorHandler.DrawProperty(subMenuBehaviour, customSkin, "Sub Menu Behaviour");
+                    MUIPEditorHandler.DrawProperty(cameraSource, customSkin, "Camera Source");
+
+                    if (cmTarget.cameraSource == ContextMenuManager.CameraSource.Custom)
+                        MUIPEditorHandler.DrawProperty(targetCamera, customSkin, "Target Camera");
 
                     MUIPEditorHandler.DrawHeader(customSkin, "UIM Header", 10);
 

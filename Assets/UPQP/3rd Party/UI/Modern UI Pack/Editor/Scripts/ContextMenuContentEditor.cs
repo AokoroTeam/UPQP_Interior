@@ -22,22 +22,26 @@ namespace Michsky.UI.ModernUIPack
         {
             MUIPEditorHandler.DrawComponentHeader(customSkin, "CM Top Header");
 
-            GUIContent[] toolbarTabs = new GUIContent[2];
+            GUIContent[] toolbarTabs = new GUIContent[3];
             toolbarTabs[0] = new GUIContent("Content");
             toolbarTabs[1] = new GUIContent("Resources");
-          
+            toolbarTabs[2] = new GUIContent("Settings");
+
             currentTab = MUIPEditorHandler.DrawTabs(currentTab, toolbarTabs, customSkin);
 
             if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Tab Content")))
                 currentTab = 0;
             if (GUILayout.Button(new GUIContent("Resources", "Resources"), customSkin.FindStyle("Tab Resources")))
                 currentTab = 1;
+            if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Tab Settings")))
+                currentTab = 2;
 
             GUILayout.EndHorizontal();
 
             var contextManager = serializedObject.FindProperty("contextManager");
             var itemParent = serializedObject.FindProperty("itemParent");
             var contexItems = serializedObject.FindProperty("contexItems");
+            var useIn3D = serializedObject.FindProperty("useIn3D");
 
             switch (currentTab)
             {
@@ -61,6 +65,11 @@ namespace Michsky.UI.ModernUIPack
                     MUIPEditorHandler.DrawHeader(customSkin, "Core Header", 6);
                     MUIPEditorHandler.DrawProperty(contextManager, customSkin, "Context Manager");
                     MUIPEditorHandler.DrawProperty(itemParent, customSkin, "Item Parent");
+                    break;
+
+                case 2:
+                    MUIPEditorHandler.DrawHeader(customSkin, "Options Header", 6);
+                    useIn3D.boolValue = MUIPEditorHandler.DrawToggle(useIn3D.boolValue, customSkin, "Use In 3D");
                     break;
             }
 

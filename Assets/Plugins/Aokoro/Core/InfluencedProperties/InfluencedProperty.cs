@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using NaughtyAttributes;
 
 namespace Aokoro
 {
@@ -17,7 +18,7 @@ namespace Aokoro
         Highest = 100
     }
 
-    public struct Influence<T>
+    internal struct Influence<T>
     {
         public int Priority { get; private set; }
         public T Value { get; private set; }
@@ -37,6 +38,7 @@ namespace Aokoro
     public class InfluencedProperty<T> 
     {
         public event Action<T, object> OnValueChanged;
+
         private Dictionary<object, Influence<T>> influences = new Dictionary<object, Influence<T>>();
 
         private bool influencesListIsDirty;
@@ -50,7 +52,7 @@ namespace Aokoro
             get
             {
                 if (influencesListIsDirty)
-                    SetMainInfluenceur();
+                    EvaluateMainInfluenceur();
 
                 return _mainInfluencer;
             }
@@ -58,14 +60,15 @@ namespace Aokoro
             set => _mainInfluencer = value;
         }
 
+        [ShowNativeProperty]
         public T Value
         {
             get
             {
                 if (influencesListIsDirty)
-                    SetMainInfluenceur();
+                    EvaluateMainInfluenceur();
 
-                return MainInfluencer == null ? defaultValue : influences [MainInfluencer].Value;
+                return MainInfluencer == null ? defaultValue : influences[MainInfluencer].Value;
             }
         }
         
@@ -84,6 +87,7 @@ namespace Aokoro
         public void Lock(object influencer, PriorityTags priority) => Lock(influencer, (int)priority);
         public void Subscribe(object influencer, int priority) => Subscribe(influencer, priority, defaultValue);
         public void Subscribe(object influencer, PriorityTags priority) => Subscribe(influencer, (int)priority, defaultValue);
+        public void Subscribe(object influencer, PriorityTags priority, T Value) => Subscribe(influencer, (int)priority, Value);
         public void Subscribe(object influencer, int priority, T Value)
         {
             Influence<T> i = new Influence<T>(priority, Value);
@@ -94,29 +98,26 @@ namespace Aokoro
                 influences[influencer] = i;
 
             this.influencesListIsDirty = true;
+
+            if(MainInfluencer == influencer)
+                OnValueChanged?.Invoke(Value, influencer);
         }
         
-        public void Subscribe(object influencer, PriorityTags priority, T Value) => Subscribe(influencer, (int)priority, Value);
 
         public void Unsubscribe(object influencer)
         {
             if (IsInfluencing(influencer))
             {
+                var wasMain = influencer == MainInfluencer;
+
                 influences.Remove(influencer);
                 this.influencesListIsDirty = true;
+
+                if(wasMain)
+                    OnValueChanged?.Invoke(Value, influencer);
             }
         }
         
-        public void Unsubscribe(object influencer, object transferTo) => Unsubscribe(influencer, transferTo, GetValueFromInfluencer(influencer));
-
-        public void Unsubscribe(object influencer, object transferTo, T value)
-        {
-            if (IsPriority(influencer))
-                Set(transferTo, value);
-
-            Unsubscribe(influencer);
-        }
-
         public void Set(object influencer, T value)
         {
             if (influences.ContainsKey(influencer))
@@ -125,12 +126,15 @@ namespace Aokoro
                 i.Set(value);
                 influences[influencer] = i;
             }
+
+            if(influencer == MainInfluencer)
+                OnValueChanged?.Invoke(Value, influencer);
         }
 
         public bool IsPriority(object influencer) => influencer != null && MainInfluencer == influencer;
         public bool IsInfluencing(object influencer) => influences.ContainsKey(influencer);
 
-        private void SetMainInfluenceur()
+        private void EvaluateMainInfluenceur()
         {
             this.influencesListIsDirty = false;
             MainInfluencer = null;
@@ -139,7 +143,10 @@ namespace Aokoro
             foreach (var kv in influences)
             {
                 if (kv.Value.Priority > lastPriority)
+                {
+                    lastPriority = kv.Value.Priority;
                     MainInfluencer = kv.Key;
+                }
             }
         }
 

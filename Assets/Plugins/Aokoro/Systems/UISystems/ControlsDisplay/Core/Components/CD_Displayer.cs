@@ -105,7 +105,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 displayer.Fill(commands[i]);
             }
 
-            Debug.Log("[Control Display] Controls have been successfuly updated", gameObject);
+            //Debug.Log("[Control Display] Controls have been successfuly updated", gameObject);
             //Canvas.ForceUpdateCanvases();
         }
 

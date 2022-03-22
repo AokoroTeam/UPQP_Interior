@@ -1,28 +1,30 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace Michsky.UI.ModernUIPack
 {
     public class DemoElementSway : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [Header("Resources")]
-        public DemoElementSwayParent swayParent;
-        public Canvas mainCanvas;
-        public RectTransform swayObject;
-        public CanvasGroup normalCG;
-        public CanvasGroup highlightedCG;
-        public CanvasGroup selectedCG;
+        [SerializeField] private DemoElementSwayParent swayParent;
+        [SerializeField] private Canvas mainCanvas;
+        [SerializeField] private RectTransform swayObject;
+        [SerializeField] private CanvasGroup normalCG;
+        [SerializeField] private CanvasGroup highlightedCG;
+        [SerializeField] private CanvasGroup selectedCG;
 
         [Header("Settings")]
-        public float smoothness = 10;
-        public float transitionSpeed = 8;
-        [Range(0, 1)] public float dissolveAlpha = 0.5f;
+        [SerializeField] private float smoothness = 10;
+        [SerializeField] private float transitionSpeed = 8;
+        [SerializeField] [Range(0, 1)] private float dissolveAlpha = 0.5f;
 
         [Header("Events")]
-        public UnityEvent onClick;
+        [SerializeField] private UnityEvent onClick;
 
         bool allowSway;
         [HideInInspector] public bool wmSelected;

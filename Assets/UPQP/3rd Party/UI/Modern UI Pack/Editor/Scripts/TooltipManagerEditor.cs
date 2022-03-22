@@ -53,6 +53,8 @@ namespace Michsky.UI.ModernUIPack
             var tooltipSmoothness = serializedObject.FindProperty("tooltipSmoothness");
             var dampSpeed = serializedObject.FindProperty("dampSpeed");
             var preferredWidth = serializedObject.FindProperty("preferredWidth");
+            var targetCamera = serializedObject.FindProperty("targetCamera");
+            var cameraSource = serializedObject.FindProperty("cameraSource");
 
             switch (currentTab)
             {
@@ -63,7 +65,7 @@ namespace Michsky.UI.ModernUIPack
                     MUIPEditorHandler.DrawProperty(hBorderLeft, customSkin, "Left Bound");
                     MUIPEditorHandler.DrawProperty(hBorderRight, customSkin, "Right Bound");
 
-                    if (tooltipTarget.tooltipObject.GetComponent<CanvasGroup>().alpha == 0)
+                    if (tooltipTarget.tooltipObject != null && tooltipTarget.tooltipObject.GetComponent<CanvasGroup>().alpha == 0)
                     {
                         if (GUILayout.Button("Make It Visible", customSkin.button))
                         {
@@ -95,6 +97,10 @@ namespace Michsky.UI.ModernUIPack
                     MUIPEditorHandler.DrawProperty(preferredWidth, customSkin, "Preferred Width");
                     MUIPEditorHandler.DrawProperty(tooltipSmoothness, customSkin, "Smoothness");
                     MUIPEditorHandler.DrawProperty(dampSpeed, customSkin, "Damp Speed");
+                    MUIPEditorHandler.DrawProperty(cameraSource, customSkin, "Camera Source");
+
+                    if (tooltipTarget.cameraSource == TooltipManager.CameraSource.Custom)
+                        MUIPEditorHandler.DrawProperty(targetCamera, customSkin, "Target Camera");
 
                     MUIPEditorHandler.DrawHeader(customSkin, "UIM Header", 10);
 

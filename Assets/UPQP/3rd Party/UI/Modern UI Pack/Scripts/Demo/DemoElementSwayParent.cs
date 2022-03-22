@@ -7,9 +7,9 @@ namespace Michsky.UI.ModernUIPack
 {
     public class DemoElementSwayParent : MonoBehaviour
     {
-        public Animator titleAnimator;
-        public TextMeshProUGUI elementTitle;
-        public TextMeshProUGUI elementTitleHelper;
+        [SerializeField] private Animator titleAnimator;
+        [SerializeField] private TextMeshProUGUI elementTitle;
+        [SerializeField] private TextMeshProUGUI elementTitleHelper;
 
         private List<DemoElementSway> elements = new List<DemoElementSway>();
         private int prevIndex;
