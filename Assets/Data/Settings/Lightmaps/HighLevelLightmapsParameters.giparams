@@ -8,7 +8,7 @@ LightmapParameters:
   m_PrefabAsset: {fileID: 0}
   m_Name: HighLevelLightmapsParameters
   serializedVersion: 3
-  resolution: 0.5
+  resolution: 0.25
   clusterResolution: 0.15
   irradianceBudget: 64
   irradianceQuality: 4096

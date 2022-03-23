@@ -558,25 +558,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant1
       objectReference: {fileID: 0}
-    - target: {fileID: 141973685417304316, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.3965
-      objectReference: {fileID: 0}
-    - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.3965
-      objectReference: {fileID: 0}
-    - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.3965
       objectReference: {fileID: 0}
     - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -617,10 +601,6 @@ PrefabInstance:
     - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 141973685417802972, guid: 083db226221520747a3a4afc9db97ba3, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 083db226221520747a3a4afc9db97ba3, type: 3}

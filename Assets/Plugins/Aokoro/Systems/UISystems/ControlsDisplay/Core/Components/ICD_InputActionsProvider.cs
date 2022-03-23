@@ -10,7 +10,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
     public interface ICD_InputActionsProvider
     {
         public InputAction[] GetInputActions();
-        public string GetCurrentDeviceName();
+        public string GetControlScheme();
         public event Action OnActionsNeedRefresh;
     }
 }

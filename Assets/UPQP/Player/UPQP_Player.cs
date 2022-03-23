@@ -27,7 +27,7 @@ namespace UPQP.Player
             }
 
 
-            public string GetCurrentDeviceName() => player.playerInput.currentControlScheme;
+            public string GetControlScheme() => player.playerInput.currentControlScheme;
             public InputAction[] GetInputActions() => player.executeFeatures.actions.ToArray();
         }
 

@@ -34,18 +34,19 @@ namespace Aokoro.UI.ControlsDiplaySystem
             }
         }
 
-        public static CD_DeviceControls GetControlsForDevice(string device)
+        public static CD_DeviceControls GetControlsForControlScheme(string controlScheme)
         {
             CD_DeviceControls[] controls = Data.controls;
 
             for (int i = 0; i < controls.Length; i++)
             {
-                if (InputSystem.IsFirstLayoutBasedOnSecond(controls[i].Device, device))
+                if (controls[i].ControlScheme == controlScheme)
                     return controls[i];
             }
-            Debug.Log($"Unkown device {device}, returning default");
+            Debug.Log($"Unkown scheme : {controlScheme}. Returning default");
             return controls[0];
         }
+        
 
         public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_DeviceControls controls)
         {
@@ -56,22 +57,16 @@ namespace Aokoro.UI.ControlsDiplaySystem
             for (int i = 0; i < length; i++)
             {
                 CD_InputAction cd_action = actions[i];
-                InputAction action = cd_action.action;
 
                 CD_Command command = new CD_Command(cd_action.DisplayName);
+                InputAction action = cd_action.action;
 
-
-                UnityEngine.InputSystem.Utilities.ReadOnlyArray<InputBinding> bindings = action.bindings;
-                int bindingCount = bindings.Count;
-
-                for (int j = 0; j < bindingCount; j++)
+                foreach (var control in action.controls)
                 {
-                    InputBinding binding = bindings[j];
+                    InputBinding.MaskByGroups(controls.Devices);
 
-                    if (binding.isPartOfComposite)
-                        continue;
-
-                    string displayString = action.GetBindingDisplayString(j, out string device, out string controlPath, InputBinding.DisplayStringOptions.DontIncludeInteractions);
+                    var bindingIndex = action.GetBindingIndexForControl(control);
+                    var binding = action.bindings[bindingIndex];
 
                     if (binding.isComposite)
                     {
@@ -84,7 +79,73 @@ namespace Aokoro.UI.ControlsDiplaySystem
                         {
                             int Index() => j + compositeIndex;
 
-                            string compositePath = GetDisplayString(action, Index());
+                            string compositePath = GetBindingDisplayString(action, Index());
+                            compositePaths.Add(compositePath);
+
+                            compositeIndex++;
+                            int newIndex = Index();
+                            insideComposite = newIndex < bindingCount && bindings[newIndex].isPartOfComposite;
+                        }
+
+                        //Modifiers
+                        if (compositeType is "OneModifier" or "TwoModifier")
+                        {
+                            MatchedInput[] inputs = new MatchedInput[compositePaths.Count];
+                            if (ConvertBindingsToMatchedInputs(controls, compositePaths, inputs))
+                                command.Addcombination(inputs);
+                        }
+                        //Axis
+                        else
+                        {
+                            string pathData = string.Join('/', compositePaths);
+                            AddBindingToCommand(controls, ref command, compositeType, pathData);
+                        }
+                    }
+                    else
+                        AddBindingToCommand(controls, ref command, controlPath, controlPath);
+                    if (binding.isPartOfComposite)
+                    {
+                        if (lastCompositeIndex != -1)
+                            continue;
+                        lastCompositeIndex = action.ChangeBinding(bindingIndex).PreviousCompositeBinding().bindingIndex;
+                        bindingIndex = lastCompositeIndex;
+                    }
+                    else
+                    {
+                        lastCompositeIndex = -1;
+                    }
+                    if (!isFirstControl)
+                        controls += " or ";
+
+                    controls += action.GetBindingDisplayString(bindingIndex);
+                    isFirstControl = false;
+                }
+
+
+
+                UnityEngine.InputSystem.Utilities.ReadOnlyArray<InputBinding> bindings = action.bindings;
+                Debug.Log(GenerateHelpText(action));
+                int bindingCount = bindings.Count;
+                for (int j = 0; j < bindingCount; j++)
+                {
+                    InputBinding binding = bindings[j];
+                    string displayString = binding.ToDisplayString(out string deviceLayout, out string controlPath, InputBinding.DisplayStringOptions.DontIncludeInteractions, Keyboard.current);
+
+                    if (binding.isPartOfComposite)
+                        continue;
+
+                    if (binding.isComposite)
+                    {
+                        string compositeType = binding.GetNameOfComposite();
+                        List<string> compositePaths = new List<string>();
+                        int compositeIndex = 1;
+                        bool insideComposite = true;
+
+                        while (insideComposite)
+                        {
+                            int Index() => j + compositeIndex;
+
+                            string compositePath = GetBindingDisplayString(action, Index());
                             compositePaths.Add(compositePath);
 
                             compositeIndex++;
@@ -125,7 +186,43 @@ namespace Aokoro.UI.ControlsDiplaySystem
             }
         }
 
-        private static string GetDisplayString(InputAction action, int index)
+
+        private static string GenerateHelpText(InputAction action)
+        {
+            if (action.controls.Count == 0)
+                return string.Empty;
+
+            var verb = action.type == InputActionType.Button ? "Press" : "Use";
+            var lastCompositeIndex = -1;
+            var isFirstControl = true;
+
+            var controls = "";
+            foreach (var control in action.controls)
+            {
+                var bindingIndex = action.GetBindingIndexForControl(control);
+                var binding = action.bindings[bindingIndex];
+
+
+                if (binding.isPartOfComposite)
+                {
+                    if (lastCompositeIndex != -1)
+                        continue;
+                    lastCompositeIndex = action.ChangeBinding(bindingIndex).PreviousCompositeBinding().bindingIndex;
+                    bindingIndex = lastCompositeIndex;
+                }
+                else
+                {
+                    lastCompositeIndex = -1;
+                }
+                if (!isFirstControl)
+                    controls += " or ";
+
+                controls += action.GetBindingDisplayString(bindingIndex);
+                isFirstControl = false;
+            }
+            return $"{verb} {controls} to {action.name.ToLower()}";
+        }
+        private static string GetBindingDisplayString(InputAction action, int index)
         {
             string displayString = action.GetBindingDisplayString(
                 index,
@@ -133,6 +230,8 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 out string controlPath,
                 InputBinding.DisplayStringOptions.DontIncludeInteractions
             );
+
+            //
             return string.IsNullOrWhiteSpace(controlPath) ? displayString : controlPath;
         }
         private static bool ConvertBindingsToMatchedInputs(CD_DeviceControls controls, IEnumerable<string> bindings, MatchedInput[] inputs)

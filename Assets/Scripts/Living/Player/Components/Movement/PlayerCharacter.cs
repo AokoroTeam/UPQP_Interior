@@ -84,7 +84,7 @@ namespace UPQP.Player.Movement
 
         #region CD_InputActionsProvider
         private void TriggerRefresh() => OnActionsNeedRefresh?.Invoke();
-        public string GetCurrentDeviceName() => Manager.playerInput.currentControlScheme;
+        public string GetControlScheme() => Manager.playerInput.currentControlScheme;
 
         public InputAction[] GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();
 

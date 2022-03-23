@@ -20,7 +20,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
         [SerializeField, ReadOnly]
         private List<CD_DisplayCommand> displays = new List<CD_DisplayCommand>();
 
-        public CD_DeviceControls CurrentControl => ControlsDiplaySystem.GetControlsForDevice(ActionProvider.GetCurrentDeviceName());
+        public CD_DeviceControls CurrentControl => ControlsDiplaySystem.GetControlsForControlScheme(ActionProvider.GetControlScheme());
 
         [SerializeField, RequireInterface(typeof(ICD_InputActionsProvider))]
         private UnityEngine.Object _actionProviderReference;

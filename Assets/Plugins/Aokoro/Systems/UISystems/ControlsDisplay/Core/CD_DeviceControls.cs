@@ -7,10 +7,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
     public class CD_DeviceControls : ScriptableObject
     {
 
-        public string Device => device;
+        public string[] Devices => devices;
+        public string ControlScheme => controlScheme;
 
         [SerializeField]
-        private string device;
+        private string[] devices;
+        [SerializeField]
+        private string controlScheme;
 
         private CD_Input defaultControl;
         [SerializeField]

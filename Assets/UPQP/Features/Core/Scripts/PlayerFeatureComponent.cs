@@ -57,7 +57,7 @@ namespace UPQP.Features
 
         InputAction[] ICD_InputActionsProvider.GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();
 
-        string ICD_InputActionsProvider.GetCurrentDeviceName() => Player.playerInput.currentControlScheme;
+        string ICD_InputActionsProvider.GetControlScheme() => Player.playerInput.currentControlScheme;
 
 
 

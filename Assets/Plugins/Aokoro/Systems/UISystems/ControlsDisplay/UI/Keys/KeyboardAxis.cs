@@ -47,7 +47,10 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                     default:
                         var control = InputControlPath.TryFindChild(Keyboard.current, controlPath);
                         if (control != null)
+                        {
                             texts[i].SetText(control.displayName);
+                            //Debug.Log(Keyboard.current[controlPath]);
+                        }
                         else
                             texts[i].SetText(controlPath);
 
