@@ -7,41 +7,54 @@ namespace Aokoro.UI.ControlsDiplaySystem
     public class CD_DeviceControls : ScriptableObject
     {
 
-        public string[] Devices => devices;
         public string ControlScheme => controlScheme;
 
         [SerializeField]
-        private string[] devices;
-        [SerializeField]
         private string controlScheme;
 
-        private CD_Input defaultControl;
+        private CD_InputDisplay defaultControl;
         [SerializeField]
-        private CD_Input[] SpecialControls;
+        private CD_InputDisplay[] SpecialControls;
 
-        internal bool TryGetMatchedInput(string path, out CD_MatchedInput matchedInput)
+        internal CD_InputRepresentation GetInputRepresentationFromControl(CD_InputControl control)
         {
-            CD_Input data = FindInputData(path);
-            matchedInput = data.HasValue ? new CD_MatchedInput(data, path) : default;
-
-            return data.HasValue;
+            CD_InputDisplay display = FindDisplayForControl(control);
+            return display.HasValue ? new CD_InputRepresentation(display, control) : null;
         }
-        internal CD_Input FindInputData(string controlPath)
+
+        internal int GetInputRepresentationsFromControls(CD_InputControl[] controls, CD_InputRepresentation[] output)
+        {
+            int size = 0;
+            for (int i = 0; i < controls.Length; i++)
+            {
+                CD_InputControl control = controls[i];
+                CD_InputRepresentation representation = GetInputRepresentationFromControl(control);
+                if (representation != null)
+                {
+                    output[size] = representation;
+                    size++;
+                }
+            }
+
+            return size;
+        }
+
+        private CD_InputDisplay FindDisplayForControl(CD_InputControl control)
         {
             for (int i = 0; i < SpecialControls.Length; i++)
             {
-                CD_Input controlData = SpecialControls[i];
+                CD_InputDisplay controlData = SpecialControls[i];
+
                 if (!defaultControl.HasValue && controlData.isDefault)
                     defaultControl = controlData;
 
-                if (controlData.MatchesPath(controlPath))
+                if (controlData.MatchesControl(control))
                     return controlData;
 
             }
-            //Debug.LogError($"{controlPath} was not found in {device}", this);
+
             return defaultControl;
         }
-
 
 #if UNITY_EDITOR
         private void OnValidate()

@@ -8,34 +8,45 @@ using System;
 namespace Aokoro.UI.ControlsDiplaySystem
 {
     [System.Serializable]
-    public struct CD_Input
+    public struct CD_InputDisplay
     {
         public bool isDefault;
         [ShowAssetPreview, AllowNesting]
         public GameObject representation;
 
-        [SerializeField]
-        private string[] matchPaths;
+        [SerializeField] bool isComposite;
+        [SerializeField, ShowIf(nameof(isComposite))] string compositeType;
+        [SerializeField, ShowIf(nameof(isComposite))] string[] matchPaths;
 
         public bool HasValue => representation != null && (isDefault || matchPaths != null && matchPaths.Length != 0);
 
 
-        public bool MatchesPath(string path)
+        public bool MatchesControl(CD_InputControl control)
         {
-            for (int j = 0; j < matchPaths.Length; j++)
+            if (control.IsComposite == isComposite)
             {
-                if (matchPaths[j] == path.Trim().ToLower())
-                    return true;
+                if (isComposite)
+                    return control.compositeType.Trim().ToLower() == compositeType;
+                else
+                {
+                    foreach (string controlPath in control.Paths)
+                    {
+                        for (int j = 0; j < matchPaths.Length; j++)
+                        {
+                            if (controlPath.Trim().ToLower() == matchPaths[j])
+                                return true;
+                        }
+                    }
+                }
             }
-
             return false;
         }
-        public static bool operator ==(CD_Input c1, CD_Input c2)
+        public static bool operator ==(CD_InputDisplay c1, CD_InputDisplay c2)
         {
             return c1.Equals(c2);
         }
 
-        public static bool operator !=(CD_Input c1, CD_Input c2)
+        public static bool operator !=(CD_InputDisplay c1, CD_InputDisplay c2)
         {
             return !c1.Equals(c2);
         }
@@ -49,7 +60,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
         public override bool Equals(object obj)
         {
-            return obj is CD_Input input &&
+            return obj is CD_InputDisplay input &&
                    isDefault == input.isDefault &&
                    EqualityComparer<GameObject>.Default.Equals(representation, input.representation) &&
                    EqualityComparer<string[]>.Default.Equals(matchPaths, input.matchPaths) &&
@@ -63,15 +74,16 @@ namespace Aokoro.UI.ControlsDiplaySystem
 #endif
     }
 
-    public readonly struct CD_MatchedInput
+    public class CD_InputRepresentation
     {
-        public readonly CD_Input InputData;
-        public readonly string Binding;
 
-        public CD_MatchedInput(CD_Input input, string binding)
+        public readonly CD_InputDisplay display;
+        public readonly CD_InputControl control;
+
+        public CD_InputRepresentation(CD_InputDisplay display, CD_InputControl control)
         {
-            this.InputData = input;
-            this.Binding = binding;
+            this.display = display;
+            this.control = control;
         }
     }
 }

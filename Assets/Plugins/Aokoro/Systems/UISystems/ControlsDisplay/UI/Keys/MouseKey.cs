@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Aokoro.UI.ControlsDiplaySystem.UI
@@ -29,9 +28,9 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
 
 
 
-        public override void SetupIcon(string path)
+        public override void SetupIcon(CD_InputControl control)
         {
-            Image.sprite = path switch
+            Image.sprite = control.Path switch
             {
                 "leftButton" => lmb,
                 "rightButton" => rmb,

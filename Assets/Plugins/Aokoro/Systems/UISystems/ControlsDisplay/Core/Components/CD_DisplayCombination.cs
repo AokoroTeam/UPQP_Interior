@@ -22,9 +22,9 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     commandDisplayer.And(root);
 
                 var matchedInput = combination[i];
-                instantiatedInputs[i] = GameObject.Instantiate(matchedInput.InputData.representation, root);
+                instantiatedInputs[i] = GameObject.Instantiate(matchedInput.display.representation, root);
                 if(instantiatedInputs[i].TryGetComponent(out ControlIcon icon))
-                    icon.SetupIcon(matchedInput.Binding);
+                    icon.SetupIcon(matchedInput.control);
                 
             }
         }

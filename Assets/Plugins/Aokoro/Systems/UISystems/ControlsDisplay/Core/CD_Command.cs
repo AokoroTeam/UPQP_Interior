@@ -19,9 +19,15 @@ namespace Aokoro.UI.ControlsDiplaySystem
             combinations = new List<CD_InputCombination>();
         }
 
-        public void Addcombination(params CD_MatchedInput[] inputs)
+        
+        public void Addcombination(params CD_InputRepresentation[] inputs) => this.combinations.Add(inputs);
+        public void Addcombination(int range, CD_InputRepresentation[] inputs)
         {
-            this.combinations.Add(new CD_InputCombination(inputs));
+            CD_InputRepresentation[] shortenInputs = new CD_InputRepresentation[range];
+            for (int i = 0; i < range; i++)
+                shortenInputs[i] = inputs[i];
+
+            combinations.Add(shortenInputs);
         }
 
         IEnumerator<CD_InputCombination> IEnumerable<CD_InputCombination>.GetEnumerator() => combinations.GetEnumerator();
@@ -30,18 +36,21 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
 
     }
-    public struct CD_InputCombination : IEnumerable<CD_MatchedInput>
+    public struct CD_InputCombination : IEnumerable<CD_InputRepresentation>
     {
-        private CD_MatchedInput[] inputs;
-        public CD_InputCombination(CD_MatchedInput[] matchedInputs)
+        private CD_InputRepresentation[] inputs;
+        public CD_InputCombination(CD_InputRepresentation[] matchedInputs)
         {
             inputs = matchedInputs;
         }
-        public CD_MatchedInput this[int i] => inputs[i];
+        public CD_InputRepresentation this[int i] => inputs[i];
         public int Length => inputs != null ? inputs.Length : 0;
 
-        IEnumerator<CD_MatchedInput> IEnumerable<CD_MatchedInput>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<CD_MatchedInput>;
+        IEnumerator<CD_InputRepresentation> IEnumerable<CD_InputRepresentation>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<CD_InputRepresentation>;
 
         IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
+
+
+        public static implicit operator CD_InputCombination(CD_InputRepresentation[] inputs) => new CD_InputCombination(inputs);
     }
 }
