@@ -19,7 +19,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
             combinations = new List<CD_InputCombination>();
         }
 
-        public void Addcombination(params MatchedInput[] inputs)
+        public void Addcombination(params CD_MatchedInput[] inputs)
         {
             this.combinations.Add(new CD_InputCombination(inputs));
         }
@@ -30,17 +30,17 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
 
     }
-    public struct CD_InputCombination : IEnumerable<MatchedInput>
+    public struct CD_InputCombination : IEnumerable<CD_MatchedInput>
     {
-        private MatchedInput[] inputs;
-        public CD_InputCombination(MatchedInput[] matchedInputs)
+        private CD_MatchedInput[] inputs;
+        public CD_InputCombination(CD_MatchedInput[] matchedInputs)
         {
             inputs = matchedInputs;
         }
-        public MatchedInput this[int i] => inputs[i];
+        public CD_MatchedInput this[int i] => inputs[i];
         public int Length => inputs != null ? inputs.Length : 0;
 
-        IEnumerator<MatchedInput> IEnumerable<MatchedInput>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<MatchedInput>;
+        IEnumerator<CD_MatchedInput> IEnumerable<CD_MatchedInput>.GetEnumerator() => inputs.GetEnumerator() as IEnumerator<CD_MatchedInput>;
 
         IEnumerator IEnumerable.GetEnumerator() => (this as IEnumerable).GetEnumerator();
     }

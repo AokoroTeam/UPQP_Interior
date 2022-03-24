@@ -63,12 +63,12 @@ namespace Aokoro.UI.ControlsDiplaySystem
 #endif
     }
 
-    public readonly struct MatchedInput
+    public readonly struct CD_MatchedInput
     {
         public readonly CD_Input InputData;
         public readonly string Binding;
 
-        public MatchedInput(CD_Input input, string binding)
+        public CD_MatchedInput(CD_Input input, string binding)
         {
             this.InputData = input;
             this.Binding = binding;

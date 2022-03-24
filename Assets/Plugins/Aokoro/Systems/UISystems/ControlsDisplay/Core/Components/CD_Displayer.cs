@@ -95,8 +95,11 @@ namespace Aokoro.UI.ControlsDiplaySystem
         {
             Clean();
 
-            CD_InputAction[] actions = ControlsDiplaySystem.ConvertInputSystemActions(ActionProvider.GetInputActions(), actionSettings);
-            CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, CurrentControl);
+            InputAction[] inputActions = ActionProvider.GetInputActions();
+            InputDevice[] devices = ActionProvider.GetDevices();
+
+            CD_InputAction[] actions = ControlsDiplaySystem.ConvertInputSystemActions(inputActions, actionSettings);
+            CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, CurrentControl, devices);
 
             for (int i = 0; i < commands.Length; i++)
             {

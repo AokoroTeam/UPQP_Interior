@@ -29,6 +29,7 @@ namespace UPQP.Player
 
             public string GetControlScheme() => player.playerInput.currentControlScheme;
             public InputAction[] GetInputActions() => player.executeFeatures.actions.ToArray();
+            public InputDevice[] GetDevices() => player.playerInput.devices.ToArray();
         }
 
         [BoxGroup("Features"), SerializeField]

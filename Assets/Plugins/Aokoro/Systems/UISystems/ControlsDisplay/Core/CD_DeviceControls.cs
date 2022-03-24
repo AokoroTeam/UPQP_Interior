@@ -19,7 +19,14 @@ namespace Aokoro.UI.ControlsDiplaySystem
         [SerializeField]
         private CD_Input[] SpecialControls;
 
-        internal CD_Input GetMatchingInput(string controlPath)
+        internal bool TryGetMatchedInput(string path, out CD_MatchedInput matchedInput)
+        {
+            CD_Input data = FindInputData(path);
+            matchedInput = data.HasValue ? new CD_MatchedInput(data, path) : default;
+
+            return data.HasValue;
+        }
+        internal CD_Input FindInputData(string controlPath)
         {
             for (int i = 0; i < SpecialControls.Length; i++)
             {

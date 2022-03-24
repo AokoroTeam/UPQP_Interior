@@ -88,6 +88,7 @@ namespace UPQP.Player.Movement
 
         public InputAction[] GetInputActions() => ActionAsset.actionMaps[0].actions.ToArray();
 
+        public InputDevice[] GetDevices() => Manager.playerInput.devices.ToArray();
         #endregion
     }
 }

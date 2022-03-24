@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.Utilities;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -46,147 +47,119 @@ namespace Aokoro.UI.ControlsDiplaySystem
             Debug.Log($"Unkown scheme : {controlScheme}. Returning default");
             return controls[0];
         }
-        
 
-        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_DeviceControls controls)
+
+        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_DeviceControls controls, InputDevice[] devices)
         {
             int length = actions.Length;
             CD_Command[] commands = new CD_Command[actions.Length];
 
-
             for (int i = 0; i < length; i++)
             {
+                //System representation of actions
                 CD_InputAction cd_action = actions[i];
-
-                CD_Command command = new CD_Command(cd_action.DisplayName);
+                //Action to work with
                 InputAction action = cd_action.action;
+                //Create the command that will represent the action and the controls associated to it
+                CD_Command command = new CD_Command(cd_action.DisplayName);
 
-                foreach (var control in action.controls)
-                {
-                    InputBinding.MaskByGroups(controls.Devices);
-
-                    var bindingIndex = action.GetBindingIndexForControl(control);
-                    var binding = action.bindings[bindingIndex];
-
-                    if (binding.isComposite)
-                    {
-                        string compositeType = binding.GetNameOfComposite();
-                        List<string> compositePaths = new List<string>();
-                        int compositeIndex = 1;
-                        bool insideComposite = true;
-
-                        while (insideComposite)
-                        {
-                            int Index() => j + compositeIndex;
-
-                            string compositePath = GetBindingDisplayString(action, Index());
-                            compositePaths.Add(compositePath);
-
-                            compositeIndex++;
-                            int newIndex = Index();
-                            insideComposite = newIndex < bindingCount && bindings[newIndex].isPartOfComposite;
-                        }
-
-                        //Modifiers
-                        if (compositeType is "OneModifier" or "TwoModifier")
-                        {
-                            MatchedInput[] inputs = new MatchedInput[compositePaths.Count];
-                            if (ConvertBindingsToMatchedInputs(controls, compositePaths, inputs))
-                                command.Addcombination(inputs);
-                        }
-                        //Axis
-                        else
-                        {
-                            string pathData = string.Join('/', compositePaths);
-                            AddBindingToCommand(controls, ref command, compositeType, pathData);
-                        }
-                    }
-                    else
-                        AddBindingToCommand(controls, ref command, controlPath, controlPath);
-                    if (binding.isPartOfComposite)
-                    {
-                        if (lastCompositeIndex != -1)
-                            continue;
-                        lastCompositeIndex = action.ChangeBinding(bindingIndex).PreviousCompositeBinding().bindingIndex;
-                        bindingIndex = lastCompositeIndex;
-                    }
-                    else
-                    {
-                        lastCompositeIndex = -1;
-                    }
-                    if (!isFirstControl)
-                        controls += " or ";
-
-                    controls += action.GetBindingDisplayString(bindingIndex);
-                    isFirstControl = false;
-                }
-
-
-
-                UnityEngine.InputSystem.Utilities.ReadOnlyArray<InputBinding> bindings = action.bindings;
-                Debug.Log(GenerateHelpText(action));
+                //Going through all bindings inside of the action
+                var bindings = action.bindings;
                 int bindingCount = bindings.Count;
                 for (int j = 0; j < bindingCount; j++)
                 {
                     InputBinding binding = bindings[j];
-                    string displayString = binding.ToDisplayString(out string deviceLayout, out string controlPath, InputBinding.DisplayStringOptions.DontIncludeInteractions, Keyboard.current);
+                    //Only the final path is intresting
+                    string effectivePath = binding.effectivePath;
 
+                    //If so, skip because it is already used later on
                     if (binding.isPartOfComposite)
                         continue;
 
+                    //If the binding is itself a combination of multiple bindings
                     if (binding.isComposite)
                     {
                         string compositeType = binding.GetNameOfComposite();
-                        List<string> compositePaths = new List<string>();
-                        int compositeIndex = 1;
-                        bool insideComposite = true;
-
-                        while (insideComposite)
-                        {
-                            int Index() => j + compositeIndex;
-
-                            string compositePath = GetBindingDisplayString(action, Index());
-                            compositePaths.Add(compositePath);
-
-                            compositeIndex++;
-                            int newIndex = Index();
-                            insideComposite = newIndex < bindingCount && bindings[newIndex].isPartOfComposite;
-                        }
+                        List<string> compositePaths = ExtractComposites(devices, bindings, j);
 
                         //Modifiers
                         if (compositeType is "OneModifier" or "TwoModifier")
                         {
-                            MatchedInput[] inputs = new MatchedInput[compositePaths.Count];
-                            if (ConvertBindingsToMatchedInputs(controls, compositePaths, inputs))
-                                command.Addcombination(inputs);
+                            List<CD_MatchedInput> inputs = new List<CD_MatchedInput>();
+                            for (int l = 0; l < compositePaths.Count; l++)
+                            {
+                                if (controls.TryGetMatchedInput(compositePaths[j], out CD_MatchedInput matchedInput))
+                                    inputs.Add(matchedInput);
+                            }
+                            command.Addcombination(inputs.ToArray());
                         }
-                        //Axis
+                        //Axis etc...
                         else
                         {
                             string pathData = string.Join('/', compositePaths);
                             AddBindingToCommand(controls, ref command, compositeType, pathData);
                         }
                     }
-                    else
-                        AddBindingToCommand(controls, ref command, controlPath, controlPath);
+
+                    else if (TryGetControlPathsFromBinding(devices, effectivePath, out string controlPath, out string displayName))
+                        AddBindingToCommand(controls, ref command, controlPath, displayName);
                 }
 
                 commands[i] = command;
             }
 
             return commands;
+        }
+        private static void AddBindingToCommand(CD_DeviceControls controls, ref CD_Command command, string matchingString, string registeredString)
+        {
 
-            static void AddBindingToCommand(CD_DeviceControls controls, ref CD_Command command, string matchingString, string pathData)
-            {
-                CD_Input data = controls.GetMatchingInput(matchingString);
-                if (data.HasValue)
-                    command.Addcombination(new MatchedInput(data, pathData));
-                else
-                    Debug.LogError($"Cannot find binding {matchingString}");
-            }
+            CD_Input data = controls.FindInputData(matchingString);
+            if (data.HasValue)
+                command.Addcombination(new CD_MatchedInput(data, registeredString));
+            else
+                Debug.LogError($"Cannot find binding {matchingString}");
         }
 
+        private static List<string> ExtractComposites(InputDevice[] devices, ReadOnlyArray<InputBinding> bindings, int index)
+        {
+            //Composites parts are after the Composite
+            List<string> compositePaths = new List<string>();
+            while (true)
+            {
+                index++;
+                var compositeBinding = bindings[index];
+                //Out of the composite
+                if (!compositeBinding.isPartOfComposite)
+                    break;
 
+                if (TryGetControlPathsFromBinding(devices, compositeBinding.effectivePath,
+                    out string compositePath,
+                    out string compositeDisplayName))
+
+                    compositePaths.Add(compositePath);
+            }
+
+            return compositePaths;
+        }
+
+        private static bool TryGetControlPathsFromBinding(InputDevice[] devices, string bindingPath, out string controlPath, out string displayName)
+        {
+            displayName = string.Empty;
+            controlPath = string.Empty;
+
+            foreach (var device in devices)
+            {
+                var control = InputControlPath.TryFindControl(device, bindingPath);
+                if (control != null)
+                {
+                    controlPath = control.path;
+                    displayName = InputControlPath.ToHumanReadableString(controlPath, InputControlPath.HumanReadableStringOptions.OmitDevice, device);
+                    return true;
+                }
+            }
+
+            return false;
+        }
         private static string GenerateHelpText(InputAction action)
         {
             if (action.controls.Count == 0)
@@ -221,35 +194,6 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 isFirstControl = false;
             }
             return $"{verb} {controls} to {action.name.ToLower()}";
-        }
-        private static string GetBindingDisplayString(InputAction action, int index)
-        {
-            string displayString = action.GetBindingDisplayString(
-                index,
-                out string device,
-                out string controlPath,
-                InputBinding.DisplayStringOptions.DontIncludeInteractions
-            );
-
-            //
-            return string.IsNullOrWhiteSpace(controlPath) ? displayString : controlPath;
-        }
-        private static bool ConvertBindingsToMatchedInputs(CD_DeviceControls controls, IEnumerable<string> bindings, MatchedInput[] inputs)
-        {
-            int i = 0;
-            foreach (string bindingString in bindings)
-            {
-                //Get all kind of info from action that will be used for matching the correct sprite with the correct binding
-                CD_Input data = controls.GetMatchingInput(bindingString);
-                if (data.HasValue)
-                    inputs[i] = new MatchedInput(data, bindingString);
-                else
-                    return false;
-
-                i++;
-            }
-
-            return true;
         }
 
         public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions, CD_ActionsFilters settings)
