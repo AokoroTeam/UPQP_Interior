@@ -128,13 +128,9 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 if (!compositeBinding.isPartOfComposite)
                     break;
 
-                if (TryGetControlPathsFromBinding(devices, compositeBinding.effectivePath,
-                    out string compositeControlPath,
-                    out string compositeDisplayName))
-
+                if (TryGetControlPathsFromBinding(devices, compositeBinding.effectivePath, out string compositeControlPath, out string compositeDisplayName))
                     composite.AddControl(compositeControlPath, compositeDisplayName);
             }
-
             return composite;
         }
 

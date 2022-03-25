@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem ;
+using UnityEngine.InputSystem;
 using Aokoro;
 
 namespace UPQP.Managers
@@ -30,17 +30,8 @@ namespace UPQP.Managers
         private void Start()
         {
             OnFocusLost();
-            
-            
-            Debug.Log($"A is {Keyboard.current.aKey.displayName} at path {Keyboard.current.aKey.path}");
-
-            Keyboard.current.onTextInput += Current_onTextInput;
         }
 
-        private void Current_onTextInput(char obj)
-        {
-            Debug.Log("Input : " + obj + " " + Keyboard.current.FindKeyOnCurrentKeyboardLayout(obj.ToString()));
-        }
 
         private void CursorVisibility_OnValueChanged(bool value, object key)
         {
@@ -54,7 +45,7 @@ namespace UPQP.Managers
             cursorVisibility.Subscribe(this, PriorityTags.Highest, true);
 
             LoosedFocusUI.SetActive(true);
-            
+
             Time.timeScale = 0;
         }
 
