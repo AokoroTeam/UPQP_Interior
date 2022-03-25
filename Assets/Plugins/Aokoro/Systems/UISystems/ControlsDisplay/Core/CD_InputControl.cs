@@ -5,41 +5,67 @@ using UnityEngine;
 namespace Aokoro.UI.ControlsDiplaySystem
 {
     [System.Serializable]
-    public struct CD_InputControl
+    public struct CD_InputControl : IEnumerable<CD_InputControl.CD_ControlData>
     {
-        public bool IsComposite => size > 1;
-        public string Path => Paths[0];
-        public string DisplayName => DisplayNames[0];
+        public readonly struct CD_ControlData
+        {
+            public readonly string Path;
+            public readonly string DisplayName;
+
+            internal CD_ControlData(string path, string displayName)
+            {
+                Path = path;
+                DisplayName = displayName;
+            }
+        }
+        public bool IsComposite => Lenght > 1;
+        public string Path => controls[0].Path;
+        public string DisplayName => controls[0].DisplayName;
+        public int Lenght => controls.Count;
 
         public string compositeType;
 
-        public string[] Paths;
-        public string[] DisplayNames;
+        private List<CD_ControlData> controls;
 
-        public int size;
 
         public CD_InputControl(string path, string displayName)
         {
-            this.size = 1;
             this.compositeType = string.Empty;
 
-            Paths = new string[] { path };
-            DisplayNames = new string[] { displayName };
+            controls = new List<CD_ControlData>() { new CD_ControlData(path, displayName) };
         }
 
-        public CD_InputControl(int size, string compositeType)
+        public CD_InputControl(string compositeType)
         {
-            this.size = size;
             this.compositeType = compositeType;
-
-            Paths = new string[size];
-            DisplayNames = new string[size];
+            controls = new List<CD_ControlData>();
         }
 
-        public void SetAtIndex(int index, string path, string displayName)
+        public void AddControl(string path, string displayName)
         {
-            Paths[index] = path;
-            DisplayNames[index] = displayName;
+            controls.Add(new CD_ControlData(path, displayName));
         }
+
+        public string GetPathAtIndex(int index) => controls[index].Path;
+        public string GetDisplayNameAtIndex(int index) => controls[index].DisplayName;
+        public CD_ControlData GetDataAtIndex(int index) => controls[index];
+
+        public CD_InputControl[] Split()
+        {
+            if (!IsComposite)
+                return new CD_InputControl[] { this };
+            else
+            {
+                CD_InputControl[] controlArray = new CD_InputControl[Lenght];
+                for (int i = 0; i < Lenght; i++)
+                    controlArray[i] = new CD_InputControl(GetPathAtIndex(i), GetDisplayNameAtIndex(i));
+
+                return controlArray;
+            }
+        }
+
+        public IEnumerator<CD_ControlData> GetEnumerator() => controls.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => controls.GetEnumerator();
     }
 }

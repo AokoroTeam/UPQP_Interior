@@ -28,7 +28,7 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         {
             for (int i = 0; i < texts.Length; i++)
             {
-                string controlPath = control.Paths[i];
+                string controlPath = control.GetPathAtIndex(i);
                 switch (controlPath.ToLower().Trim())
                 {
                     case "uparrow":
@@ -44,7 +44,7 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                         SetArrowIcon(i, leftArrow);
                         break;
                     default:
-                        texts[i].SetText(control.DisplayNames[i]);
+                        texts[i].SetText(control.GetDisplayNameAtIndex(i));
                         images[i].gameObject.SetActive(false);
                         break;
                 }

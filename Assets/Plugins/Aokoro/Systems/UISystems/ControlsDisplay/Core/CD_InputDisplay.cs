@@ -29,11 +29,12 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     return control.compositeType.Trim().ToLower() == compositeType;
                 else
                 {
-                    foreach (string controlPath in control.Paths)
+                    foreach (var controlData in control)
                     {
+                        string path = controlData.Path.Trim().ToLower();
                         for (int j = 0; j < matchPaths.Length; j++)
                         {
-                            if (controlPath.Trim().ToLower() == matchPaths[j])
+                            if (path == matchPaths[j])
                                 return true;
                         }
                     }

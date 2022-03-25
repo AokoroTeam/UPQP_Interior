@@ -68,7 +68,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 int bindingCount = bindings.Count;
                 for (int j = 0; j < bindingCount; j++)
                 {
-                    
+
                     InputBinding binding = bindings[j];
                     //Only the final path is intresting
                     string effectivePath = binding.effectivePath;
@@ -80,25 +80,28 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     //If the binding is itself a combination of multiple bindings
                     if (binding.isComposite)
                     {
-                        string compositeType = binding.GetNameOfComposite();
-                        CD_InputControl[] compositeControls = ExtractComposites(devices, bindings, j);
+                        CD_InputControl composite = ExtractCompositeControls(devices, bindings, j);
 
                         //Modifiers
-                        if (compositeType is "OneModifier" or "TwoModifier")
+                        if (composite.compositeType is "OneModifier" or "TwoModifier")
                         {
-                            CD_InputRepresentation[] representations = new CD_InputRepresentation[compositeControls.Length];
-                            int representationLenght = controls.GetInputRepresentationsFromControls(compositeControls, representations);
+                            CD_InputRepresentation[] representations = new CD_InputRepresentation[composite.Lenght];
+                            int representationLenght = controls.GetInputRepresentationsFromControls(composite.Split(), representations);
                             command.Addcombination(representationLenght, representations);
                         }
                         //Axis etc...
                         else
                         {
-                            AddBindingToCommand(controls, ref command, compositeType, pathData);
+                            CD_InputRepresentation representation = controls.GetInputRepresentationFromControl(composite);
+                            command.Addcombination(representation);
                         }
                     }
 
                     else if (TryGetControlPathsFromBinding(devices, effectivePath, out string controlPath, out string displayName))
-                        AddBindingToCommand(controls, ref command, controlPath, displayName);
+                    {
+                        CD_InputRepresentation representation = controls.GetInputRepresentationFromControl(new CD_InputControl(controlPath, displayName));
+                        command.Addcombination(representation);
+                    }
                 }
 
                 commands[i] = command;
@@ -106,20 +109,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
             return commands;
         }
-        private static void AddBindingToCommand(CD_DeviceControls controls, ref CD_Command command, string controlPath, string displayName)
+
+        private static CD_InputControl ExtractCompositeControls(InputDevice[] devices, ReadOnlyArray<InputBinding> bindings, int index)
         {
 
-            CD_InputDisplay data = controls.FindInputDisplayForControl(controlPath);
-            if (data.HasValue)
-                command.Addcombination(new CD_MatchedInput(data, controlPath, displayName));
-            else
-                Debug.LogError($"Cannot find binding {controlPath}");
-        }
+            CD_InputControl composite = new CD_InputControl(bindings[index].GetNameOfComposite());
 
-        private static CD_InputControl[] ExtractComposites(InputDevice[] devices, ReadOnlyArray<InputBinding> bindings, int index)
-        {
             //Composites parts are after the Composite
-            Dictionary<string, string> compositePaths = new Dictionary<string, string>();
             while (true)
             {
                 index++;
@@ -127,6 +123,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     break;
 
                 var compositeBinding = bindings[index];
+
                 //Out of the composite
                 if (!compositeBinding.isPartOfComposite)
                     break;
@@ -135,10 +132,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     out string compositeControlPath,
                     out string compositeDisplayName))
 
-                    compositePaths.Add(compositeControlPath, compositeDisplayName);
+                    composite.AddControl(compositeControlPath, compositeDisplayName);
             }
 
-            return compositePaths;
+            return composite;
         }
 
         private static bool TryGetControlPathsFromBinding(InputDevice[] devices, string bindingPath, out string controlPath, out string displayName)
