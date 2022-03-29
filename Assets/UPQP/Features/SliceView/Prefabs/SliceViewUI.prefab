@@ -267,6 +267,8 @@ MonoBehaviour:
       outputName: Regarder
     - displayName: Exit
       outputName: Sortir
+    - displayName: Soom
+      outputName: Zoomer
   displays: []
   _actionProviderReference: {fileID: 0}
 --- !u!114 &2630192172289993478

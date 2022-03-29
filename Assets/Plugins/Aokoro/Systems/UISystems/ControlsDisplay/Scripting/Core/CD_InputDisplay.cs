@@ -10,13 +10,11 @@ namespace Aokoro.UI.ControlsDiplaySystem
     [System.Serializable]
     public struct CD_InputDisplay
     {
-        public bool isDefault;
-        [ShowAssetPreview, AllowNesting]
         public GameObject representation;
 
+        public bool isDefault;
         [SerializeField] bool isComposite;
-        [SerializeField, ShowIf(nameof(isComposite))] string compositeType;
-        [SerializeField, ShowIf(nameof(isComposite))] string[] matchPaths;
+        [SerializeField] string[] matchPaths;
 
         public bool HasValue => representation != null && (isDefault || matchPaths != null && matchPaths.Length != 0);
 
@@ -25,18 +23,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
         {
             if (control.IsComposite == isComposite)
             {
-                if (isComposite)
-                    return control.compositeType.Trim().ToLower() == compositeType;
-                else
+                foreach (var controlData in control)
                 {
-                    foreach (var controlData in control)
+                    string path = (isComposite ? control.compositeType : controlData.Path).Trim().ToLower();
+                    for (int j = 0; j < matchPaths.Length; j++)
                     {
-                        string path = controlData.Path.Trim().ToLower();
-                        for (int j = 0; j < matchPaths.Length; j++)
-                        {
-                            if (path == matchPaths[j])
-                                return true;
-                        }
+                        if (path == matchPaths[j])
+                            return true;
                     }
                 }
             }

@@ -144,48 +144,19 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 var control = InputControlPath.TryFindControl(device, bindingPath);
                 if (control != null)
                 {
-                    controlPath = InputControlPath.ToHumanReadableString(control.path, InputControlPath.HumanReadableStringOptions.OmitDevice, device);
-                    displayName = control.displayName;
+                    displayName = InputControlPath.ToHumanReadableString(control.path, 
+                        out string deviceLayoutName, 
+                        out controlPath, 
+                        InputControlPath.HumanReadableStringOptions.OmitDevice,
+                        device);
+
+                    /*Debug.Log($"Display name : {displayName} | ControlPath : {controlPath} | Device Layout : {deviceLayoutName}");
+                    Debug.Log($"{control.path} | {control.name} | {control.variants}  | {control.shortDisplayName} ");*/
                     return true;
                 }
             }
 
             return false;
-        }
-        private static string GenerateHelpText(InputAction action)
-        {
-            if (action.controls.Count == 0)
-                return string.Empty;
-
-            var verb = action.type == InputActionType.Button ? "Press" : "Use";
-            var lastCompositeIndex = -1;
-            var isFirstControl = true;
-
-            var controls = "";
-            foreach (var control in action.controls)
-            {
-                var bindingIndex = action.GetBindingIndexForControl(control);
-                var binding = action.bindings[bindingIndex];
-
-
-                if (binding.isPartOfComposite)
-                {
-                    if (lastCompositeIndex != -1)
-                        continue;
-                    lastCompositeIndex = action.ChangeBinding(bindingIndex).PreviousCompositeBinding().bindingIndex;
-                    bindingIndex = lastCompositeIndex;
-                }
-                else
-                {
-                    lastCompositeIndex = -1;
-                }
-                if (!isFirstControl)
-                    controls += " or ";
-
-                controls += action.GetBindingDisplayString(bindingIndex);
-                isFirstControl = false;
-            }
-            return $"{verb} {controls} to {action.name.ToLower()}";
         }
 
         public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions, CD_ActionsFilters settings)
