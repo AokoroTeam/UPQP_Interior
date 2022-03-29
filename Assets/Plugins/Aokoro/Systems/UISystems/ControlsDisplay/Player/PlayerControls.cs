@@ -25,18 +25,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
         private void Awake()
         {
             playerInput = GetComponent<PlayerInput>();
-            Debug.Log($"Awake" + (Keyboard.current == null ? "Keyboards not found" : $"Keyboard found layout is {Keyboard.current.keyboardLayout}"));
         }
-        private void Update()
-        {
-            Debug.Log($"Update " + (Keyboard.current == null ? "Keyboards not found" : $"Keyboard found layout is  {Keyboard.current.keyboardLayout}"));
-        }
+
         private void Start()
         {
             playerInput.SwitchCurrentControlScheme(InputSystem.devices.ToArray());
             lastMap = playerInput.currentActionMap;
 
-            Debug.Log($"Start " + (Keyboard.current == null ? "Keyboards not found" : $"Keyboard found layout is {Keyboard.current.keyboardLayout}"));
         }
         private void OnEnable()
         {

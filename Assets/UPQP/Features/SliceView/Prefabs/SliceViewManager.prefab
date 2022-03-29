@@ -87,11 +87,11 @@ MonoBehaviour:
   m_Follow: {fileID: 2536632493113109089}
   m_Lens:
     FieldOfView: 50
-    OrthographicSize: 20
+    OrthographicSize: 15
     NearClipPlane: 0.1
     FarClipPlane: 500
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
     m_SensorSize: {x: 2.1541755, y: 1}
@@ -165,9 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6acdaa6554518645b8a3cbc3eff8bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelRoot: {fileID: 0}
   virtualCamera: {fileID: 2536632493180779971}
-  windowManager: {fileID: 0}
+  levelRoot: {fileID: 0}
+  hide: []
 --- !u!1 &2536632494785436242
 GameObject:
   m_ObjectHideFlags: 0

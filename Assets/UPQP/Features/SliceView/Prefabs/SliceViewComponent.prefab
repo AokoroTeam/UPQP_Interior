@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapName: SliceView
   actions: {fileID: -944628639613478452, guid: 2dfa225a2c8e39f4ea40c7c866057fe2, type: 3}
+  rotationSpeedModifier: 30

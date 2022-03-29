@@ -12,6 +12,8 @@ namespace UPQP.Features.SliceView
     [AddComponentMenu("UPQP/Features/SliceView/Player")]
     public class SliceView_Player : PlayerFeatureComponent<SliceView>
     {
+        [SerializeField]
+        private float rotationSpeedModifier = 10;
         private CinemachineOrbitalTransposer vCam;
         private CinemachineFollowZoom zoom;
 
@@ -50,7 +52,7 @@ namespace UPQP.Features.SliceView
 
         private void OnExit_performed(InputAction.CallbackContext ctx) => Player.EndFeature(Feature);
 
-        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = ctx.ReadValue<float>() * Time.deltaTime;
+        private void OnRotate_performed(InputAction.CallbackContext ctx) => vCam.m_XAxis.m_InputAxisValue = ctx.ReadValue<float>() * rotationSpeedModifier * Time.deltaTime;
 
     }
 }

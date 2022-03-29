@@ -77,10 +77,10 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Mouse",
-                    "id": "11602acd-4910-4077-ad17-5f4bc4fd1628",
-                    "path": "OneModifier",
-                    "interactions": "Hold",
+                    "name": "Arrows",
+                    "id": "29f13167-ba9a-4770-b88a-7db67ef35bce",
+                    "path": "1DAxis",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Rotate",
@@ -88,9 +88,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Modifier",
-                    "id": "ca9b7f90-c147-47ac-932f-5e0d9006146f",
-                    "path": "<Mouse>/leftButton",
+                    "name": "negative",
+                    "id": "22d84746-a8ad-4e42-b5ae-8c8921ceee1a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -99,9 +99,42 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Binding",
-                    "id": "5287d18a-4a46-4557-9854-c4db866b61e3",
-                    "path": "<Pointer>/delta/x",
+                    "name": "positive",
+                    "id": "7f4f47d2-9275-4bde-9ee5-5f4ae00a630b",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "QD",
+                    "id": "fa9538d4-fd04-4429-8668-bdb11ed14e88",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "eb96f89e-9931-4697-9316-8759cfabc2d5",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "67427491-b0eb-4ea5-bf68-ca032ef4063b",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
