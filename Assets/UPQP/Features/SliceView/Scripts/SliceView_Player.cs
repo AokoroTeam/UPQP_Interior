@@ -13,6 +13,7 @@ namespace UPQP.Features.SliceView
     public class SliceView_Player : PlayerFeatureComponent<SliceView>
     {
         private CinemachineOrbitalTransposer vCam;
+        private CinemachineFollowZoom zoom;
 
         protected override void Initiate()
         {

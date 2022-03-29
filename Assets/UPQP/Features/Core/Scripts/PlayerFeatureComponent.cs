@@ -59,9 +59,7 @@ namespace UPQP.Features
 
         string ICD_InputActionsProvider.GetControlScheme() => Player.playerInput.currentControlScheme;
 
-
-
-
+        public InputDevice[] GetDevices() => Player.playerInput.devices.ToArray();
         #endregion
     }
 }

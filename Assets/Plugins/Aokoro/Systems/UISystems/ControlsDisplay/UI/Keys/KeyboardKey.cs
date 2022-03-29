@@ -10,9 +10,9 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         [SerializeField]
         TextMeshProUGUI text;
 
-        public override void SetupIcon(string path)
+        public override void SetupIcon(CD_InputControl control)
         {
-            text.SetText(path switch
+            text.SetText(control.Path switch
             {
                 "&" => "1",
                 "é" => "2",
@@ -24,7 +24,7 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                 "_" => "8",
                 "ç" => "9",
                 "à" => "0",
-                _ => path,
+                _ => control.DisplayName,
             });
         }
     }

@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace Aokoro.UI.ControlsDiplaySystem.UI
 {
@@ -19,9 +17,9 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         private GameObject vertical2;
 
 
-        public override void SetupIcon(string path)
+        public override void SetupIcon(CD_InputControl control)
         {
-            switch (path)
+            switch (control.Path)
             {
                 case ("delta"):
                     horizontal1.SetActive(true);

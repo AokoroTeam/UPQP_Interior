@@ -24,12 +24,11 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         [SerializeField]
         Sprite leftArrow;
 
-        public override void SetupIcon(string path)
+        public override void SetupIcon(CD_InputControl control)
         {
-            string[] textsStrings = path.Split('/');
             for (int i = 0; i < texts.Length; i++)
             {
-                string controlPath = textsStrings[i];
+                string controlPath = control.GetPathAtIndex(i);
                 switch (controlPath.ToLower().Trim())
                 {
                     case "uparrow":
@@ -45,15 +44,7 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                         SetArrowIcon(i, leftArrow);
                         break;
                     default:
-                        var control = InputControlPath.TryFindChild(Keyboard.current, controlPath);
-                        if (control != null)
-                        {
-                            texts[i].SetText(control.displayName);
-                            //Debug.Log(Keyboard.current[controlPath]);
-                        }
-                        else
-                            texts[i].SetText(controlPath);
-
+                        texts[i].SetText(control.GetDisplayNameAtIndex(i));
                         images[i].gameObject.SetActive(false);
                         break;
                 }
