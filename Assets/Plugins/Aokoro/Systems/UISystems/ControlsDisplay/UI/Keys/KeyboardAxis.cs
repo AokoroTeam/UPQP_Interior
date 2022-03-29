@@ -44,7 +44,13 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
                         SetArrowIcon(i, leftArrow);
                         break;
                     default:
-                        texts[i].SetText(control.GetDisplayNameAtIndex(i));
+                        string name = control.GetDisplayNameAtIndex(i);
+
+                        texts[i].SetText(name switch {
+                            "W" => "Z",
+                            "A" => "Q",
+                            _ => name
+                        });
                         images[i].gameObject.SetActive(false);
                         break;
                 }
