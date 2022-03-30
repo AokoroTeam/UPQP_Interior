@@ -20,8 +20,6 @@ namespace Aokoro.UI.ControlsDiplaySystem
         [SerializeField, ReadOnly]
         private List<CD_DisplayCommand> displays = new List<CD_DisplayCommand>();
 
-        public CD_DeviceControls CurrentControl => ControlsDiplaySystem.GetControlsForControlScheme(ActionProvider.GetControlScheme());
-
         [SerializeField, RequireInterface(typeof(ICD_InputActionsProvider))]
         private UnityEngine.Object _actionProviderReference;
 
@@ -97,15 +95,25 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
             InputAction[] inputActions = ActionProvider.GetInputActions();
             InputDevice[] devices = ActionProvider.GetDevices();
+            string schemeName = ActionProvider.GetControlScheme();
 
-            CD_InputAction[] actions = ControlsDiplaySystem.ConvertInputSystemActions(inputActions, actionSettings);
-            CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, CurrentControl, devices);
-
-            for (int i = 0; i < commands.Length; i++)
+            if (ControlsDiplaySystem.GetControlsForControlScheme(schemeName, out CD_ControlScheme scheme))
             {
-                CD_DisplayCommand displayer = GameObject.Instantiate(CommandLayout, root).GetComponent<CD_DisplayCommand>();
-                displays.Add(displayer);
-                displayer.Fill(commands[i]);
+
+                CD_InputAction[] actions = ControlsDiplaySystem.SelectInputActions(inputActions, actionSettings);
+                CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, scheme, devices);
+
+                for (int i = 0; i < commands.Length; i++)
+                {
+                    CD_DisplayCommand displayer = GameObject.Instantiate(CommandLayout, root).GetComponent<CD_DisplayCommand>();
+                    displays.Add(displayer);
+                    displayer.Fill(commands[i]);
+                }
+            }
+            else
+            {
+                Debug.Log($"No compatible scheme for {schemeName}");
+                Hide();
             }
 
             //Debug.Log("[Control Display] Controls have been successfuly updated", gameObject);

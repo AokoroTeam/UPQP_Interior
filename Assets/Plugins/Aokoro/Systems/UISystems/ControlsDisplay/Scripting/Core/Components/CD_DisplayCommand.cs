@@ -58,13 +58,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
         public virtual void And(Transform root)
         {
             if (and)
-                ands.Add(Instantiate(ControlsDiplaySystem.Data.and, root));
+                ands.Add(Instantiate(ControlsDiplaySystem.Data.And, root));
         }
 
         public virtual void Or(Transform root)
         {
             if (or)
-                ors.Add(Instantiate(ControlsDiplaySystem.Data.or, root));
+                ors.Add(Instantiate(ControlsDiplaySystem.Data.Or, root));
         }
 
 
@@ -74,7 +74,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
             {
                 for (int i = 0; i < instantiatedCombinations.Length; i++)
                 {
-                    instantiatedCombinations[i].Clear();
+                    instantiatedCombinations[i]?.Clear();
                     Destroy(instantiatedCombinations[i].gameObject);
                 }
 

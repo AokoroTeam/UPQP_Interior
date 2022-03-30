@@ -1,8 +1,10 @@
 using UnityEngine;
 using System;
 using System.IO;
+using System.Linq;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.InputSystem.Utilities;
 
 #if UNITY_EDITOR
@@ -35,21 +37,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
             }
         }
 
-        public static CD_DeviceControls GetControlsForControlScheme(string controlScheme)
-        {
-            CD_DeviceControls[] controls = Data.controls;
-
-            for (int i = 0; i < controls.Length; i++)
-            {
-                if (controls[i].ControlScheme == controlScheme)
-                    return controls[i];
-            }
-            Debug.Log($"Unkown scheme : {controlScheme}. Returning default");
-            return controls[0];
-        }
+        public static bool GetControlsForControlScheme(string controlScheme, out CD_ControlScheme scheme) => Data.TryGetControlsForScheme(controlScheme, out scheme);
 
 
-        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_DeviceControls controls, InputDevice[] devices)
+        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_ControlScheme controlScheme, InputDevice[] devices)
         {
             int length = actions.Length;
             CD_Command[] commands = new CD_Command[actions.Length];
@@ -86,20 +77,21 @@ namespace Aokoro.UI.ControlsDiplaySystem
                         if (composite.compositeType is "OneModifier" or "TwoModifier")
                         {
                             CD_InputRepresentation[] representations = new CD_InputRepresentation[composite.Lenght];
-                            int representationLenght = controls.GetInputRepresentationsFromControls(composite.Split(), representations);
+                            int representationLenght = controlScheme.GetInputRepresentationsFromControls(composite.Split(), representations);
                             command.Addcombination(representationLenght, representations);
                         }
                         //Axis etc...
                         else
                         {
-                            CD_InputRepresentation representation = controls.GetInputRepresentationFromControl(composite);
+                            CD_InputRepresentation representation = controlScheme.GetInputRepresentationFromControl(composite);
                             command.Addcombination(representation);
                         }
                     }
 
-                    else if (TryGetControlPathsFromBinding(devices, effectivePath, out string controlPath, out string displayName))
+                    else if (TryGetControlPathsFromBinding(devices, effectivePath, out string controlPath, out string displayName, out InputDevice device))
                     {
-                        CD_InputRepresentation representation = controls.GetInputRepresentationFromControl(new CD_InputControl(controlPath, displayName));
+                        CD_InputControl control = new CD_InputControl(controlPath, displayName, device.displayName);
+                        CD_InputRepresentation representation = controlScheme.GetInputRepresentationFromControl(control);
                         command.Addcombination(representation);
                     }
                 }
@@ -128,28 +120,30 @@ namespace Aokoro.UI.ControlsDiplaySystem
                 if (!compositeBinding.isPartOfComposite)
                     break;
 
-                if (TryGetControlPathsFromBinding(devices, compositeBinding.effectivePath, out string compositeControlPath, out string compositeDisplayName))
-                    composite.AddControl(compositeControlPath, compositeDisplayName);
+                if (TryGetControlPathsFromBinding(devices, compositeBinding.effectivePath, out string compositeControlPath, out string compositeDisplayName, out InputDevice device))
+                    composite.AddControl(compositeControlPath, compositeDisplayName, device.displayName);
             }
             return composite;
         }
 
-        private static bool TryGetControlPathsFromBinding(InputDevice[] devices, string bindingPath, out string controlPath, out string displayName)
+        private static bool TryGetControlPathsFromBinding(InputDevice[] devices, string bindingPath, out string controlPath, out string displayName, out InputDevice associatedDevice)
         {
             displayName = string.Empty;
             controlPath = string.Empty;
+            associatedDevice = null;
 
             foreach (var device in devices)
             {
                 var control = InputControlPath.TryFindControl(device, bindingPath);
                 if (control != null)
                 {
-                    displayName = InputControlPath.ToHumanReadableString(control.path, 
-                        out string deviceLayoutName, 
-                        out controlPath, 
+                    displayName = InputControlPath.ToHumanReadableString(control.path,
+                        out string deviceLayoutName,
+                        out controlPath,
                         InputControlPath.HumanReadableStringOptions.OmitDevice,
                         device);
 
+                    associatedDevice = device;
                     /*Debug.Log($"Display name : {displayName} | ControlPath : {controlPath} | Device Layout : {deviceLayoutName}");
                     Debug.Log($"{control.path} | {control.name} | {control.variants}  | {control.shortDisplayName} ");*/
                     return true;
@@ -159,15 +153,15 @@ namespace Aokoro.UI.ControlsDiplaySystem
             return false;
         }
 
-        public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions, CD_ActionsFilters settings)
+        public static CD_InputAction[] SelectInputActions(InputAction[] actions, CD_ActionsFilters settings)
         {
             if (!settings.HasValue)
-                return ConvertInputSystemActions(actions);
+                return SelectInputactions(actions);
             else
                 return settings.ConvertInputSystemActions(actions);
 
         }
-        public static CD_InputAction[] ConvertInputSystemActions(InputAction[] actions)
+        public static CD_InputAction[] SelectInputactions(InputAction[] actions)
         {
             CD_InputAction[] cD_InputActions = new CD_InputAction[actions.Length];
             for (int i = 0; i < actions.Length; i++)

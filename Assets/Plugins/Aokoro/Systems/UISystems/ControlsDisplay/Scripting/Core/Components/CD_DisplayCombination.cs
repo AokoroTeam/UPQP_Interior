@@ -23,9 +23,9 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
                 var matchedInput = combination[i];
                 instantiatedInputs[i] = GameObject.Instantiate(matchedInput.display.representation, root);
-                if(instantiatedInputs[i].TryGetComponent(out ControlIcon icon))
+                if (instantiatedInputs[i].TryGetComponent(out ControlIcon icon))
                     icon.SetupIcon(matchedInput.control);
-                
+
             }
         }
         public void Clear()

@@ -11,12 +11,10 @@ namespace Aokoro.UI.ControlsDiplaySystem
     public struct CD_InputDisplay
     {
         public GameObject representation;
-
-        public bool isDefault;
         [SerializeField] bool isComposite;
         [SerializeField] string[] matchPaths;
 
-        public bool HasValue => representation != null && (isDefault || matchPaths != null && matchPaths.Length != 0);
+        public bool IsValid => representation != null && matchPaths != null && matchPaths.Length != 0;
 
 
         public bool MatchesControl(CD_InputControl control)
@@ -55,15 +53,14 @@ namespace Aokoro.UI.ControlsDiplaySystem
         public override bool Equals(object obj)
         {
             return obj is CD_InputDisplay input &&
-                   isDefault == input.isDefault &&
                    EqualityComparer<GameObject>.Default.Equals(representation, input.representation) &&
                    EqualityComparer<string[]>.Default.Equals(matchPaths, input.matchPaths) &&
-                   HasValue == input.HasValue;
+                   IsValid == input.IsValid;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(isDefault, representation, matchPaths, HasValue);
+            return HashCode.Combine(representation, matchPaths, IsValid);
         }
 #endif
     }
