@@ -18,11 +18,11 @@ namespace UPQP.Features
             if(feature == _Feature)
             {
                 Feature.InitiateFeatureComponents -= Feature_InitiateFeatureComponents;
-                Initiate();
+                OnFeatureComponentInitiate();
             }
         }
 
-        protected abstract void Initiate();
+        protected abstract void OnFeatureComponentInitiate();
 
         protected virtual void Start()
         {

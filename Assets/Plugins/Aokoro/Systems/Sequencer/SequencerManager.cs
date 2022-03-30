@@ -173,8 +173,10 @@ namespace Aokoro.Sequencing
                 }
 
                 Threads[thread].Add(sequencer);
-                Dependances.Add(sequencer, dependances.ToList());
 
+                if(dependances.Length > 0)
+                    AddDependances(sequencer, dependances);
+                
                 sequencer.OnStarted?.Invoke();
 
                 Update(sequencer, null);

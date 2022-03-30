@@ -1,6 +1,6 @@
 {
     "name": "Aokoro.Sequencing",
-    "rootNamespace": "",
+    "rootNamespace": "Aokoro.Sequencing",
     "references": [
         "GUID:324bb285b201c5f4d92dbcc2c0fc5db0",
         "GUID:776d03a35f1b52c4a9aed9f56d7b4229"

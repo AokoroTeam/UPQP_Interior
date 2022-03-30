@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Aokoro.Sequencing.Steps
 {
@@ -9,7 +6,7 @@ namespace Aokoro.Sequencing.Steps
     public class WaitForFramesStep : IStep
     {
         private int frameCount;
-        private int targetFrameCount;
+        private readonly int targetFrameCount;
         
         public WaitForFramesStep(int targetFrameCount)
         {

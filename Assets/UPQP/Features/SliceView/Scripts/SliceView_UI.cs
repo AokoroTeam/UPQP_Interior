@@ -22,7 +22,7 @@ namespace UPQP.Features.SliceView
             base.Awake();
         }
 
-        protected override void Initiate()
+        protected override void OnFeatureComponentInitiate()
         {
             GameUIManager.MainUI.AddWindow(windowName, gameObject);
 

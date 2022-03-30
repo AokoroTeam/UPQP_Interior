@@ -1,12 +1,17 @@
-using Aokoro.Entities;
 using EasyCharacterMovement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+using Aokoro.Entities;
 using Aokoro.Entities.Player;
-using UnityEngine.InputSystem;
 using Aokoro.UI.ControlsDiplaySystem;
-using System;
+
+using UPQP.Managers;
+
+using UnityEngine.InputSystem;
 using NaughtyAttributes;
 
 namespace UPQP.Player.Movement
@@ -39,6 +44,8 @@ namespace UPQP.Player.Movement
         {
             base.OnStart();
             ShowUI();
+            GameNotifications.Instance.TriggerNotification("Conseil", "Nous vous conseillons de vous munir d'une souris pour pouvoir vous déplacer en même temps que vous regarder.", 10, 2);
+            GameNotifications.Instance.TriggerNotification("Conseil", "Vous pouvez courir en maintenant : \n - <b>Shift</b> \n - <b>clic gauche</b>.", 10, 12);
         }
         public void ShowUI() => UI?.Show();
         public void HideUI() => UI?.Hide();

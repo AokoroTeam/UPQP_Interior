@@ -7,8 +7,9 @@ namespace Aokoro.Sequencing
 {
     public static class StepExtensions
     {
-        public static ISequencer ToSequence(this IEnumerable<IStep> steps) => new Sequencer(steps.ToArray());
+        public static Sequencer ToSequence(this IEnumerable<IStep> steps) => new Sequencer(steps.ToArray());
         public static bool IsRunning(this IStep step) => SequencerManager.IsRunning(step);
+        
         public static ISequencer Root(this IStep step) => SequencerManager.Root(step);
         public static ISequencer Parent(this IStep step) => SequencerManager.GetParent(step);
     }

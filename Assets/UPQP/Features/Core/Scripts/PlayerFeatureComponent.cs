@@ -11,8 +11,10 @@ namespace UPQP.Features
 
     public abstract class PlayerFeatureComponent<T> : FeatureComponent<T>, IPlayerFeature, ICD_InputActionsProvider, IPlayerInputAssetProvider where T : Feature
     {
+        Feature IPlayerFeature.Feature => _Feature;
+
         public event Action OnActionsNeedRefresh;
-        public Feature Feature => _Feature;
+
         public string MapName => mapName;
 
         [SerializeField] private string mapName;
