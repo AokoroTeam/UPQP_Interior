@@ -2007,6 +2007,18 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8211786350873182967, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
+      propertyPath: _maxWalkSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211786350873182967, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
+      propertyPath: _sprintSpeedModifier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211786350873182967, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
+      propertyPath: _sprintAccelerationModifier
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1596070223, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}
     - {fileID: 8570470377052915234, guid: d6840a0f984a9ae43a469597cf94d75b, type: 3}

@@ -40,25 +40,32 @@ namespace Aokoro.UI.ControlsDiplaySystem
         public static bool GetControlsForControlScheme(string controlScheme, out CD_ControlScheme scheme) => Data.TryGetControlsForScheme(controlScheme, out scheme);
 
 
-        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_ControlScheme controlScheme, InputDevice[] devices)
+        public static CD_Command[] ExtractCommands(CD_InputAction[] actions, CD_ControlScheme controlScheme, InputDevice[] devices, CD_Settings settings)
         {
             int length = actions.Length;
             CD_Command[] commands = new CD_Command[actions.Length];
 
             for (int i = 0; i < length; i++)
             {
+                int skipBindingCount = 0;
                 //System representation of actions
                 CD_InputAction cd_action = actions[i];
                 //Action to work with
                 InputAction action = cd_action.action;
                 //Create the command that will represent the action and the controls associated to it
-                CD_Command command = new CD_Command(cd_action.DisplayName);
+                CD_Command command = new CD_Command(cd_action.settings.outputName);
 
                 //Going through all bindings inside of the action
                 var bindings = action.bindings;
                 int bindingCount = bindings.Count;
+
                 for (int j = 0; j < bindingCount; j++)
                 {
+                    if (!cd_action.settings.IsBindingRequested(command.CombinationsCount + 1 + skipBindingCount))
+                    {
+                        skipBindingCount++;
+                        continue;
+                    }
 
                     InputBinding binding = bindings[j];
                     //Only the final path is intresting
@@ -153,7 +160,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
             return false;
         }
 
-        public static CD_InputAction[] SelectInputActions(InputAction[] actions, CD_ActionsFilters settings)
+        public static CD_InputAction[] SelectInputActions(InputAction[] actions, CD_Settings settings)
         {
             if (!settings.HasValue)
                 return SelectInputactions(actions);

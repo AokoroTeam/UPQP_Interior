@@ -262,13 +262,16 @@ MonoBehaviour:
   CommandLayout: {fileID: 5595791543192764704, guid: 5431aca153f90b547abd30b109b6a349, type: 3}
   root: {fileID: 2630192171946747660}
   actionSettings:
-    selectActions:
+    settings:
     - displayName: Rotate
       outputName: Regarder
+      bindings: 01000000
+    - displayName: Zoom
+      outputName: Zoomer
+      bindings: 
     - displayName: Exit
       outputName: Sortir
-    - displayName: Soom
-      outputName: Zoomer
+      bindings: 
   displays: []
   _actionProviderReference: {fileID: 0}
 --- !u!114 &2630192172289993478

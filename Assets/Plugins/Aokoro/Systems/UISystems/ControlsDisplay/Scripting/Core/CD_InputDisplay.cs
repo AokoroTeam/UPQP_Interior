@@ -14,9 +14,6 @@ namespace Aokoro.UI.ControlsDiplaySystem
         [SerializeField] bool isComposite;
         [SerializeField] string[] matchPaths;
 
-        public bool IsValid => representation != null && matchPaths != null && matchPaths.Length != 0;
-
-
         public bool MatchesControl(CD_InputControl control)
         {
             if (control.IsComposite == isComposite)
@@ -54,13 +51,12 @@ namespace Aokoro.UI.ControlsDiplaySystem
         {
             return obj is CD_InputDisplay input &&
                    EqualityComparer<GameObject>.Default.Equals(representation, input.representation) &&
-                   EqualityComparer<string[]>.Default.Equals(matchPaths, input.matchPaths) &&
-                   IsValid == input.IsValid;
+                   EqualityComparer<string[]>.Default.Equals(matchPaths, input.matchPaths) ;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(representation, matchPaths, IsValid);
+            return HashCode.Combine(representation, matchPaths);
         }
 #endif
     }

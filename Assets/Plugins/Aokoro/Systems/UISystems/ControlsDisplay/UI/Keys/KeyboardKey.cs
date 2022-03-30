@@ -10,22 +10,21 @@ namespace Aokoro.UI.ControlsDiplaySystem.UI
         [SerializeField]
         TextMeshProUGUI text;
 
+        private const string numpad = "numpad";
         public override void SetupIcon(CD_InputControl control)
         {
-            text.SetText(control.Path switch
+            string displayName = control.DisplayName;
+            string path = control.Path;
+
+            if (path.StartsWith(numpad))
+                text.SetText(path.Remove(0, numpad.Length));
+            else
             {
-                "&" => "1",
-                "é" => "2",
-                "\"" => "3",
-                "'" => "4",
-                "(" => "5",
-                "-" => "6",
-                "è" => "7",
-                "_" => "8",
-                "ç" => "9",
-                "à" => "0",
-                _ => control.DisplayName,
-            });
+                if (int.TryParse(path, out _))
+                    text.SetText(path);
+                else
+                    text.SetText(displayName);
+            }
         }
     }
 }

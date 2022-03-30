@@ -19,7 +19,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
         internal CD_InputRepresentation GetInputRepresentationFromControl(CD_InputControl control)
         {
             CD_InputDisplay display = FindDisplayForControl(control);
-            return display.IsValid ? new CD_InputRepresentation(display, control) : null;
+            return new CD_InputRepresentation(display, control);
         }
 
         internal int GetInputRepresentationsFromControls(CD_InputControl[] controls, CD_InputRepresentation[] output)

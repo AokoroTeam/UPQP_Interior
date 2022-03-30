@@ -73,7 +73,7 @@ namespace UPQP.Player
             executeFeatures.Disable();
 
             //Filters to find this actions
-            CD_ActionsFilters.CD_ActionFilterData[] datas = new CD_ActionsFilters.CD_ActionFilterData[length];
+            CD_ActionSettings[] actionSettings = new CD_ActionSettings[length];
 
             for (int i = 0; i < length; i++)
             {
@@ -83,14 +83,16 @@ namespace UPQP.Player
                 playerFeature.Player = this;
 
                 string displayName = $"Start {playerFeature.MapName}";
-                ///Creates an action to start executing the feature binded to 1, then 2, then 3, etc....
-                InputAction startAction = executeFeatures.AddAction(displayName, InputActionType.Button, $"<Keyboard>/{(i == 9 ? 0 : i + 1)}");
+                int digit = (i == 9 ? 0 : i + 1);
 
+                ///Creates an action to start executing the feature binded to 1, then 2, then 3, etc....
+                InputAction startAction = executeFeatures.AddAction(displayName, InputActionType.Button, $"<Keyboard>/{digit}", groups: "Keyboard&Mouse");;
+                startAction.AddBinding($"<Keyboard>/numpad{digit}", groups: "Keyboard&Mouse");
                 ///Links it to the correct callback
                 startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature.Feature);
 
                 //Indicates to the UI where to find this actions and how to name them
-                datas[i] = new CD_ActionsFilters.CD_ActionFilterData(displayName, playerFeature.MapName);
+                actionSettings[i] = new CD_ActionSettings(displayName, playerFeature.Feature.FeatureName, 1);
             }
 
             executeFeatures.Enable();
@@ -102,7 +104,7 @@ namespace UPQP.Player
             featuresUI = Instantiate(featuresControls, parent.transform).GetComponent<CD_Displayer>();
 
             //Setup the UI
-            featuresUI.actionSettings = new CD_ActionsFilters(datas);
+            featuresUI.actionSettings = new CD_Settings(actionSettings);
             featuresUI.AssignActionProvider(new UPQP_FeaturesActionProvider(this), true);
         }
 

@@ -9,6 +9,7 @@ namespace UPQP.Features.SliceView
 
     public class SliceView : Feature
     {
+        public override string FeatureName => "Vue coupée";
         public SliceView_Player Player { get; private set; }
         public SliceView_Manager Manager { get; private set; }
         public SliceView_UI UI { get; private set; }

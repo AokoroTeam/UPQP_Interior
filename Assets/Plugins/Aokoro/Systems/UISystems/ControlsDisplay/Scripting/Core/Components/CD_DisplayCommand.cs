@@ -74,8 +74,13 @@ namespace Aokoro.UI.ControlsDiplaySystem
             {
                 for (int i = 0; i < instantiatedCombinations.Length; i++)
                 {
-                    instantiatedCombinations[i]?.Clear();
-                    Destroy(instantiatedCombinations[i].gameObject);
+
+                    CD_DisplayCombination cD_DisplayCombination = instantiatedCombinations[i];
+                    if (cD_DisplayCombination)
+                    {
+                        cD_DisplayCombination.Clear();
+                        Destroy(cD_DisplayCombination.gameObject);
+                    }
                 }
 
                 instantiatedCombinations = null;

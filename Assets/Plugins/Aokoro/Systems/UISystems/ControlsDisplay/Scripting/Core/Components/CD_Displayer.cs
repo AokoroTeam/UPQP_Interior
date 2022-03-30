@@ -15,7 +15,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
         [SerializeField, Required]
         Transform root;
-        public CD_ActionsFilters actionSettings;
+        public CD_Settings actionSettings;
 
         [SerializeField, ReadOnly]
         private List<CD_DisplayCommand> displays = new List<CD_DisplayCommand>();
@@ -101,7 +101,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
             {
 
                 CD_InputAction[] actions = ControlsDiplaySystem.SelectInputActions(inputActions, actionSettings);
-                CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, scheme, devices);
+                CD_Command[] commands = ControlsDiplaySystem.ExtractCommands(actions, scheme, devices, actionSettings);
 
                 for (int i = 0; i < commands.Length; i++)
                 {
