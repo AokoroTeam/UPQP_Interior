@@ -6,11 +6,12 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using NaughtyAttributes;
 using Aokoro.Entities;
+using UPQP.Player;
 
 namespace UPQP.Features.SliceView
 {
     [AddComponentMenu("UPQP/Features/SliceView/Player")]
-    public class SliceView_Player : PlayerFeatureComponent<SliceView>, IUpdateEntityComponent<UPQP.Player.UPQP_Player>
+    public class SliceView_Player : PlayerFeatureComponent<SliceView>//, IUpdateEntityComponent<UPQP.Player.UPQP_Player>
     {
         [SerializeField, BoxGroup("Rotation")]
         private float rotationSpeedModifier = 10;
@@ -25,11 +26,13 @@ namespace UPQP.Features.SliceView
         private CinemachineFollowZoom zoomComponent;
         private Bounds LevelBounds;
 
+        public UPQP_Player Manager { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        public string ComponentName => throw new System.NotImplementedException();
 
         protected override void OnFeatureComponentInitiate()
         {
-            zoomComponent.m_MinFOV = zoom.x;
-            zoomComponent.m_MaxFOV = zoom.y;
+            
         }
 
         protected override void Start()
@@ -37,6 +40,8 @@ namespace UPQP.Features.SliceView
             vCam = _Feature.Manager.virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             zoomComponent = vCam.VirtualCamera.GetComponent<CinemachineFollowZoom>();
 
+            zoomComponent.m_MinFOV = zoom.x;
+            zoomComponent.m_MaxFOV = zoom.y;
             base.Start();
         }
 

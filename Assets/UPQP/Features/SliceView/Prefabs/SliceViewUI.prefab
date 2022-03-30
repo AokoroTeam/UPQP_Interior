@@ -219,9 +219,6 @@ MonoBehaviour:
     - displayName: Rotate
       outputName: Regarder
       bindings: 01000000
-    - displayName: Zoom
-      outputName: Zoomer
-      bindings: 
     - displayName: Exit
       outputName: Sortir
       bindings: 

@@ -8,7 +8,7 @@ using System;
 
 namespace Aokoro.UI.ControlsDiplaySystem
 {
-    public class PlayerControls : MonoBehaviour, ILateUpdateLivingComponent<PlayerManager>
+    public class PlayerControls : MonoBehaviour, ILateUpdateEntityComponent<PlayerManager>
     {
         string IEntityComponent.ComponentName => "PlayerControls";
 
