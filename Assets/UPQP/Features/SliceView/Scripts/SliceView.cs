@@ -9,7 +9,7 @@ namespace UPQP.Features.SliceView
 
     public class SliceView : Feature
     {
-        public override string FeatureName => "Vue coupÈe";
+        public override string FeatureName => "Vue coup√©e";
         public SliceView_Player Player { get; private set; }
         public SliceView_Manager Manager { get; private set; }
         public SliceView_UI UI { get; private set; }
@@ -25,7 +25,7 @@ namespace UPQP.Features.SliceView
             this.P_UI = P_UI;
         }
 
-        protected override void GenerateNeededContent(LevelManager manager)
+        protected override void GenerateNeededContentOnSetup(LevelManager manager)
         {
             //Add Manager
             Manager = GameObject.FindObjectOfType<SliceView_Manager>(false);
@@ -39,7 +39,7 @@ namespace UPQP.Features.SliceView
             UI._Feature = this;
         }
 
-        public override void Clean(LevelManager controller)
+        public override void CleanContentOnDestroy(LevelManager controller)
         {
             GameObject.Destroy(Player);
             GameObject.Destroy(Manager.gameObject);

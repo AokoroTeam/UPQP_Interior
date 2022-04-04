@@ -3,6 +3,9 @@ using UnityEngine;
 using Cinemachine;
 using System.Collections;
 using UPQP.Managers;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace UPQP.Features.SliceView
 {
@@ -14,13 +17,23 @@ namespace UPQP.Features.SliceView
         [SerializeField] private GameObject[] hide;
 
         [SerializeField, BoxGroup("Notification")]
-        private string title = "Nouvelle fonctionnalité !";
+        private string title = "Nouvelle fonctionnalitÃ© !";
         [SerializeField, BoxGroup("Notification")]
-        private string description = "Appuyez sur la touche 1 pour activer la vue découpée et observer l'environnement dans sa globalité.";
+        private string description = "Appuyez sur la touche 1 pour activer la vue dÃ©coupÃ©e et observer l'environnement dans sa globalitÃ©.";
 
+        [SerializeField]
+        private InputAction zoomToPinch;
+        /*
+        protected override void Start()
+        {
+            base.Start();
+            EnhancedTouchSupport.Enable();
+        }
 
-
-
+        private void Update()
+        {
+            Debug.Log(Touch.activeFingers);
+        }*/
         [Button]
         protected override void OnFeatureComponentInitiate()
         {
@@ -34,10 +47,10 @@ namespace UPQP.Features.SliceView
             }
             GameNotifications.Instance.TriggerNotification(title, description, 10, 50);
         }
-        
+
         public Bounds GetCurrentBounds()
         {
-            Bounds bounds = new ();
+            Bounds bounds = new();
             var meshes = levelRoot.GetComponentsInChildren<MeshRenderer>();
             for (int i = 0; i < meshes.Length; i++)
             {
