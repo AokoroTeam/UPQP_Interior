@@ -7,6 +7,7 @@ using Cinemachine;
 using NaughtyAttributes;
 using Aokoro.Entities;
 using UPQP.Player;
+using DG.Tweening;
 
 namespace UPQP.Features.SliceView
 {
@@ -21,14 +22,18 @@ namespace UPQP.Features.SliceView
 
         [SerializeField, BoxGroup("zoom"), MinMaxSlider(0, 200)]
         Vector2 zoom;
+        [SerializeField, BoxGroup("zoom")]
+        private float zoomDamping;
+        [SerializeField, BoxGroup("zoom")]
+        private int zoomSpeed;
+
+        [SerializeField, BoxGroup("move")]
+        private int moveSpeed;
 
 
         private CinemachineFollowZoom zoomComponent;
+        private Transform cameraCenter;
         private Bounds LevelBounds;
-
-        public UPQP_Player Manager { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public string ComponentName => throw new System.NotImplementedException();
 
         protected override void OnFeatureComponentInitiate()
         {
@@ -37,14 +42,16 @@ namespace UPQP.Features.SliceView
 
         protected override void Start()
         {
+            base.Start();
+
             vCam = _Feature.Manager.virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             zoomComponent = vCam.VirtualCamera.GetComponent<CinemachineFollowZoom>();
+            cameraCenter = _Feature.Manager.cameraCenter;
 
             zoomComponent.m_MinFOV = zoom.x;
             zoomComponent.m_MaxFOV = zoom.y;
-            base.Start();
+            zoomComponent.m_Damping = zoomDamping;
         }
-
 
         public override void OnFeatureEnables()
         {
@@ -64,17 +71,52 @@ namespace UPQP.Features.SliceView
         public override void BindToNewActions(InputActionAsset asset)
         {
             var map = asset.FindActionMap(MapName);
-            ///Rotation
-            map.FindAction("Rotate").performed += OnRotate_performed;
-            map.FindAction("Rotate").canceled += OnRotate_performed;
-            map.FindAction("Rotate").started += OnRotate_performed;
+            try
+            {
+                ///Rotation
+                map.FindAction("Rotate").performed += OnRotate_performed;
+                ///Zoom
+                map.FindAction("Zoom").performed += OnZoom_Performed;
+                ///Move
+                map.FindAction("Move").performed += OnMove_Performed;
+                
 
-            ///Zoom
-            map.FindAction("Zoom").performed += OnZoom_Performed;
-            map.FindAction("Zoom").canceled += OnZoom_Performed;
-            map.FindAction("Zoom").started += OnZoom_Performed;
+                map.FindAction("Exit").performed += OnExit_performed;
+            }
+            catch(System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
 
-            map.FindAction("Exit").performed += OnExit_performed;
+        private Vector3 firstClickRayPoint;
+        private Plane scrollPlane;
+
+        private void OnMove_Performed(InputAction.CallbackContext ctx)
+        {
+
+            switch(ctx.phase)
+            {
+                case InputActionPhase.Started:
+                    Ray ray = Camera.main.ScreenPointToRay(ctx.ReadValue<Vector3>());
+                    if (Physics.Raycast(ray, out RaycastHit hitInfos))
+                    {
+                        firstClickRayPoint = hitInfos.point;
+                        scrollPlane = new Plane(Vector3.up, firstClickRayPoint);
+                    }
+                    else
+                    {
+                        scrollPlane = new Plane(Vector3.up, LevelBounds.center);
+                        scrollPlane.Raycast(ray, out float distance);
+                        firstClickRayPoint = ray.GetPoint(distance);
+                    }
+                    break;
+                case InputActionPhase.Performed:
+                    Ray ray = Camera.main.ScreenPointToRay(ctx.ReadValue<Vector3>());
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+            }
         }
 
         private void OnExit_performed(InputAction.CallbackContext ctx) => Player.EndFeature(_Feature);
@@ -86,7 +128,9 @@ namespace UPQP.Features.SliceView
 
         private void OnZoom_Performed(InputAction.CallbackContext ctx)
         {
-
+            float input = ctx.ReadValue<float>() * Time.deltaTime;
+            float newWidth = input * zoomSpeed + zoomComponent.m_Width;
+            zoomComponent.m_Width = Mathf.Clamp(newWidth, zoom.x, zoom.y);
         }
     }
 }
