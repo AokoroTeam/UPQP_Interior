@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace Aokoro.Entities
 {
-    public interface IUpdateEntityComponent<T> : IUpdateEntityComponent, IEntityComponent<T> where T : Entity
+    public interface IUpdateEntityComponent<T> : IEntityComponent<T>, IUpdateEntityComponent where T : Entity
     { }
-    public interface ILateUpdateEntityComponent<T> : ILateUpdateEntityComponent, IEntityComponent<T> where T : Entity
+    public interface ILateUpdateEntityComponent<T> : IEntityComponent<T>, ILateUpdateEntityComponent where T : Entity
     { }
-    public interface IFixedUpdateEntityComponent<T> : IFixedUpdateEntityComponent, IEntityComponent<T> where T : Entity
+    public interface IFixedUpdateEntityComponent<T> : IEntityComponent<T>, IFixedUpdateEntityComponent where T : Entity
     { }
 
     public interface IEntityComponent<T> : IEntityComponent where T : Entity
     {
+
         T Manager { get; set; }
         void Initiate(T manager);
     }

@@ -80,7 +80,6 @@ namespace Aokoro.UI.ControlsDiplaySystem
                     {
                         CD_InputControl composite = ExtractCompositeControls(devices, bindings, j);
 
-                        Debug.Log(composite.compositeType);
                         //Modifiers
                         if (composite.compositeType is "OneModifier" or "TwoModifier")
                         {

@@ -74,10 +74,26 @@ namespace Aokoro.Entities
                         var ga = interfaceType.GetGenericArguments()[0];
                         if (ga == typeof(T) || ga.IsSubclassOf(typeof(T)))
                         {
-                            var c = (component as IEntityComponent<T>);
-
-                            c.Manager = this as T;
-                            c.Initiate(this as T);
+                            if (component is IUpdateEntityComponent<T> u)
+                            {
+                                u.Manager = this as T;
+                                u.Initiate(this as T);
+                            }
+                            else if (component is IFixedUpdateEntityComponent<T> fu)
+                            {
+                                fu.Manager = this as T;
+                                fu.Initiate(this as T);
+                            }
+                            else if (component is ILateUpdateEntityComponent<T> Lu)
+                            {
+                                Lu.Manager = this as T;
+                                Lu.Initiate(this as T);
+                            }
+                            else if(component is IEntityComponent<T> c)
+                            {
+                                c.Manager = this as T;
+                                c.Initiate(this as T);
+                            }
                             break;
                         }
                         else

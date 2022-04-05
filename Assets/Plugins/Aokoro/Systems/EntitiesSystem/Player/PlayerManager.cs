@@ -91,7 +91,7 @@ namespace Aokoro.Entities.Player
         {
             playerInput.actions = GenerateInputActionAsset();
             playerInput.ActivateInput();
-            playerInput.actions.Enable();
+            playerInput.actions.Disable();
         }
 
         protected virtual InputActionAsset GenerateInputActionAsset()
@@ -112,7 +112,11 @@ namespace Aokoro.Entities.Player
                 }
 
                 foreach (InputActionMap map in subAsset.actionMaps)
-                    asset.AddActionMap(map.Clone());
+                {
+                    InputActionMap mapCopy = map.Clone();
+                    mapCopy.Disable();
+                    asset.AddActionMap(mapCopy);
+                }
             }
 
             for (int i = 0; i < inputProviders.Length; i++)

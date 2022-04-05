@@ -8,11 +8,13 @@ using NaughtyAttributes;
 using Aokoro.Entities;
 using UPQP.Player;
 using DG.Tweening;
+using System;
+using UPQP.Player.Movement;
 
 namespace UPQP.Features.SliceView
 {
     [AddComponentMenu("UPQP/Features/SliceView/Player")]
-    public class SliceView_Player : PlayerFeatureComponent<SliceView>//, IUpdateEntityComponent<UPQP.Player.UPQP_Player>
+    public class SliceView_Player : PlayerFeatureComponent<SliceView>, IUpdateEntityComponent<UPQP_Player>
     {
         [SerializeField, BoxGroup("Rotation")]
         private float rotationSpeedModifier = 10;
@@ -28,16 +30,23 @@ namespace UPQP.Features.SliceView
         private int zoomSpeed;
 
         [SerializeField, BoxGroup("move")]
-        private int moveSpeed;
+        private int recenterSpeed;
 
 
         private CinemachineFollowZoom zoomComponent;
         private Transform cameraCenter;
         private Bounds LevelBounds;
 
+        InputAction cursorPosition;
         InputAction moveAction;
         InputAction rotateAction;
         InputAction zoomAction;
+
+        private Vector3 CenterPosition;
+
+        public UPQP_Player Manager { get; set; }
+
+        public string ComponentName =>"SliceView player";
 
         protected override void OnFeatureComponentInitiate()
         {
@@ -60,19 +69,28 @@ namespace UPQP.Features.SliceView
         public override void OnFeatureEnables()
         {
             Player.ChangeActionMap(MapName);
-            Player.Freezed.Subscribe(this, 20, true);
+            if(Player.GetLivingComponent(out PlayerCharacter character))
+            {
+                Debug.Log("[Slice view] Freezing player movements");
+                character.Freezed.Subscribe(this, 20, true);
+            }
 
             if (LevelBounds == null)
                 LevelBounds = _Feature.Manager.GetCurrentBounds();
 
             cameraCenter.position = LevelBounds.center;
-
+            CenterPosition = LevelBounds.center;
         }
 
         public override void OnFeatureDisables()
         {
             Player.ChangeActionMap(Player.DefaultActionMap);
-            Player.Freezed.Unsubscribe(this);
+
+            if (Player.GetLivingComponent(out PlayerCharacter character))
+            {
+                Debug.Log("[Slice view] Defreezing player movements");
+                character.Freezed.Unsubscribe(this);
+            }
         }
 
         public override void BindToNewActions(InputActionAsset asset)
@@ -83,6 +101,7 @@ namespace UPQP.Features.SliceView
                 rotateAction = map.FindAction("Rotate");
                 zoomAction = map.FindAction("Zoom");
                 moveAction = map.FindAction("Move");
+                cursorPosition = map.FindAction("CursorPosition");
 
                 ///Rotation
                 rotateAction.performed += OnRotate_performed;
@@ -92,7 +111,10 @@ namespace UPQP.Features.SliceView
                 ///Move
                 moveAction.performed += OnMove;
 
+                map.FindAction("Interact").performed += OnInteract;
+
                 map.FindAction("Exit").performed += OnExit_performed;
+
             }
             catch (System.Exception e)
             {
@@ -100,13 +122,23 @@ namespace UPQP.Features.SliceView
             }
         }
 
-        private void OnMoveInitiated(InputAction.CallbackContext ctx)
+        private void OnInteract(InputAction.CallbackContext ctx)
         {
-            if (ctx.phase == InputActionPhase.Started)
-                moveAction.Enable();
+            //Ray
+            Ray centerRay = Camera.main.ScreenPointToRay(cursorPosition.ReadValue<Vector2>());
+            if (Raycast(centerRay, out RaycastHit centerHit))
+            {
+                CenterPosition = centerHit.point;
+            }
+            else
+            {
+                Debug.Log("Nothing touched");
+            }
+        }
 
-            if (ctx.phase == InputActionPhase.Performed)
-                moveAction.Disable();
+        private static bool Raycast(Ray centerRay, out RaycastHit centerHit)
+        {
+            return Physics.Raycast(centerRay, out centerHit, 100, LayerMask.GetMask("SliceViewPlane"), QueryTriggerInteraction.Collide);
         }
 
         private void OnMove(InputAction.CallbackContext ctx)
@@ -121,7 +153,7 @@ namespace UPQP.Features.SliceView
 
             //Creating plane
             Plane plane;
-            if (Physics.Raycast(centerRay, out RaycastHit centerHit))
+            if (Raycast(centerRay, out RaycastHit centerHit))
                 plane = new Plane(Vector3.up, centerHit.point);
             else
                 plane = new Plane(Vector3.up, LevelBounds.center);
@@ -139,7 +171,7 @@ namespace UPQP.Features.SliceView
                 Vector3 worldDelta = B - A;
                 //Debug.Log($"A : {A} | B : {B}");
 
-                cameraCenter.position -= worldDelta;
+                CenterPosition -= worldDelta;
             }
         }
 
@@ -155,6 +187,20 @@ namespace UPQP.Features.SliceView
             float input = ctx.ReadValue<float>() * Time.deltaTime;
             float newWidth = input * zoomSpeed + zoomComponent.m_Width;
             zoomComponent.m_Width = Mathf.Clamp(newWidth, zoom.x, zoom.y);
+        }
+
+        public void OnUpdate()
+        {
+            Debug.Log(_Feature.IsActive);
+            if(_Feature.IsActive)
+            {
+                cameraCenter.position = Vector3.Lerp(cameraCenter.position, CenterPosition, Time.deltaTime * recenterSpeed);
+            }
+        }
+
+        public void Initiate(UPQP_Player manager)
+        {
+
         }
     }
 }
