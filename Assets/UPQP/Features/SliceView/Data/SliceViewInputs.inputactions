@@ -34,7 +34,7 @@
                 },
                 {
                     "name": "Move",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "68ccddf0-dea4-47a0-8b1c-d1f1aac6d17b",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -157,7 +157,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -165,10 +165,10 @@
                 {
                     "name": "binding",
                     "id": "4ffd0a27-85c6-4694-be89-4f454f83c9ff",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true

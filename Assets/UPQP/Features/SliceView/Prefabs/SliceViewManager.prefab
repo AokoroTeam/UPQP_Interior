@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6acdaa6554518645b8a3cbc3eff8bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraCenter: {fileID: 0}
+  cameraCenter: {fileID: 2536632493113109089}
   virtualCamera: {fileID: 2536632493180779971}
   levelRoot: {fileID: 0}
   hide: []

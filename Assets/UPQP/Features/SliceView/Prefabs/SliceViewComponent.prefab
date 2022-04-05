@@ -49,5 +49,6 @@ MonoBehaviour:
   rotationSpeedModifier: 30
   vCam: {fileID: 0}
   zoom: {x: 5, y: 30}
-  zoomDamping: 2
+  zoomDamping: 0.5
   zoomSpeed: 1
+  moveSpeed: 0

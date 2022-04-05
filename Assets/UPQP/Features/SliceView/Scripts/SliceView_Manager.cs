@@ -14,12 +14,17 @@ namespace UPQP.Features.SliceView
     {
         public Transform cameraCenter;
         public CinemachineVirtualCamera virtualCamera;
-        [SerializeField] private Transform levelRoot;
-        [SerializeField] private GameObject[] hide;
+
+        [SerializeField, BoxGroup("Level")]
+        private Transform levelRoot;
+        [SerializeField, BoxGroup("Level")]
+        private GameObject[] hide;
+
 
         [SerializeField, BoxGroup("Notification")]
         private string title = "Nouvelle fonctionnalité !";
         [SerializeField, BoxGroup("Notification")]
+
         private string description = "Appuyez sur la touche 1 pour activer la vue découpée et observer l'environnement dans sa globalité.";
 
         protected override void Start()

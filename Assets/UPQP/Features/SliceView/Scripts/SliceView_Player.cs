@@ -35,9 +35,13 @@ namespace UPQP.Features.SliceView
         private Transform cameraCenter;
         private Bounds LevelBounds;
 
+        InputAction moveAction;
+        InputAction rotateAction;
+        InputAction zoomAction;
+
         protected override void OnFeatureComponentInitiate()
         {
-            
+
         }
 
         protected override void Start()
@@ -60,6 +64,9 @@ namespace UPQP.Features.SliceView
 
             if (LevelBounds == null)
                 LevelBounds = _Feature.Manager.GetCurrentBounds();
+
+            cameraCenter.position = LevelBounds.center;
+
         }
 
         public override void OnFeatureDisables()
@@ -73,49 +80,66 @@ namespace UPQP.Features.SliceView
             var map = asset.FindActionMap(MapName);
             try
             {
+                rotateAction = map.FindAction("Rotate");
+                zoomAction = map.FindAction("Zoom");
+                moveAction = map.FindAction("Move");
+
                 ///Rotation
-                map.FindAction("Rotate").performed += OnRotate_performed;
+                rotateAction.performed += OnRotate_performed;
                 ///Zoom
-                map.FindAction("Zoom").performed += OnZoom_Performed;
+                zoomAction.performed += OnZoom_Performed;
+
                 ///Move
-                map.FindAction("Move").performed += OnMove_Performed;
-                
+                moveAction.performed += OnMove;
 
                 map.FindAction("Exit").performed += OnExit_performed;
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 Debug.LogException(e);
             }
         }
 
-        private Vector3 firstClickRayPoint;
-        private Plane scrollPlane;
-
-        private void OnMove_Performed(InputAction.CallbackContext ctx)
+        private void OnMoveInitiated(InputAction.CallbackContext ctx)
         {
+            if (ctx.phase == InputActionPhase.Started)
+                moveAction.Enable();
 
-            switch(ctx.phase)
+            if (ctx.phase == InputActionPhase.Performed)
+                moveAction.Disable();
+        }
+
+        private void OnMove(InputAction.CallbackContext ctx)
+        {
+            //Pixel positions
+            Vector2 delta = ctx.ReadValue<Vector2>();
+            Vector2 pixelPositionOfCenter = Camera.main.ViewportToScreenPoint(Vector3.one * .5f);
+
+            //Rays
+            Ray centerRay = Camera.main.ScreenPointToRay(pixelPositionOfCenter);
+            Ray deltaRay = Camera.main.ScreenPointToRay(pixelPositionOfCenter + delta);
+
+            //Creating plane
+            Plane plane;
+            if (Physics.Raycast(centerRay, out RaycastHit centerHit))
+                plane = new Plane(Vector3.up, centerHit.point);
+            else
+                plane = new Plane(Vector3.up, LevelBounds.center);
+
+            //Dragging
+            if (plane.Raycast(centerRay, out float centerDistance)
+                && plane.Raycast(deltaRay, out float deltaDistance))
             {
-                case InputActionPhase.Started:
-                    Ray ray = Camera.main.ScreenPointToRay(ctx.ReadValue<Vector3>());
-                    if (Physics.Raycast(ray, out RaycastHit hitInfos))
-                    {
-                        firstClickRayPoint = hitInfos.point;
-                        scrollPlane = new Plane(Vector3.up, firstClickRayPoint);
-                    }
-                    else
-                    {
-                        scrollPlane = new Plane(Vector3.up, LevelBounds.center);
-                        scrollPlane.Raycast(ray, out float distance);
-                        firstClickRayPoint = ray.GetPoint(distance);
-                    }
-                    break;
-                case InputActionPhase.Performed:
-                    Ray ray = Camera.main.ScreenPointToRay(ctx.ReadValue<Vector3>());
-                    break;
-                case InputActionPhase.Canceled:
-                    break;
+                Vector3 A = centerRay.GetPoint(centerDistance);
+                Vector3 B = deltaRay.GetPoint(deltaDistance);
+
+                Debug.DrawRay(A, Vector3.up * 10, Color.blue);
+                Debug.DrawRay(B, Vector3.up * 10, Color.green);
+
+                Vector3 worldDelta = B - A;
+                //Debug.Log($"A : {A} | B : {B}");
+
+                cameraCenter.position -= worldDelta;
             }
         }
 
