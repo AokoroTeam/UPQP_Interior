@@ -91,7 +91,7 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 500
     Dutch: 0
-    ModeOverride: 1
+    ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
     m_SensorSize: {x: 2.1541755, y: 1}
@@ -165,9 +165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6acdaa6554518645b8a3cbc3eff8bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraCenter: {fileID: 2536632493113109089}
   virtualCamera: {fileID: 2536632493180779971}
   levelRoot: {fileID: 0}
   hide: []
+  title: "Nouvelle fonctionnalit\xE9 !"
+  description: "Appuyez sur la touche 1 pour activer la vue d\xE9coup\xE9e et observer
+    l'environnement dans sa globalit\xE9."
 --- !u!1 &2536632494785436242
 GameObject:
   m_ObjectHideFlags: 0
