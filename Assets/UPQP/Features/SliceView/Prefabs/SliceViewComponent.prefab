@@ -48,7 +48,7 @@ MonoBehaviour:
   actions: {fileID: -944628639613478452, guid: 2dfa225a2c8e39f4ea40c7c866057fe2, type: 3}
   rotationSpeedModifier: 30
   vCam: {fileID: 0}
-  zoom: {x: 5, y: 30}
+  zoom: {x: 10, y: 60}
   zoomDamping: 0.5
   zoomSpeed: 1
-  moveSpeed: 0
+  moveSpeed: 1

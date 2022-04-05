@@ -13,6 +13,7 @@ using UPQP.Managers;
 
 using UnityEngine.InputSystem;
 using NaughtyAttributes;
+using Aokoro;
 
 namespace UPQP.Player.Movement
 {
@@ -21,6 +22,9 @@ namespace UPQP.Player.Movement
     {
         [ReadOnly]
         public PlayerMovementUI UI;
+
+        public InfluencedProperty<bool> Freezed;
+
         public PlayerManager Manager { get; set; }
         public InputActionAsset ActionAsset { get => inputActions; set => inputActions = value; }
 
@@ -30,10 +34,8 @@ namespace UPQP.Player.Movement
 
         private PlayerControls playerControls;
 
-        public void BindToNewActions(InputActionAsset asset)
-        {
 
-        }
+        #region Unity Events
         protected override void OnAwake()
         {
             base.OnAwake();
@@ -47,9 +49,6 @@ namespace UPQP.Player.Movement
             GameNotifications.Instance.TriggerNotification("Conseil", "Nous vous conseillons de vous munir d'une souris pour pouvoir vous déplacer en même temps que vous regarder.", 10, 2);
             GameNotifications.Instance.TriggerNotification("Conseil", "Vous pouvez courir en maintenant : \n - <b>Shift</b> \n - <b>clic gauche</b>.", 10, 12);
         }
-        public void ShowUI() => UI?.Show();
-        public void HideUI() => UI?.Hide();
-
         protected override void OnOnEnable()
         {
             base.OnOnEnable();
@@ -62,11 +61,42 @@ namespace UPQP.Player.Movement
             playerControls.OnControlChanges -= TriggerRefresh;
         }
 
+        protected override void OnUpdate()
+        {
+            if(!Freezed)
+                base.OnUpdate();
+        }
+
+        protected override void OnFixedUpdate()
+        {
+            if (!Freezed)
+                base.OnFixedUpdate();
+        }
+
+        protected override void OnLateFixedUpdate()
+        {
+            if (!Freezed)
+                base.OnLateFixedUpdate();
+        }
+
+        protected override void OnLateUpdate()
+        {
+            if (!Freezed)
+                base.OnLateUpdate();
+        }
+        #endregion
+
         public void Initiate(PlayerManager manager)
         {
             inputActions = manager.playerInput.actions;
             camera = Camera.main;
         }
+
+        public void BindToNewActions(InputActionAsset asset)
+        {
+
+        }
+
         protected override void Animate()
         {
             if (animator)
@@ -87,6 +117,9 @@ namespace UPQP.Player.Movement
                 animator.SetFloat("Speed", speed);
             }
         }
+
+        public void ShowUI() => UI?.Show();
+        public void HideUI() => UI?.Hide();
 
 
         #region CD_InputActionsProvider

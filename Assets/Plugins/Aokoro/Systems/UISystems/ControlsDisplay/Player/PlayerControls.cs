@@ -45,7 +45,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
         }
         private void OnControlsChanges(PlayerInput playerInput)
         {
-            Debug.Log("Player controls have changed");
+            //Debug.Log("Player controls have changed");
             OnControlChanges?.Invoke();
         }
 

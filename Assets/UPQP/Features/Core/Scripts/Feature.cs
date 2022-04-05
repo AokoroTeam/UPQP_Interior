@@ -8,6 +8,7 @@ namespace UPQP.Features
 {
     public abstract class Feature
     {
+        public bool IsActive;
         public abstract string FeatureName { get; }
         public static event Action<Feature> InitiateFeatureComponents;
 

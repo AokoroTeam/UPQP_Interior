@@ -216,8 +216,11 @@ MonoBehaviour:
   root: {fileID: 2630192171946747660}
   actionSettings:
     settings:
+    - displayName: Move
+      outputName: "Se d\xE9placer"
+      bindings: 01000000
     - displayName: Rotate
-      outputName: Regarder
+      outputName: Tourner
       bindings: 01000000
     - displayName: Zoom
       outputName: Zoomer

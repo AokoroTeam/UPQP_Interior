@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &140796256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 140796257}
+  - component: {fileID: 140796258}
+  m_Layer: 31
+  m_Name: LevelPlane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &140796257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140796256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.19, y: 0, z: 3.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2536632493224494046}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &140796258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140796256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 24.449682, y: 1, z: 25.25275}
+  m_Center: {x: 0.62484074, y: 0, z: -1.2243934}
 --- !u!1 &2536632493113109103
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,11 +132,11 @@ MonoBehaviour:
   m_Follow: {fileID: 2536632493113109089}
   m_Lens:
     FieldOfView: 50
-    OrthographicSize: 15
+    OrthographicSize: 12
     NearClipPlane: 0.1
     FarClipPlane: 500
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
     m_SensorSize: {x: 2.1541755, y: 1}
@@ -115,9 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Width: 40
-  m_Damping: 1
-  m_MinFOV: 3
+  m_Width: 21.79861
+  m_Damping: 0.5
+  m_MinFOV: 10
   m_MaxFOV: 60
 --- !u!1 &2536632493224494047
 GameObject:
@@ -150,6 +195,7 @@ Transform:
   m_Children:
   - {fileID: 2536632493113109089}
   - {fileID: 2536632493180779970}
+  - {fileID: 140796257}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -168,7 +214,13 @@ MonoBehaviour:
   cameraCenter: {fileID: 2536632493113109089}
   virtualCamera: {fileID: 2536632493180779971}
   levelRoot: {fileID: 0}
-  hide: []
+  hide:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   title: "Nouvelle fonctionnalit\xE9 !"
   description: "Appuyez sur la touche 1 pour activer la vue d\xE9coup\xE9e et observer
     l'environnement dans sa globalit\xE9."
@@ -243,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 30, z: 30}
+  m_FollowOffset: {x: 0, y: 30, z: 15}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0

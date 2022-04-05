@@ -6,7 +6,7 @@ namespace Aokoro.UI.ControlsDiplaySystem
     internal class CD_Data : ScriptableObject
     {
         internal GameObject Or => or;
-        internal GameObject And => or;
+        internal GameObject And => and;
 
         [SerializeField]
         private GameObject or;
