@@ -43,7 +43,7 @@ namespace UPQP.Features.SliceView
         {
             if (levelRoot == null)
             {
-                Debug.LogError("Please add SliceView_LevelRoot component to the root of the level");
+                Debug.LogError("Please reference the root of the level", gameObject);
             }
             else
             {

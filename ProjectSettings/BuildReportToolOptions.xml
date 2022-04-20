@@ -19,7 +19,7 @@
   <GetImportedSizesForUnusedAssets>true</GetImportedSizesForUnusedAssets>
   <IgnorePatternsForUnused />
   <FileFilterNameForTextureData>Textures</FileFilterNameForTextureData>
-  <ShowTextureColumnTextureType>true</ShowTextureColumnTextureType>
+  <ShowTextureColumnTextureType>false</ShowTextureColumnTextureType>
   <ShowTextureColumnIsSRGB>false</ShowTextureColumnIsSRGB>
   <ShowTextureColumnAlphaSource>false</ShowTextureColumnAlphaSource>
   <ShowTextureColumnAlphaIsTransparency>false</ShowTextureColumnAlphaIsTransparency>
@@ -48,13 +48,13 @@
   <ShowTextureColumnCompressionType>false</ShowTextureColumnCompressionType>
   <ShowTextureColumnCompressionIsCrunched>false</ShowTextureColumnCompressionIsCrunched>
   <ShowTextureColumnCompressionQuality>false</ShowTextureColumnCompressionQuality>
-  <ShowTextureColumnImportedWidthAndHeight>true</ShowTextureColumnImportedWidthAndHeight>
+  <ShowTextureColumnImportedWidthAndHeight>false</ShowTextureColumnImportedWidthAndHeight>
   <ShowTextureColumnRealWidthAndHeight>false</ShowTextureColumnRealWidthAndHeight>
   <ShowColumnAssetPath>true</ShowColumnAssetPath>
-  <ShowColumnSizeBeforeBuild>true</ShowColumnSizeBeforeBuild>
+  <ShowColumnSizeBeforeBuild>false</ShowColumnSizeBeforeBuild>
   <ShowColumnSizeInBuild>true</ShowColumnSizeInBuild>
-  <ShowColumnUnusedRawSize>true</ShowColumnUnusedRawSize>
-  <ShowColumnUnusedImportedSize>true</ShowColumnUnusedImportedSize>
+  <ShowColumnUnusedRawSize>false</ShowColumnUnusedRawSize>
+  <ShowColumnUnusedImportedSize>false</ShowColumnUnusedImportedSize>
   <SearchType>100</SearchType>
   <SearchFilenameOnly>true</SearchFilenameOnly>
   <SearchCaseSensitive>false</SearchCaseSensitive>

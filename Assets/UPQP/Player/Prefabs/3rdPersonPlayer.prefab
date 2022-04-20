@@ -775,7 +775,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -825,7 +825,7 @@ MonoBehaviour:
   _rotationMode: 2
   _rotationRate: 300
   _defaultMovementMode: 1
-  _maxWalkSpeed: 1.5
+  _maxWalkSpeed: 1
   _minAnalogWalkSpeed: 0
   _maxAcceleration: 20
   _brakingDecelerationWalking: 20
@@ -845,8 +845,8 @@ MonoBehaviour:
   _useSeparateBrakingFriction: 0
   _brakingFriction: 0
   _canEverSprint: 1
-  _sprintSpeedModifier: 2.5
-  _sprintAccelerationModifier: 1
+  _sprintSpeedModifier: 1.5
+  _sprintAccelerationModifier: 0.25
   _canEverCrouch: 0
   _unCrouchedHeight: 2
   _crouchedHeight: 1.25
@@ -887,13 +887,13 @@ MonoBehaviour:
   _planeConstraint: 0
   _rootTransform: {fileID: 0}
   _rootTransformOffset: {x: 0, y: 0, z: 0}
-  _radius: 0.5
+  _radius: 0.25
   _height: 2
   _slopeLimit: 45
-  _stepOffset: 0.45
-  _perchOffset: 0.5
+  _stepOffset: 0.25
+  _perchOffset: 0.2
   _perchAdditionalHeight: 0.4
-  _slopeLimitOverride: 0
+  _slopeLimitOverride: 1
   _useFlatBaseForGroundChecks: 1
   _collisionLayers:
     serializedVersion: 2

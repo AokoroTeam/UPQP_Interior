@@ -46,7 +46,7 @@ namespace UPQP.Features.SliceView
 
         public UPQP_Player Manager { get; set; }
 
-        public string ComponentName =>"SliceView player";
+        public string ComponentName => "SliceView player";
 
         protected override void OnFeatureComponentInitiate()
         {
@@ -69,7 +69,7 @@ namespace UPQP.Features.SliceView
         public override void OnFeatureEnables()
         {
             Player.ChangeActionMap(MapName);
-            if(Player.GetLivingComponent(out PlayerCharacter character))
+            if (Player.GetLivingComponent(out PlayerCharacter character))
             {
                 Debug.Log("[Slice view] Freezing player movements");
                 character.Freezed.Subscribe(this, 20, true);
@@ -191,8 +191,7 @@ namespace UPQP.Features.SliceView
 
         public void OnUpdate()
         {
-            Debug.Log(_Feature.IsActive);
-            if(_Feature.IsActive)
+            if (_Feature.IsActive)
             {
                 cameraCenter.position = Vector3.Lerp(cameraCenter.position, CenterPosition, Time.deltaTime * recenterSpeed);
             }
