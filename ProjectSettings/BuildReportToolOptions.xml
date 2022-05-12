@@ -45,9 +45,9 @@
   <ShowTextureColumnMaxTextureSize>false</ShowTextureColumnMaxTextureSize>
   <ShowTextureColumnResizeAlgorithm>false</ShowTextureColumnResizeAlgorithm>
   <ShowTextureColumnTextureFormat>true</ShowTextureColumnTextureFormat>
-  <ShowTextureColumnCompressionType>false</ShowTextureColumnCompressionType>
-  <ShowTextureColumnCompressionIsCrunched>false</ShowTextureColumnCompressionIsCrunched>
-  <ShowTextureColumnCompressionQuality>false</ShowTextureColumnCompressionQuality>
+  <ShowTextureColumnCompressionType>true</ShowTextureColumnCompressionType>
+  <ShowTextureColumnCompressionIsCrunched>true</ShowTextureColumnCompressionIsCrunched>
+  <ShowTextureColumnCompressionQuality>true</ShowTextureColumnCompressionQuality>
   <ShowTextureColumnImportedWidthAndHeight>false</ShowTextureColumnImportedWidthAndHeight>
   <ShowTextureColumnRealWidthAndHeight>false</ShowTextureColumnRealWidthAndHeight>
   <ShowColumnAssetPath>true</ShowColumnAssetPath>

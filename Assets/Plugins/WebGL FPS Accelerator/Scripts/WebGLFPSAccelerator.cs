@@ -31,6 +31,7 @@ namespace AG_WebGLFPSAccelerator
         [Read_Only_Field]
         public float dpi = 1;
         public bool dynamicResolutionSystem;
+        public bool ShowHideUI;
         public float dpiDecrease = 0.050f;
         public float dpiIncrease = 0.050f;
         public int fpsMax = 35;
@@ -40,6 +41,22 @@ namespace AG_WebGLFPSAccelerator
         public float measurePeriod = 4f;
         public float fixedDPI = 1f;
         public bool useRenderScaleURP;
+
+        [Header("___UI ELEMENTS____________________________________________________________________________________________________________________")]
+        public TMP_Text dpi_TMP_Text;
+        public AG_inputManager1 AG_inputManager1_fpsMax;
+        public AG_inputManager1 AG_inputManager1_fpsMin;
+        public AG_inputManager1 AG_inputManager1_dpiMax;
+        public AG_inputManager1 AG_inputManager1_dpiMin;
+        public AG_inputManager1 AG_inputManager1_dpiDecrease;
+        public AG_inputManager1 AG_inputManager1_dpiIncrease;
+        public AG_inputManager1 AG_inputManager1_measurePeriod;
+        public AG_inputManager2 AG_inputManager2_fixedDPI;
+        public Toggle Toggle1;
+        public Toggle Toggle2;
+        public GameObject dpiUIElement;
+        public GameObject fixedDPIUIElement;
+        public GameObject webglFpsAcceleratorInGameUI;
 
         [HideInInspector]
         public int fps;
@@ -82,7 +99,13 @@ namespace AG_WebGLFPSAccelerator
         void Start()
         {
             requestDefaultDPR();
+            if (ShowHideUI)
+            {
 
+                Toggle1.isOn = dynamicResolutionSystem;
+                Toggle2.isOn = useRenderScaleURP;
+                webglFpsAcceleratorInGameUI.transform.parent.gameObject.GetComponent<Canvas>().enabled = ShowHideUI;
+            }
             Invoke("waitForOneSecond", 1);
 
 #if USING_URP
@@ -90,6 +113,12 @@ namespace AG_WebGLFPSAccelerator
             urpAsset = (UniversalRenderPipelineAsset)rpAsset;
 
             urp = true;
+            if (ShowHideUI)
+            {
+                Toggle2.transform.parent.gameObject.SetActive(true);
+                RectTransform rt = webglFpsAcceleratorInGameUI.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(rt.sizeDelta.x, 580);
+            }
 #endif
         }
 
@@ -109,12 +138,12 @@ namespace AG_WebGLFPSAccelerator
 
         public void Toggle1Event()
         {
-
+            dynamicResolutionSystem = Toggle1.isOn;
         }
 
         public void Toggle2Event()
         {
-
+            useRenderScaleURP = Toggle2.isOn;
         }
 
         public void getAverageFPS()
@@ -175,6 +204,12 @@ namespace AG_WebGLFPSAccelerator
                     if (dynamicResolutionSystem != lastDynamicResolutionSystem || dpr == 0)
                     {
                         lastDynamicResolutionSystem = dynamicResolutionSystem;
+                        if (ShowHideUI)
+                        {
+                            fixedDPIUIElement.SetActive(true);
+                            dpiUIElement.SetActive(false);
+                        }
+
                         lastDPR = 0;
                     }
 
@@ -184,10 +219,12 @@ namespace AG_WebGLFPSAccelerator
                     {
                         dpr = dpi;
 
-#if USING_URP
                         if (dpr != lastDPR)
+                        {
+#if USING_URP
                             urpAsset.renderScale = dpr;
 #endif
+                        }
                     }
                     else
                     {
@@ -209,6 +246,11 @@ namespace AG_WebGLFPSAccelerator
                         lastDynamicResolutionSystem = dynamicResolutionSystem;
                         m_FpsNextPeriod = Time.realtimeSinceStartup + measurePeriod;
                         m_FpsAccumulator = 0;
+                        if (ShowHideUI)
+                        {
+                            fixedDPIUIElement.SetActive(false);
+                            dpiUIElement.SetActive(true);
+                        }
 
                         lastDPR = 0;
                     }
@@ -218,9 +260,74 @@ namespace AG_WebGLFPSAccelerator
             }
 
             dpi = (float)Math.Round(dpi * 100f) / 100f;
+            if (ShowHideUI)
+            {
+                dpi_TMP_Text.text = dpi.ToString();
 
+                updateUI();
+
+                if (ShowHideUI != lastShowHideUI)
+                {
+                    webglFpsAcceleratorInGameUI.transform.parent.gameObject.GetComponent<Canvas>().enabled = ShowHideUI;
+                    lastShowHideUI = ShowHideUI;
+                }
+            }
         }
-        
+
+        public void m_fpsMax()
+        {
+            fpsMax = int.Parse(AG_inputManager1_fpsMax.valueString);
+        }
+
+        public void m_fpsMin()
+        {
+            fpsMin = int.Parse(AG_inputManager1_fpsMin.valueString);
+        }
+
+        public void m_dpiMax()
+        {
+            dpiMax = float.Parse(AG_inputManager1_dpiMax.valueString);
+        }
+
+        public void m_dpiMin()
+        {
+            dpiMin = float.Parse(AG_inputManager1_dpiMin.valueString);
+        }
+
+        public void m_dpiDecrease()
+        {
+            dpiDecrease = float.Parse(AG_inputManager1_dpiDecrease.valueString);
+        }
+
+        public void m_dpiIncrease()
+        {
+            dpiIncrease = float.Parse(AG_inputManager1_dpiIncrease.valueString);
+        }
+
+        public void m_measurePeriod()
+        {
+            measurePeriod = float.Parse(AG_inputManager1_measurePeriod.valueString);
+        }
+
+        public void m_fixedDPI()
+        {
+            fixedDPI = AG_inputManager2_fixedDPI.value;
+        }
+
+        public void updateUI()
+        {
+            AG_inputManager1_fpsMax.changeValueString(fpsMax.ToString());
+            AG_inputManager1_fpsMin.changeValueString(fpsMin.ToString());
+            AG_inputManager1_dpiMin.changeValueString(dpiMin.ToString());
+            AG_inputManager1_dpiMax.changeValueString(dpiMax.ToString());
+            AG_inputManager1_dpiIncrease.changeValueString(dpiIncrease.ToString());
+            AG_inputManager1_dpiDecrease.changeValueString(dpiDecrease.ToString());
+            AG_inputManager1_measurePeriod.changeValueString(measurePeriod.ToString());
+
+            if (fixedDPIUIElement.activeSelf)
+                AG_inputManager2_fixedDPI.changeValue(fixedDPI);
+        }
+
         public void waitForOneSecond()
         {
             wait = false;

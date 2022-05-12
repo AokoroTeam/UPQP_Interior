@@ -890,7 +890,7 @@ MonoBehaviour:
   _radius: 0.25
   _height: 2
   _slopeLimit: 45
-  _stepOffset: 0.25
+  _stepOffset: 0.3
   _perchOffset: 0.2
   _perchAdditionalHeight: 0.4
   _slopeLimitOverride: 1

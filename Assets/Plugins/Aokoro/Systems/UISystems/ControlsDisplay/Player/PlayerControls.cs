@@ -29,7 +29,8 @@ namespace Aokoro.UI.ControlsDiplaySystem
 
         private void Start()
         {
-            playerInput.SwitchCurrentControlScheme(InputSystem.devices.ToArray());
+            InputDevice[] devices = InputSystem.devices.ToArray();
+            playerInput.SwitchCurrentControlScheme(devices);
             lastMap = playerInput.currentActionMap;
 
         }

@@ -52,6 +52,13 @@ namespace AG_WebGLFPSAccelerator
 #if UNITY_WEBGL && !UNITY_EDITOR
             isiOS = isiOS2();
             isAndroid = isAndroid2();
+
+            if (isiOS || isAndroid)
+            {
+                GameObject webglFpsAcceleratorInGameUI = WebGLFPSAccelerator.instance.webglFpsAcceleratorInGameUI;
+                RectTransform rt = webglFpsAcceleratorInGameUI.GetComponent<RectTransform>();
+                rt.localScale = new Vector3(0.85f, 0.85f, 1);
+            }
 #endif
 
 #if UNITY_EDITOR

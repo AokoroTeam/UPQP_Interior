@@ -64,6 +64,9 @@ namespace UPQP.Player
             for (int i = 0; i < playerFeatures.Length; i++)
                 playerFeatures[i].Player = this;
 
+            if (features.Length == 0)
+                return;
+
             //Cant be more than 10 because there are only 10 avaiable keys
             ///TODO Add 10 more binded to maj + number
             int length = Mathf.Min(features.Length, 10);
@@ -86,7 +89,7 @@ namespace UPQP.Player
                 int digit = (i == 9 ? 0 : i + 1);
 
                 ///Creates an action to start executing the feature binded to 1, then 2, then 3, etc....
-                InputAction startAction = executeFeatures.AddAction(displayName, InputActionType.Button, $"<Keyboard>/{digit}", groups: "Keyboard&Mouse");;
+                InputAction startAction = executeFeatures.AddAction(displayName, InputActionType.Button, $"<Keyboard>/{digit}", groups: "Keyboard&Mouse"); ;
                 startAction.AddBinding($"<Keyboard>/numpad{digit}", groups: "Keyboard&Mouse");
                 ///Links it to the correct callback
                 startAction.performed += ctx => ExecuteFeatureCallback(ctx, playerFeature.Feature);
@@ -132,6 +135,6 @@ namespace UPQP.Player
             executeFeatures.Enable();
         }
 
-        
+
     }
 }

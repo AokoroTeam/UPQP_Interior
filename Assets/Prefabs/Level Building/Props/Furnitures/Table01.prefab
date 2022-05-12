@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 7271148687557012283}
   - component: {fileID: 6229887332124611762}
   - component: {fileID: 4610929826585804749}
-  - component: {fileID: 8448868803344209236}
   m_Layer: 0
   m_Name: Table01
   m_TagString: Untagged
@@ -136,29 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exportPath: Data/Meshes/Props
---- !u!114 &8448868803344209236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5959131943021107496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fadcc2d9a34a1a34f93d4962ec37e6e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_data: {fileID: 11400000, guid: 09c79603a1a7dfc45b6ecd57d5a2a0cb, type: 2}
-  m_rootTransform: {fileID: 7271148687557012283}
-  m_lodGroup: {fileID: 6229887332124611762}
-  m_renderers:
-  - {fileID: 3114252317816738709}
-  m_lodReplacement: 2
-  m_renderPipelineInUse: 3
-  m_insertIndex: 1
-  m_lastImpostor: {fileID: 0}
-  m_folderPath: Assets/Data/Meshes/Impostors/
-  m_cutMode: 0
 --- !u!1 &6105841708415503302
 GameObject:
   m_ObjectHideFlags: 0

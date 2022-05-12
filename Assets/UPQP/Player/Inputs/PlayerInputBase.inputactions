@@ -7,19 +7,19 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "e80734f5-885e-46b1-b108-d0ce8e098469",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Look",
                     "type": "Value",
                     "id": "80752687-0753-4aef-807f-da820867c345",
                     "expectedControlType": "Vector2",
-                    "processors": "ScaleVector2",
+                    "processors": "ScaleVector2(x=2.5,y=2.5)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -152,17 +152,6 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "3e9fd29e-7fdb-4180-8426-1cce0b5b5f07",
-                    "path": "<Mouse>/scroll",
-                    "interactions": "",
-                    "processors": "NormalizeVector2,ScaleVector2(x=10,y=10)",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

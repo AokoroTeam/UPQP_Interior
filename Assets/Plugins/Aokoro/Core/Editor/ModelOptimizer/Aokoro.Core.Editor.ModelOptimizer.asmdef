@@ -1,0 +1,20 @@
+{
+    "name": "Aokoro.Core.Editor.ModelOptimizer",
+    "rootNamespace": "Aokoro.Editor.Replacer",
+    "references": [
+        "GUID:199144cfd25db134f9f322aaa3d28483",
+        "GUID:0f9e8f73c69964f1e8176f9a0b86f9b2",
+        "GUID:39b65f12fbeeab141b52c86b73253497"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
